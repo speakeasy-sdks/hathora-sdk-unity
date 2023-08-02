@@ -1,9 +1,14 @@
 configVersion: 1.0.0
 generation:
-  sdkClassName: SDK
+  sdkClassName: Hathora
   singleTagPerOp: false
 csharp:
   version: 0.0.1
   author: Speakeasy
   maxMethodParams: 0
   packageName: openapi
+unity:
+  version: 0.0.1
+  author: Speakeasy
+  maxMethodParams: 0
+  packageName: hathora

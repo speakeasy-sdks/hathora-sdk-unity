@@ -1,0 +1,10 @@
+# AppConfigAuthConfiguration
+
+
+## Fields
+
+| Field                                                                                       | Type                                                                                        | Required                                                                                    | Description                                                                                 |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
+| `anonymous`                                                                                 | [RecordStringNever](../../Models/Shared/RecordStringNever.md)                               | :heavy_minus_sign:                                                                          | Construct a type with a set of properties K of type T                                       |
+| `google`                                                                                    | [AppConfigAuthConfigurationGoogle](../../Models/Shared/AppConfigAuthConfigurationGoogle.md) | :heavy_minus_sign:                                                                          | N/A                                                                                         |
+| `nickname`                                                                                  | [RecordStringNever](../../Models/Shared/RecordStringNever.md)                               | :heavy_minus_sign:                                                                          | Construct a type with a set of properties K of type T                                       |

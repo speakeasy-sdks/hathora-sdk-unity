@@ -1,0 +1,81 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/manjitbedi/Projects/Work/Speakeasy/hathora-sdk-unity/Hathora/Hathora.csproj": {}
+  },
+  "projects": {
+    "/Users/manjitbedi/Projects/Work/Speakeasy/hathora-sdk-unity/Hathora/Hathora.csproj": {
+      "version": "0.0.1",
+      "restore": {
+        "projectUniqueName": "/Users/manjitbedi/Projects/Work/Speakeasy/hathora-sdk-unity/Hathora/Hathora.csproj",
+        "projectName": "hathora",
+        "projectPath": "/Users/manjitbedi/Projects/Work/Speakeasy/hathora-sdk-unity/Hathora/Hathora.csproj",
+        "packagesPath": "/Users/manjitbedi/.nuget/packages/",
+        "outputPath": "/Users/manjitbedi/Projects/Work/Speakeasy/hathora-sdk-unity/Hathora/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/manjitbedi/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net5.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net5.0": {
+            "targetAlias": "net5.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net5.0": {
+          "targetAlias": "net5.0",
+          "dependencies": {
+            "newtonsoft.json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "nodatime": {
+              "target": "Package",
+              "version": "[3.1.9, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[5.0.0, 5.0.0]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/7.0.306/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
