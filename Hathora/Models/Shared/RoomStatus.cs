@@ -11,6 +11,8 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    
     
     /// <summary>
     /// The allocation status of a room.
@@ -37,4 +39,27 @@ namespace Hathora.Models.Shared
 		[JsonProperty("destroyed")]
 		Destroyed,
     }
+    
+    public static class RoomStatusExtension
+    {
+        public static string Value(this RoomStatus value)
+        {
+            return ((JsonPropertyAttribute)value.GetType().GetMember(value.ToString())[0].GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0]).PropertyName ?? value.ToString();
+        }
+
+        public static RoomStatus ToEnum(this string value)
+        {
+            foreach(var field in typeof(RoomStatus).GetFields())
+            {
+                var attribute = field.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0] as JsonPropertyAttribute;
+                if (attribute != null && attribute.PropertyName == value)
+                {
+                    return (RoomStatus)field.GetValue(null);
+                }
+            }
+
+            throw new Exception($"Unknown value {value} for enum RoomStatus");
+        }
+    }
+    
 }

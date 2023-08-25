@@ -10,27 +10,14 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
-    using System;
-using UnityEngine.Networking;
-using System.Text;
-using Newtonsoft.Json;
-using Hathora.Utils;
-    using System.Collections.Generic;
+    using Newtonsoft.Json;
+    
+    
     public class CustomerPortalUrl
     {
-        
         [JsonProperty("returnUrl")]
         public string ReturnUrl { get; set; }
         
-        internal static UnityWebRequest BuildHttpRequestMessage(string operationId, CustomerPortalUrl value, string baseUrl)
-        {
-            if("InitStripeCustomerPortalUrl" == operationId)
-            {
-                string json = JsonConvert.SerializeObject(value, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new IsoDateTimeSerializer(), new EnumSerializer() }});var urlString = baseUrl + "/billing/v1/customerportalurl";// #request-debugging post TODO: work in progress
-                UnityWebRequest message;message = UnityWebRequest.Post(urlString, json, "application/json");
-                return message;
-            }
-            throw new ArgumentException($"Attempt to build UnityWebRequest for invalid operationId [{operationId}] for request type [CustomerPortalUrl]");
-        }
     }
+    
 }

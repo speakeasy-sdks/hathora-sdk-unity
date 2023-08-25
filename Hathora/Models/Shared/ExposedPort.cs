@@ -11,31 +11,28 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// Connection information to an exposed port on an active process.
-/// </summary>
+    
+    
+    /// <summary>
+    /// Connection details for an active process.
+    /// </summary>
     public class ExposedPort
     {
-        
         [JsonProperty("host")]
         public string Host { get; set; }
-        
         
         [JsonProperty("name")]
         public string Name { get; set; }
         
-        
         [JsonProperty("port")]
         public float Port { get; set; }
         
-    /// <summary>
-    /// Transport type specifies the underlying communication protocol to the exposed port.
-    /// </summary>
-        
+        /// <summary>
+        /// Transport type specifies the underlying communication protocol to the exposed port.
+        /// </summary>
         [JsonProperty("transportType")]
         public TransportType TransportType { get; set; }
         
     }
+    
 }

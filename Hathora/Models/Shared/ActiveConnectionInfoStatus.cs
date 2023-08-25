@@ -11,10 +11,35 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    
     
     public enum ActiveConnectionInfoStatus
     {
     	[JsonProperty("active")]
 		Active,
     }
+    
+    public static class ActiveConnectionInfoStatusExtension
+    {
+        public static string Value(this ActiveConnectionInfoStatus value)
+        {
+            return ((JsonPropertyAttribute)value.GetType().GetMember(value.ToString())[0].GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0]).PropertyName ?? value.ToString();
+        }
+
+        public static ActiveConnectionInfoStatus ToEnum(this string value)
+        {
+            foreach(var field in typeof(ActiveConnectionInfoStatus).GetFields())
+            {
+                var attribute = field.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0] as JsonPropertyAttribute;
+                if (attribute != null && attribute.PropertyName == value)
+                {
+                    return (ActiveConnectionInfoStatus)field.GetValue(null);
+                }
+            }
+
+            throw new Exception($"Unknown value {value} for enum ActiveConnectionInfoStatus");
+        }
+    }
+    
 }

@@ -11,23 +11,22 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// Connection information to the default port.
-/// </summary>
+    
+    
+    /// <summary>
+    /// Connection information to the default port.
+    /// </summary>
     public class StartingConnectionInfo
     {
-    /// <summary>
-    /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
-    /// </summary>
-        
+        /// <summary>
+        /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
+        /// </summary>
         [JsonProperty("roomId")]
         public string RoomId { get; set; }
-        
         
         [JsonProperty("status")]
         public StartingConnectionInfoStatus Status { get; set; }
         
     }
+    
 }

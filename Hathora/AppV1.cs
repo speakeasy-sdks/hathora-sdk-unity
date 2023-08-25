@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 #nullable enable
-namespace Hathora.AppV1
+namespace Hathora
 {
+    using Hathora.Models.Operations;
+    using Hathora.Models.Shared;
+    using Hathora.Utils;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System;
-using System.Collections.Generic;
-using UnityEngine.Networking;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Hathora.Models.AppV1;
-using Hathora.Models.Shared;
-using Hathora.Utils;
+    using UnityEngine.Networking;
 
     public interface IAppV1SDK
     {
@@ -30,231 +30,356 @@ using Hathora.Utils;
 
     public class AppV1SDK: IAppV1SDK
     {
-
         public SDKConfig Config { get; private set; }
-        private const string _language = "csharp";
+        private const string _target = "unity";
         private const string _sdkVersion = "0.0.1";
         private const string _sdkGenVersion = "internal";
         private const string _openapiDocVersion = "0.0.1";
-        // TODO: code review, is this more work required here to convert to a base URL?
-        public Uri ServerUrl { get { return new Uri(_defaultClient.Client.url); } }
-        private SpeakeasyHttpClient _defaultClient;
-        private SpeakeasyHttpClient _securityClient;
+        private string _serverUrl = "";
+        private ISpeakeasyHttpClient _defaultClient;
+        private ISpeakeasyHttpClient _securityClient;
 
-        public AppV1SDK(SpeakeasyHttpClient defaultClient, SpeakeasyHttpClient securityClient, SDKConfig config)
+        public AppV1SDK(ISpeakeasyHttpClient defaultClient, ISpeakeasyHttpClient securityClient, string serverUrl, SDKConfig config)
         {
             _defaultClient = defaultClient;
             _securityClient = securityClient;
+            _serverUrl = serverUrl;
             Config = config;
         }
-
         
+
     /// <summary>
     /// Create a new [application](https://hathora.dev/docs/concepts/hathora-entities#application).
     /// </summary>
-    public async Task<CreateAppResponse> CreateAppAsync(CreateAppSecurity security, AppConfig request)
-    {
-        string baseUrl = "";
-        var message = AppConfig.BuildHttpRequestMessage("CreateApp", request, baseUrl);
-        var client = _defaultClient;
-        CreateAppSecurity.Apply(security, message);
+        public async Task<CreateAppResponse> CreateAppAsync(CreateAppSecurity security, AppConfig request)
+        {
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = baseUrl + "/apps/v1/create";
+            
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new CreateAppResponse
-        {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 201))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            var serializedBody = RequestBodySerializer.Serialize(request, "Request", "json");
+            if (serializedBody == null) 
             {
-                response.Application = JsonConvert.DeserializeObject<Application>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                throw new ArgumentNullException("request body is required");
             }
-            return response;
-        }
-        if((response.StatusCode == 422))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            else
             {
-                response.CreateApp422ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                httpRequest.uploadHandler = new UploadHandlerRaw(serializedBody.Body);
+                httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
             }
-            return response;
-        }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
             {
-                response.CreateApp500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
             }
-            return response;
-        }
-        return response;
-    }
 
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new CreateAppResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 201))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Application = JsonConvert.DeserializeObject<Application>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 422))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateApp422ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateApp500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            return response;
+        }
         
+
     /// <summary>
     /// Delete an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Your organization will lose access to this application.
     /// </summary>
-    public async Task<DeleteAppResponse> DeleteAppAsync(DeleteAppSecurity security, DeleteAppRequest? request = null)
-    {
-        string baseUrl = "";
-        var message = DeleteAppRequest.BuildHttpRequestMessage("DeleteApp", request, baseUrl);
-        var client = _defaultClient;
-        DeleteAppSecurity.Apply(security, message);
-
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new DeleteAppResponse
+        public async Task<DeleteAppResponse> DeleteAppAsync(DeleteAppSecurity security, DeleteAppRequest? request = null)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 204))
-        {
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.DeleteApp404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/apps/v1/delete/{appId}", request);
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbDELETE);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new DeleteAppResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 204))
+            {
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.DeleteApp404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.DeleteApp500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.DeleteApp500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
+
     /// <summary>
     /// Get details for an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
     /// </summary>
-    public async Task<GetAppInfoResponse> GetAppInfoAsync(GetAppInfoSecurity security, GetAppInfoRequest? request = null)
-    {
-        string baseUrl = "";
-        var message = GetAppInfoRequest.BuildHttpRequestMessage("GetAppInfo", request, baseUrl);
-        var client = _defaultClient;
-        GetAppInfoSecurity.Apply(security, message);
-
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new GetAppInfoResponse
+        public async Task<GetAppInfoResponse> GetAppInfoAsync(GetAppInfoSecurity security, GetAppInfoRequest? request = null)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.Application = JsonConvert.DeserializeObject<Application>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/apps/v1/info/{appId}", request);
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new GetAppInfoResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Application = JsonConvert.DeserializeObject<Application>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetAppInfo404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetAppInfo404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
+
     /// <summary>
     /// Returns an unsorted list of your organization’s [applications](https://hathora.dev/docs/concepts/hathora-entities#application). An application is uniquely identified by an `appId`.
     /// </summary>
-    public async Task<GetAppsResponse> GetAppsAsync(GetAppsSecurity security)
-    {
-        string baseUrl = "";
-        var message = UnityWebRequest.Get(baseUrl + "/apps/v1/list");
-        var client = _defaultClient;
-        GetAppsSecurity.Apply(security, message);
-
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new GetAppsResponse
+        public async Task<GetAppsResponse> GetAppsAsync(GetAppsSecurity security)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.ApplicationWithDeployments = JsonConvert.DeserializeObject<List<ApplicationWithDeployment>>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = baseUrl + "/apps/v1/list";
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new GetAppsResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.ApplicationWithDeployments = JsonConvert.DeserializeObject<List<ApplicationWithDeployment>>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
             }
             return response;
         }
-        return response;
-    }
-
         
+
     /// <summary>
     /// Update data for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
     /// </summary>
-    public async Task<UpdateAppResponse> UpdateAppAsync(UpdateAppSecurity security, UpdateAppRequest request)
-    {
-        string baseUrl = "";
-        var message = UpdateAppRequest.BuildHttpRequestMessage("UpdateApp", request, baseUrl);
-        var client = _defaultClient;
-        UpdateAppSecurity.Apply(security, message);
+        public async Task<UpdateAppResponse> UpdateAppAsync(UpdateAppSecurity security, UpdateAppRequest request)
+        {
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/apps/v1/update/{appId}", request);
+            
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new UpdateAppResponse
-        {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            var serializedBody = RequestBodySerializer.Serialize(request, "AppConfig", "json");
+            if (serializedBody == null) 
             {
-                response.Application = JsonConvert.DeserializeObject<Application>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                throw new ArgumentNullException("request body is required");
             }
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            else
             {
-                response.UpdateApp404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                httpRequest.uploadHandler = new UploadHandlerRaw(serializedBody.Body);
+                httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
             }
-            return response;
-        }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
             {
-                response.UpdateApp500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
             }
-            return response;
-        }
-        return response;
-    }
 
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new UpdateAppResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Application = JsonConvert.DeserializeObject<Application>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.UpdateApp404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.UpdateApp500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            return response;
+        }
         
     }
 }

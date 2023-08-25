@@ -8,14 +8,15 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 #nullable enable
-namespace Hathora.ManagementV1
+namespace Hathora
 {
+    using Hathora.Models.Operations;
+    using Hathora.Models.Shared;
+    using Hathora.Utils;
+    using Newtonsoft.Json;
+    using System.Threading.Tasks;
     using System;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Hathora.Models.ManagementV1;
-using Hathora.Models.Shared;
-using Hathora.Utils;
+    using UnityEngine.Networking;
 
     public interface IManagementV1SDK
     {
@@ -24,59 +25,89 @@ using Hathora.Utils;
 
     public class ManagementV1SDK: IManagementV1SDK
     {
-
         public SDKConfig Config { get; private set; }
-        private const string _language = "csharp";
+        private const string _target = "unity";
         private const string _sdkVersion = "0.0.1";
         private const string _sdkGenVersion = "internal";
         private const string _openapiDocVersion = "0.0.1";
-        // TODO: code review, is this more work required here to convert to a base URL?
-        public Uri ServerUrl { get { return new Uri(_defaultClient.Client.url); } }
-        private SpeakeasyHttpClient _defaultClient;
-        private SpeakeasyHttpClient _securityClient;
+        private string _serverUrl = "";
+        private ISpeakeasyHttpClient _defaultClient;
+        private ISpeakeasyHttpClient _securityClient;
 
-        public ManagementV1SDK(SpeakeasyHttpClient defaultClient, SpeakeasyHttpClient securityClient, SDKConfig config)
+        public ManagementV1SDK(ISpeakeasyHttpClient defaultClient, ISpeakeasyHttpClient securityClient, string serverUrl, SDKConfig config)
         {
             _defaultClient = defaultClient;
             _securityClient = securityClient;
+            _serverUrl = serverUrl;
             Config = config;
         }
-
         
-    public async Task<SendVerificationEmailResponse> SendVerificationEmailAsync(VerificationEmailRequest request)
-    {
-        string baseUrl = "";
-        var message = VerificationEmailRequest.BuildHttpRequestMessage("SendVerificationEmail", request, baseUrl);
-        var client = _defaultClient;
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new SendVerificationEmailResponse
+        public async Task<SendVerificationEmailResponse> SendVerificationEmailAsync(VerificationEmailRequest request)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.VerificationEmailResponse = JsonConvert.DeserializeObject<VerificationEmailResponse>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = baseUrl + "/management/v1/sendverificationemail";
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            var serializedBody = RequestBodySerializer.Serialize(request, "Request", "json");
+            if (serializedBody == null) 
+            {
+                throw new ArgumentNullException("request body is required");
+            }
+            else
+            {
+                httpRequest.uploadHandler = new UploadHandlerRaw(serializedBody.Body);
+                httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
+            }
+            
+            var client = _defaultClient;
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new SendVerificationEmailResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.VerificationEmailResponse = JsonConvert.DeserializeObject<VerificationEmailResponse>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.SendVerificationEmail500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.SendVerificationEmail500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
     }
 }

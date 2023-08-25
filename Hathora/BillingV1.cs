@@ -8,16 +8,16 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 #nullable enable
-namespace Hathora.BillingV1
+namespace Hathora
 {
+    using Hathora.Models.Operations;
+    using Hathora.Models.Shared;
+    using Hathora.Utils;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System;
-using System.Collections.Generic;
-using UnityEngine.Networking;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Hathora.Models.BillingV1;
-using Hathora.Models.Shared;
-using Hathora.Utils;
+    using UnityEngine.Networking;
 
     public interface IBillingV1SDK
     {
@@ -29,176 +29,269 @@ using Hathora.Utils;
 
     public class BillingV1SDK: IBillingV1SDK
     {
-
         public SDKConfig Config { get; private set; }
-        private const string _language = "csharp";
+        private const string _target = "unity";
         private const string _sdkVersion = "0.0.1";
         private const string _sdkGenVersion = "internal";
         private const string _openapiDocVersion = "0.0.1";
-        // TODO: code review, is this more work required here to convert to a base URL?
-        public Uri ServerUrl { get { return new Uri(_defaultClient.Client.url); } }
-        private SpeakeasyHttpClient _defaultClient;
-        private SpeakeasyHttpClient _securityClient;
+        private string _serverUrl = "";
+        private ISpeakeasyHttpClient _defaultClient;
+        private ISpeakeasyHttpClient _securityClient;
 
-        public BillingV1SDK(SpeakeasyHttpClient defaultClient, SpeakeasyHttpClient securityClient, SDKConfig config)
+        public BillingV1SDK(ISpeakeasyHttpClient defaultClient, ISpeakeasyHttpClient securityClient, string serverUrl, SDKConfig config)
         {
             _defaultClient = defaultClient;
             _securityClient = securityClient;
+            _serverUrl = serverUrl;
             Config = config;
         }
-
         
-    public async Task<GetBalanceResponse> GetBalanceAsync(GetBalanceSecurity security)
-    {
-        string baseUrl = "";
-        var message = UnityWebRequest.Get(baseUrl + "/billing/v1/balance");
-        var client = _defaultClient;
-        GetBalanceSecurity.Apply(security, message);
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new GetBalanceResponse
+        public async Task<GetBalanceResponse> GetBalanceAsync(GetBalanceSecurity security)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.GetBalance200ApplicationJSONDoubleNumber = JsonConvert.DeserializeObject<float>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = baseUrl + "/billing/v1/balance";
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new GetBalanceResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetBalance200ApplicationJSONDoubleNumber = JsonConvert.DeserializeObject<float>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetBalance404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetBalance404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
-    public async Task<GetInvoicesResponse> GetInvoicesAsync(GetInvoicesSecurity security)
-    {
-        string baseUrl = "";
-        var message = UnityWebRequest.Get(baseUrl + "/billing/v1/invoices");
-        var client = _defaultClient;
-        GetInvoicesSecurity.Apply(security, message);
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new GetInvoicesResponse
+        public async Task<GetInvoicesResponse> GetInvoicesAsync(GetInvoicesSecurity security)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.Invoices = JsonConvert.DeserializeObject<List<Invoice>>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = baseUrl + "/billing/v1/invoices";
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new GetInvoicesResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Invoices = JsonConvert.DeserializeObject<List<Invoice>>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetInvoices404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetInvoices404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
-    public async Task<GetPaymentMethodResponse> GetPaymentMethodAsync(GetPaymentMethodSecurity security)
-    {
-        string baseUrl = "";
-        var message = UnityWebRequest.Get(baseUrl + "/billing/v1/paymentmethod");
-        var client = _defaultClient;
-        GetPaymentMethodSecurity.Apply(security, message);
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new GetPaymentMethodResponse
+        public async Task<GetPaymentMethodResponse> GetPaymentMethodAsync(GetPaymentMethodSecurity security)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.PaymentMethod = JsonConvert.DeserializeObject<PaymentMethod>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
             }
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetPaymentMethod404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetPaymentMethod500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
+            var urlString = baseUrl + "/billing/v1/paymentmethod";
+            
 
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new GetPaymentMethodResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.PaymentMethod = JsonConvert.DeserializeObject<PaymentMethod>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetPaymentMethod404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetPaymentMethod500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            return response;
+        }
         
-    public async Task<InitStripeCustomerPortalUrlResponse> InitStripeCustomerPortalUrlAsync(InitStripeCustomerPortalUrlSecurity security, CustomerPortalUrl request)
-    {
-        string baseUrl = "";
-        var message = CustomerPortalUrl.BuildHttpRequestMessage("InitStripeCustomerPortalUrl", request, baseUrl);
-        var client = _defaultClient;
-        InitStripeCustomerPortalUrlSecurity.Apply(security, message);
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new InitStripeCustomerPortalUrlResponse
+        public async Task<InitStripeCustomerPortalUrlResponse> InitStripeCustomerPortalUrlAsync(InitStripeCustomerPortalUrlSecurity security, CustomerPortalUrl request)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.InitStripeCustomerPortalUrl200ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = baseUrl + "/billing/v1/customerportalurl";
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            var serializedBody = RequestBodySerializer.Serialize(request, "Request", "json");
+            if (serializedBody == null) 
+            {
+                throw new ArgumentNullException("request body is required");
+            }
+            else
+            {
+                httpRequest.uploadHandler = new UploadHandlerRaw(serializedBody.Body);
+                httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
+            }
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new InitStripeCustomerPortalUrlResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.InitStripeCustomerPortalUrl200ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.InitStripeCustomerPortalUrl404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.InitStripeCustomerPortalUrl404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
     }
 }

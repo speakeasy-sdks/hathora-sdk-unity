@@ -11,48 +11,48 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// From T, pick a set of properties whose keys are in the union K
-/// </summary>
+    
+    
+    /// <summary>
+    /// From T, pick a set of properties whose keys are in the union K
+    /// </summary>
     public class RoomWithoutAllocations
     {
-    /// <summary>
-    /// System generated unique identifier for an application.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated unique identifier for an application.
+        /// </summary>
         [JsonProperty("appId")]
         public string AppId { get; set; }
-        
         
         [JsonProperty("currentAllocation")]
         public RoomWithoutAllocationsCurrentAllocation CurrentAllocation { get; set; }
         
-    /// <summary>
-    /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
-    /// </summary>
+        [JsonProperty("roomConfig")]
+        public string RoomConfig { get; set; }
         
+        /// <summary>
+        /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
+        /// </summary>
         [JsonProperty("roomId")]
         public string RoomId { get; set; }
         
-    /// <summary>
-    /// The allocation status of a room.
-    /// 
-    /// <remarks>
-    /// 
-    /// `scheduling`: a process is not allocated yet and the room is waiting to be scheduled
-    /// 
-    /// `active`: ready to accept connections
-    /// 
-    /// `suspended`: room is unallocated from the process but can be rescheduled later with the same `roomId`
-    /// 
-    /// `destroyed`: all associated metadata is deleted
-    /// </remarks>
-    /// </summary>
-        
+        /// <summary>
+        /// The allocation status of a room.
+        /// 
+        /// <remarks>
+        /// 
+        /// `scheduling`: a process is not allocated yet and the room is waiting to be scheduled
+        /// 
+        /// `active`: ready to accept connections
+        /// 
+        /// `suspended`: room is unallocated from the process but can be rescheduled later with the same `roomId`
+        /// 
+        /// `destroyed`: all associated metadata is deleted
+        /// </remarks>
+        /// </summary>
         [JsonProperty("status")]
         public RoomStatus Status { get; set; }
         
     }
+    
 }

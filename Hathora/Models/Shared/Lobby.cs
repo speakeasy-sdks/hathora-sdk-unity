@@ -10,40 +10,36 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
+    using Newtonsoft.Json;
     using System;
-using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// A lobby object allows you to store and manage metadata for your rooms.
-/// </summary>
+    
+    
+    /// <summary>
+    /// A lobby object allows you to store and manage metadata for your rooms.
+    /// </summary>
     public class Lobby
     {
-    /// <summary>
-    /// System generated unique identifier for an application.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated unique identifier for an application.
+        /// </summary>
         [JsonProperty("appId")]
         public string AppId { get; set; }
         
-    /// <summary>
-    /// When the lobby was created.
-    /// </summary>
-        
+        /// <summary>
+        /// When the lobby was created.
+        /// </summary>
         [JsonProperty("createdAt")]
         public DateTime CreatedAt { get; set; }
         
-    /// <summary>
-    /// Email address for the user that created the lobby.
-    /// </summary>
-        
+        /// <summary>
+        /// Email address for the user that created the lobby.
+        /// </summary>
         [JsonProperty("createdBy")]
         public string CreatedBy { get; set; }
         
-    /// <summary>
-    /// User input to initialize the game state. Object must be smaller than 64KB.
-    /// </summary>
-        
+        /// <summary>
+        /// User input to initialize the game state. Object must be smaller than 64KB.
+        /// </summary>
         [JsonProperty("initialConfig")]
         public LobbyInitialConfig InitialConfig { get; set; }
         
@@ -51,42 +47,36 @@ using Hathora.Models.Shared;
         [JsonProperty("local")]
         public bool Local { get; set; }
         
-    /// <summary>
-    /// Available regions to request a game server.
-    /// </summary>
-        
         [JsonProperty("region")]
         public Region Region { get; set; }
         
-    /// <summary>
-    /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
-    /// </summary>
-        
+        /// <summary>
+        /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
+        /// </summary>
         [JsonProperty("roomId")]
         public string RoomId { get; set; }
         
-    /// <summary>
-    /// JSON blob to store metadata for a room. Must be smaller than 1MB.
-    /// </summary>
-        
+        /// <summary>
+        /// JSON blob to store metadata for a room. Must be smaller than 1MB.
+        /// </summary>
         [JsonProperty("state")]
         public LobbyState? State { get; set; }
         
-    /// <summary>
-    /// Types of lobbies a player can create.
-    /// 
-    /// <remarks>
-    /// 
-    /// `private`: the player who created the room must share the roomId with their friends
-    /// 
-    /// `public`: visible in the public lobby list, anyone can join
-    /// 
-    /// `local`: for testing with a server running locally
-    /// </remarks>
-    /// </summary>
-        
+        /// <summary>
+        /// Types of lobbies a player can create.
+        /// 
+        /// <remarks>
+        /// 
+        /// `private`: the player who created the room must share the roomId with their friends
+        /// 
+        /// `public`: visible in the public lobby list, anyone can join
+        /// 
+        /// `local`: for testing with a server running locally
+        /// </remarks>
+        /// </summary>
         [JsonProperty("visibility")]
         public LobbyVisibility Visibility { get; set; }
         
     }
+    
 }

@@ -10,30 +10,27 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
+    using Newtonsoft.Json;
     using System.Collections.Generic;
-using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// Construct a type with a set of properties K of type T
-/// </summary>
+    
+    
+    /// <summary>
+    /// Construct a type with a set of properties K of type T
+    /// </summary>
     public class MetricsResponse
     {
-        
         [JsonProperty("cpu")]
         public List<MetricValue>? Cpu { get; set; }
-        
         
         [JsonProperty("memory")]
         public List<MetricValue>? Memory { get; set; }
         
-        
         [JsonProperty("rate_egress")]
         public List<MetricValue>? RateEgress { get; set; }
-        
         
         [JsonProperty("total_egress")]
         public List<MetricValue>? TotalEgress { get; set; }
         
     }
+    
 }

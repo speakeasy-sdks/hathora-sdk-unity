@@ -10,35 +10,23 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
-    using System;
-using UnityEngine.Networking;
-using System.Text;
-using Newtonsoft.Json;
-using Hathora.Models.Shared;
-using Hathora.Utils;
-    using System.Collections.Generic;
+    using Newtonsoft.Json;
+    
+    
     public class AppConfig
     {
-    /// <summary>
-    /// Readable name for an application. Must be unique within an organization.
-    /// </summary>
-        
+        /// <summary>
+        /// Readable name for an application. Must be unique within an organization.
+        /// </summary>
         [JsonProperty("appName")]
         public string AppName { get; set; }
         
-        
+        /// <summary>
+        /// Configure [player authentication](https://hathora.dev/docs/lobbies-and-matchmaking/auth-service) for your application. Use Hathora's built-in auth providers or use your own [custom authentication](https://hathora.dev/docs/lobbies-and-matchmaking/auth-service#custom-auth-provider).
+        /// </summary>
         [JsonProperty("authConfiguration")]
-        public AppConfigAuthConfiguration AuthConfiguration { get; set; }
+        public AuthConfiguration AuthConfiguration { get; set; }
         
-        internal static UnityWebRequest BuildHttpRequestMessage(string operationId, AppConfig value, string baseUrl)
-        {
-            if("CreateApp" == operationId)
-            {
-                string json = JsonConvert.SerializeObject(value, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new IsoDateTimeSerializer(), new EnumSerializer() }});var urlString = baseUrl + "/apps/v1/create";// #request-debugging post TODO: work in progress
-                UnityWebRequest message;message = UnityWebRequest.Post(urlString, json, "application/json");
-                return message;
-            }
-            throw new ArgumentException($"Attempt to build UnityWebRequest for invalid operationId [{operationId}] for request type [AppConfig]");
-        }
     }
+    
 }

@@ -11,6 +11,8 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    
     
     /// <summary>
     /// A plan defines how much CPU and memory is required to run an instance of your game server.
@@ -37,4 +39,27 @@ namespace Hathora.Models.Shared
 		[JsonProperty("large")]
 		Large,
     }
+    
+    public static class PlanNameExtension
+    {
+        public static string Value(this PlanName value)
+        {
+            return ((JsonPropertyAttribute)value.GetType().GetMember(value.ToString())[0].GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0]).PropertyName ?? value.ToString();
+        }
+
+        public static PlanName ToEnum(this string value)
+        {
+            foreach(var field in typeof(PlanName).GetFields())
+            {
+                var attribute = field.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0] as JsonPropertyAttribute;
+                if (attribute != null && attribute.PropertyName == value)
+                {
+                    return (PlanName)field.GetValue(null);
+                }
+            }
+
+            throw new Exception($"Unknown value {value} for enum PlanName");
+        }
+    }
+    
 }

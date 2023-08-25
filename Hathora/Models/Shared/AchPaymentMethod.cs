@@ -11,16 +11,16 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-    using System.Collections.Generic;
+    
+    
     public class AchPaymentMethod
     {
-        
         [JsonProperty("bankName")]
         public string? BankName { get; set; }
-        
         
         [JsonProperty("last4")]
         public string? Last4 { get; set; }
         
     }
+    
 }

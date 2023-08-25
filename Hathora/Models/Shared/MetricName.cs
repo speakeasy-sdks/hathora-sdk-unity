@@ -11,6 +11,8 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    
     
     /// <summary>
     /// Available metrics to query over time.
@@ -26,4 +28,27 @@ namespace Hathora.Models.Shared
 		[JsonProperty("total_egress")]
 		TotalEgress,
     }
+    
+    public static class MetricNameExtension
+    {
+        public static string Value(this MetricName value)
+        {
+            return ((JsonPropertyAttribute)value.GetType().GetMember(value.ToString())[0].GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0]).PropertyName ?? value.ToString();
+        }
+
+        public static MetricName ToEnum(this string value)
+        {
+            foreach(var field in typeof(MetricName).GetFields())
+            {
+                var attribute = field.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0] as JsonPropertyAttribute;
+                if (attribute != null && attribute.PropertyName == value)
+                {
+                    return (MetricName)field.GetValue(null);
+                }
+            }
+
+            throw new Exception($"Unknown value {value} for enum MetricName");
+        }
+    }
+    
 }

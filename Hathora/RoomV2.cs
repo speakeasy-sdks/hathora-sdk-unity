@@ -8,19 +8,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 #nullable enable
-namespace Hathora.RoomV2
+namespace Hathora
 {
+    using Hathora.Models.Operations;
+    using Hathora.Models.Shared;
+    using Hathora.Utils;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Hathora.Models.RoomV2;
-using Hathora.Models.Shared;
-using Hathora.Utils;
+    using UnityEngine.Networking;
 
     public interface IRoomV2SDK
     {
-        Task<CreateRoomResponse> CreateRoomAsync(CreateRoomSecurity security, CreateRoomRequest request);
+        Task<CreateRoomResponse> CreateRoomAsync(CreateRoomSecurity security, Models.Operations.CreateRoomRequest request);
         Task<DestroyRoomResponse> DestroyRoomAsync(DestroyRoomSecurity security, DestroyRoomRequest? request = null);
         Task<GetActiveRoomsForProcessResponse> GetActiveRoomsForProcessAsync(GetActiveRoomsForProcessSecurity security, GetActiveRoomsForProcessRequest? request = null);
         Task<GetConnectionInfoResponse> GetConnectionInfoAsync(GetConnectionInfoRequest? request = null);
@@ -31,344 +32,516 @@ using Hathora.Utils;
 
     public class RoomV2SDK: IRoomV2SDK
     {
-
         public SDKConfig Config { get; private set; }
-        private const string _language = "csharp";
+        private const string _target = "unity";
         private const string _sdkVersion = "0.0.1";
         private const string _sdkGenVersion = "internal";
         private const string _openapiDocVersion = "0.0.1";
-        // TODO: code review, is this more work required here to convert to a base URL?
-        public Uri ServerUrl { get { return new Uri(_defaultClient.Client.url); } }
-        private SpeakeasyHttpClient _defaultClient;
-        private SpeakeasyHttpClient _securityClient;
+        private string _serverUrl = "";
+        private ISpeakeasyHttpClient _defaultClient;
+        private ISpeakeasyHttpClient _securityClient;
 
-        public RoomV2SDK(SpeakeasyHttpClient defaultClient, SpeakeasyHttpClient securityClient, SDKConfig config)
+        public RoomV2SDK(ISpeakeasyHttpClient defaultClient, ISpeakeasyHttpClient securityClient, string serverUrl, SDKConfig config)
         {
             _defaultClient = defaultClient;
             _securityClient = securityClient;
+            _serverUrl = serverUrl;
             Config = config;
         }
-
         
+
     /// <summary>
-    /// Create a new [room](https://hathora.dev/docs/concepts/hathora-entities#room) for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId` and `region`.
+    /// Create a new [room](https://hathora.dev/docs/concepts/hathora-entities#room) for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application). Poll the [`GetConnectionInfo()`](https://hathora.dev/api#tag/RoomV2/operation/GetConnectionInfo) endpoint to get connection details for an active room.
     /// </summary>
-    public async Task<CreateRoomResponse> CreateRoomAsync(CreateRoomSecurity security, CreateRoomRequest request)
-    {
-        string baseUrl = "";
-        var message = CreateRoomRequest.BuildHttpRequestMessage("CreateRoom", request, baseUrl);
-        var client = _defaultClient;
-        CreateRoomSecurity.Apply(security, message);
+        public async Task<CreateRoomResponse> CreateRoomAsync(CreateRoomSecurity security, Models.Operations.CreateRoomRequest request)
+        {
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/rooms/v2/{appId}/create", request);
+            
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new CreateRoomResponse
-        {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 201))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            var serializedBody = RequestBodySerializer.Serialize(request, "CreateRoomRequestValue", "json");
+            if (serializedBody == null) 
             {
-                response.ConnectionInfoV2 = JsonConvert.DeserializeObject<ConnectionInfoV2>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                throw new ArgumentNullException("request body is required");
             }
-            return response;
-        }
-        if((response.StatusCode == 400))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            else
             {
-                response.CreateRoom400ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                httpRequest.uploadHandler = new UploadHandlerRaw(serializedBody.Body);
+                httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
             }
-            return response;
-        }
-        if((response.StatusCode == 403))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
             {
-                response.CreateRoom403ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
             }
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateRoom404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateRoom500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
 
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new CreateRoomResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 201))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.ConnectionInfoV2 = JsonConvert.DeserializeObject<ConnectionInfoV2>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 400))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateRoom400ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 402))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateRoom402ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 403))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateRoom403ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateRoom404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateRoom500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            return response;
+        }
         
+
     /// <summary>
-    /// Destroy a [room](https://hathora.dev/docs/concepts/hathora-entities#room) using `appId` and `roomId`. All associated metadata is deleted.
+    /// Destroy a [room](https://hathora.dev/docs/concepts/hathora-entities#room). All associated metadata is deleted.
     /// </summary>
-    public async Task<DestroyRoomResponse> DestroyRoomAsync(DestroyRoomSecurity security, DestroyRoomRequest? request = null)
-    {
-        string baseUrl = "";
-        var message = DestroyRoomRequest.BuildHttpRequestMessage("DestroyRoom", request, baseUrl);
-        var client = _defaultClient;
-        DestroyRoomSecurity.Apply(security, message);
-
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new DestroyRoomResponse
+        public async Task<DestroyRoomResponse> DestroyRoomAsync(DestroyRoomSecurity security, DestroyRoomRequest? request = null)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 204))
-        {
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.DestroyRoom404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/rooms/v2/{appId}/destroy/{roomId}", request);
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new DestroyRoomResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 204))
+            {
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.DestroyRoom404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.DestroyRoom500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.DestroyRoom500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
+
     /// <summary>
-    /// Get all active [rooms](https://hathora.dev/docs/concepts/hathora-entities#room) for a given [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
+    /// Get all active [rooms](https://hathora.dev/docs/concepts/hathora-entities#room) for a given [process](https://hathora.dev/docs/concepts/hathora-entities#process).
     /// </summary>
-    public async Task<GetActiveRoomsForProcessResponse> GetActiveRoomsForProcessAsync(GetActiveRoomsForProcessSecurity security, GetActiveRoomsForProcessRequest? request = null)
-    {
-        string baseUrl = "";
-        var message = GetActiveRoomsForProcessRequest.BuildHttpRequestMessage("GetActiveRoomsForProcess", request, baseUrl);
-        var client = _defaultClient;
-        GetActiveRoomsForProcessSecurity.Apply(security, message);
-
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new GetActiveRoomsForProcessResponse
+        public async Task<GetActiveRoomsForProcessResponse> GetActiveRoomsForProcessAsync(GetActiveRoomsForProcessSecurity security, GetActiveRoomsForProcessRequest? request = null)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.RoomWithoutAllocations = JsonConvert.DeserializeObject<List<RoomWithoutAllocations>>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/rooms/v2/{appId}/list/{processId}/active", request);
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new GetActiveRoomsForProcessResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.RoomWithoutAllocations = JsonConvert.DeserializeObject<List<RoomWithoutAllocations>>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetActiveRoomsForProcess404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetActiveRoomsForProcess404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
+
     /// <summary>
-    /// Get connection details to a [room](https://hathora.dev/docs/concepts/hathora-entities#room) using `appId` and `roomId`. Clients can call this endpoint without authentication.
+    /// Poll this endpoint to get connection details to a [room](https://hathora.dev/docs/concepts/hathora-entities#room). Clients can call this endpoint without authentication.
     /// </summary>
-    public async Task<GetConnectionInfoResponse> GetConnectionInfoAsync(GetConnectionInfoRequest? request = null)
-    {
-        string baseUrl = "";
-        var message = GetConnectionInfoRequest.BuildHttpRequestMessage("GetConnectionInfo", request, baseUrl);
-        var client = _defaultClient;
+        public async Task<GetConnectionInfoResponse> GetConnectionInfoAsync(GetConnectionInfoRequest? request = null)
+        {
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/rooms/v2/{appId}/connectioninfo/{roomId}", request);
+            
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new GetConnectionInfoResponse
-        {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = _defaultClient;
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
             {
-                response.ConnectionInfoV2 = JsonConvert.DeserializeObject<ConnectionInfoV2>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
             }
-            return response;
-        }
-        if((response.StatusCode == 400))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetConnectionInfo400ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetConnectionInfo404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetConnectionInfo500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
 
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new GetConnectionInfoResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.ConnectionInfoV2 = JsonConvert.DeserializeObject<ConnectionInfoV2>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 400))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetConnectionInfo400ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetConnectionInfo404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetConnectionInfo500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            return response;
+        }
         
+
     /// <summary>
-    /// Get all inactive [rooms](https://hathora.dev/docs/concepts/hathora-entities#room) for a given [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
+    /// Get all inactive [rooms](https://hathora.dev/docs/concepts/hathora-entities#room) for a given [process](https://hathora.dev/docs/concepts/hathora-entities#process).
     /// </summary>
-    public async Task<GetInactiveRoomsForProcessResponse> GetInactiveRoomsForProcessAsync(GetInactiveRoomsForProcessSecurity security, GetInactiveRoomsForProcessRequest? request = null)
-    {
-        string baseUrl = "";
-        var message = GetInactiveRoomsForProcessRequest.BuildHttpRequestMessage("GetInactiveRoomsForProcess", request, baseUrl);
-        var client = _defaultClient;
-        GetInactiveRoomsForProcessSecurity.Apply(security, message);
-
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new GetInactiveRoomsForProcessResponse
+        public async Task<GetInactiveRoomsForProcessResponse> GetInactiveRoomsForProcessAsync(GetInactiveRoomsForProcessSecurity security, GetInactiveRoomsForProcessRequest? request = null)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.RoomWithoutAllocations = JsonConvert.DeserializeObject<List<RoomWithoutAllocations>>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/rooms/v2/{appId}/list/{processId}/inactive", request);
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new GetInactiveRoomsForProcessResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.RoomWithoutAllocations = JsonConvert.DeserializeObject<List<RoomWithoutAllocations>>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetInactiveRoomsForProcess404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetInactiveRoomsForProcess404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
+
     /// <summary>
-    /// Get details for an existing [room](https://hathora.dev/docs/concepts/hathora-entities#room) using `appId` and `roomId`.
+    /// Retreive current and historical allocation data for a [room](https://hathora.dev/docs/concepts/hathora-entities#room).
     /// </summary>
-    public async Task<GetRoomInfoResponse> GetRoomInfoAsync(GetRoomInfoSecurity security, GetRoomInfoRequest? request = null)
-    {
-        string baseUrl = "";
-        var message = GetRoomInfoRequest.BuildHttpRequestMessage("GetRoomInfo", request, baseUrl);
-        var client = _defaultClient;
-        GetRoomInfoSecurity.Apply(security, message);
-
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new GetRoomInfoResponse
+        public async Task<GetRoomInfoResponse> GetRoomInfoAsync(GetRoomInfoSecurity security, GetRoomInfoRequest? request = null)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.Room = JsonConvert.DeserializeObject<Room>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/rooms/v2/{appId}/info/{roomId}", request);
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new GetRoomInfoResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Room = JsonConvert.DeserializeObject<Room>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetRoomInfo404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetRoomInfo404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
+
     /// <summary>
-    /// Suspend a [room](https://hathora.dev/docs/concepts/hathora-entities#room) using `appId` and `roomId`. The room is unallocated from the process but can be rescheduled later using the same `roomId`.
+    /// Suspend a [room](https://hathora.dev/docs/concepts/hathora-entities#room). The room is unallocated from the process but can be rescheduled later using the same `roomId`.
     /// </summary>
-    public async Task<SuspendRoomResponse> SuspendRoomAsync(SuspendRoomSecurity security, SuspendRoomRequest? request = null)
-    {
-        string baseUrl = "";
-        var message = SuspendRoomRequest.BuildHttpRequestMessage("SuspendRoom", request, baseUrl);
-        var client = _defaultClient;
-        SuspendRoomSecurity.Apply(security, message);
-
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new SuspendRoomResponse
+        public async Task<SuspendRoomResponse> SuspendRoomAsync(SuspendRoomSecurity security, SuspendRoomRequest? request = null)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 204))
-        {
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.SuspendRoom404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/rooms/v2/{appId}/suspend/{roomId}", request);
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new SuspendRoomResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 204))
+            {
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.SuspendRoom404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.SuspendRoom500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.SuspendRoom500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
     }
 }

@@ -11,24 +11,22 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// Make all properties in T optional
-/// </summary>
+    
+    
+    /// <summary>
+    /// Make all properties in T optional
+    /// </summary>
     public class PaymentMethod
     {
-        
         [JsonProperty("ach")]
         public AchPaymentMethod? Ach { get; set; }
         
-        
         [JsonProperty("card")]
         public CardPaymentMethod? Card { get; set; }
-        
         
         [JsonProperty("link")]
         public LinkPaymentMethod? Link { get; set; }
         
     }
+    
 }

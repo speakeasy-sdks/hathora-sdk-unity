@@ -11,16 +11,16 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// Ok
-/// </summary>
+    
+    
+    /// <summary>
+    /// Ok
+    /// </summary>
     public class VerificationEmailResponse
     {
-        
         [JsonProperty("status")]
         public VerificationEmailResponseStatus Status { get; set; }
         
     }
+    
 }

@@ -11,30 +11,28 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// A container port object represents the transport configruations for how your server will listen.
-/// </summary>
+    
+    
+    /// <summary>
+    /// A container port object represents the transport configruations for how your server will listen.
+    /// </summary>
     public class ContainerPort
     {
-    /// <summary>
-    /// Readable name for the port.
-    /// </summary>
-        
+        /// <summary>
+        /// Readable name for the port.
+        /// </summary>
         [JsonProperty("name")]
         public string Name { get; set; }
-        
         
         [JsonProperty("port")]
         public int Port { get; set; }
         
-    /// <summary>
-    /// Transport type specifies the underlying communication protocol to the exposed port.
-    /// </summary>
-        
+        /// <summary>
+        /// Transport type specifies the underlying communication protocol to the exposed port.
+        /// </summary>
         [JsonProperty("transportType")]
         public TransportType TransportType { get; set; }
         
     }
+    
 }

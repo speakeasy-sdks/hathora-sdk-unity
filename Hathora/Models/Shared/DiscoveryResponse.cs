@@ -11,24 +11,19 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
+    
+    
     public class DiscoveryResponse
     {
-        
         [JsonProperty("host")]
         public string Host { get; set; }
         
-        
         [JsonProperty("port")]
         public float Port { get; set; }
-        
-    /// <summary>
-    /// Available regions to request a game server.
-    /// </summary>
         
         [JsonProperty("region")]
         public Region Region { get; set; }
         
     }
+    
 }

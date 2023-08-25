@@ -10,63 +10,55 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
-    using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Hathora.Models.Shared;
+    using Newtonsoft.Json;
     using System.Collections.Generic;
-/// <summary>
-/// A process object represents a runtime instance of your game server and its metadata.
-/// </summary>
+    using System;
+    
+    
+    /// <summary>
+    /// A process object represents a runtime instance of your game server and its metadata.
+    /// </summary>
     public class Process
     {
-    /// <summary>
-    /// Tracks the number of active connections to a process.
-    /// </summary>
-        
+        /// <summary>
+        /// Tracks the number of active connections to a process.
+        /// </summary>
         [JsonProperty("activeConnections")]
         public float ActiveConnections { get; set; }
-        
         
         [JsonProperty("activeConnectionsUpdatedAt")]
         public DateTime ActiveConnectionsUpdatedAt { get; set; }
         
-        
         [JsonProperty("additionalExposedPorts")]
         public List<ExposedPort> AdditionalExposedPorts { get; set; }
         
-    /// <summary>
-    /// System generated unique identifier for an application.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated unique identifier for an application.
+        /// </summary>
         [JsonProperty("appId")]
         public string AppId { get; set; }
         
-    /// <summary>
-    /// System generated id for a deployment. Increments by 1.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated id for a deployment. Increments by 1.
+        /// </summary>
         [JsonProperty("deploymentId")]
         public int DeploymentId { get; set; }
         
-    /// <summary>
-    /// Process in drain will not accept any new rooms.
-    /// </summary>
-        
+        /// <summary>
+        /// Process in drain will not accept any new rooms.
+        /// </summary>
         [JsonProperty("draining")]
         public bool Draining { get; set; }
         
-    /// <summary>
-    /// Measures network traffic leaving the process in bytes.
-    /// </summary>
-        
+        /// <summary>
+        /// Measures network traffic leaving the process in bytes.
+        /// </summary>
         [JsonProperty("egressedBytes")]
         public float EgressedBytes { get; set; }
         
-    /// <summary>
-    /// Connection information to an exposed port on an active process.
-    /// </summary>
-        
+        /// <summary>
+        /// Connection details for an active process.
+        /// </summary>
         [JsonProperty("exposedPort")]
         public ExposedPort? ExposedPort { get; set; }
         
@@ -82,65 +74,54 @@ using Hathora.Models.Shared;
         [JsonProperty("port")]
         public float Port { get; set; }
         
-    /// <summary>
-    /// System generated unique identifier to a runtime instance of your game server.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated unique identifier to a runtime instance of your game server.
+        /// </summary>
         [JsonProperty("processId")]
         public string ProcessId { get; set; }
-        
-    /// <summary>
-    /// Available regions to request a game server.
-    /// </summary>
         
         [JsonProperty("region")]
         public Region Region { get; set; }
         
-    /// <summary>
-    /// Tracks the number of room slots available on the process.
-    /// </summary>
-        
+        /// <summary>
+        /// Tracks the number of room slots available on the process.
+        /// </summary>
         [JsonProperty("roomSlotsAvailable")]
         public float RoomSlotsAvailable { get; set; }
-        
         
         [JsonProperty("roomSlotsAvailableUpdatedAt")]
         public DateTime RoomSlotsAvailableUpdatedAt { get; set; }
         
-    /// <summary>
-    /// Governs how many [rooms](https://hathora.dev/docs/concepts/hathora-entities#room) can be scheduled in a process.
-    /// </summary>
-        
+        /// <summary>
+        /// Governs how many [rooms](https://hathora.dev/docs/concepts/hathora-entities#room) can be scheduled in a process.
+        /// </summary>
         [JsonProperty("roomsPerProcess")]
         public int RoomsPerProcess { get; set; }
         
-    /// <summary>
-    /// When the process bound to the specified port. We use this to determine when we should start billing.
-    /// </summary>
-        
+        /// <summary>
+        /// When the process bound to the specified port. We use this to determine when we should start billing.
+        /// </summary>
         [JsonProperty("startedAt")]
         public DateTime StartedAt { get; set; }
         
-    /// <summary>
-    /// When the process started being provisioned.
-    /// </summary>
-        
+        /// <summary>
+        /// When the process started being provisioned.
+        /// </summary>
         [JsonProperty("startingAt")]
         public DateTime StartingAt { get; set; }
         
-    /// <summary>
-    /// When the process is issued to stop. We use this to determine when we should stop billing.
-    /// </summary>
-        
+        /// <summary>
+        /// When the process is issued to stop. We use this to determine when we should stop billing.
+        /// </summary>
         [JsonProperty("stoppingAt")]
         public DateTime StoppingAt { get; set; }
         
-    /// <summary>
-    /// When the process has been terminated.
-    /// </summary>
-        
+        /// <summary>
+        /// When the process has been terminated.
+        /// </summary>
         [JsonProperty("terminatedAt")]
         public DateTime TerminatedAt { get; set; }
         
     }
+    
 }

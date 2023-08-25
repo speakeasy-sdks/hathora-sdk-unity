@@ -10,96 +10,90 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
-    using System;
-using System.Collections.Generic;
-using Newtonsoft.Json;
-using Hathora.Models.Shared;
+    using Newtonsoft.Json;
     using System.Collections.Generic;
-/// <summary>
-/// Build is a versioned artifact for a game server's container image and its data.
-/// </summary>
+    using System;
+    
+    
+    /// <summary>
+    /// Build is a versioned artifact for a game server's container image and its data.
+    /// </summary>
     public class Build
     {
-    /// <summary>
-    /// System generated unique identifier for an application.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated unique identifier for an application.
+        /// </summary>
         [JsonProperty("appId")]
         public string AppId { get; set; }
         
-    /// <summary>
-    /// System generated id for a build. Increments by 1.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated id for a build. Increments by 1.
+        /// </summary>
         [JsonProperty("buildId")]
         public int BuildId { get; set; }
         
-    /// <summary>
-    /// When a new `buildId` is generated.
-    /// </summary>
+        [JsonProperty("buildTag")]
+        public string BuildTag { get; set; }
         
+        /// <summary>
+        /// When a new `buildId` is generated.
+        /// </summary>
         [JsonProperty("createdAt")]
         public DateTime CreatedAt { get; set; }
         
-    /// <summary>
-    /// Email address for the user that created the build.
-    /// </summary>
-        
+        /// <summary>
+        /// Email address for the user that created the build.
+        /// </summary>
         [JsonProperty("createdBy")]
         public string CreatedBy { get; set; }
         
-    /// <summary>
-    /// When the container image was deleted.
-    /// </summary>
-        
+        /// <summary>
+        /// When the container image was deleted.
+        /// </summary>
         [JsonProperty("deletedAt")]
         public DateTime DeletedAt { get; set; }
         
-    /// <summary>
-    /// When the container image finished being built.
-    /// </summary>
-        
+        /// <summary>
+        /// When the container image finished being built.
+        /// </summary>
         [JsonProperty("finishedAt")]
         public DateTime FinishedAt { get; set; }
         
-    /// <summary>
-    /// Image size in MB.
-    /// </summary>
-        
+        /// <summary>
+        /// Image size in MB.
+        /// </summary>
         [JsonProperty("imageSize")]
         public float ImageSize { get; set; }
         
-    /// <summary>
-    /// An alias for the container image in our regional registries.
-    /// </summary>
-        
+        /// <summary>
+        /// An alias for the container image in our regional registries.
+        /// </summary>
         [JsonProperty("regionalContainerTags")]
         public List<BuildRegionalContainerTags> RegionalContainerTags { get; set; }
         
-    /// <summary>
-    /// When the container image starts getting built.
-    /// </summary>
-        
+        /// <summary>
+        /// When the container image starts getting built.
+        /// </summary>
         [JsonProperty("startedAt")]
         public DateTime StartedAt { get; set; }
         
-    /// <summary>
-    /// Status of creating a build.
-    /// 
-    /// <remarks>
-    /// 
-    /// `created`: a new `buildId` was generated
-    /// 
-    /// `running`: the container image is being built
-    /// 
-    /// `succeeded`: the container image was successfully built and stored in our registry
-    /// 
-    /// `failed`: there was an issue creating and storing the container image in our container registry
-    /// </remarks>
-    /// </summary>
-        
+        /// <summary>
+        /// Status of creating a build.
+        /// 
+        /// <remarks>
+        /// 
+        /// `created`: a new `buildId` was generated
+        /// 
+        /// `running`: the container image is being built
+        /// 
+        /// `succeeded`: the container image was successfully built and stored in our registry
+        /// 
+        /// `failed`: there was an issue creating and storing the container image in our container registry
+        /// </remarks>
+        /// </summary>
         [JsonProperty("status")]
         public BuildStatus Status { get; set; }
         
     }
+    
 }

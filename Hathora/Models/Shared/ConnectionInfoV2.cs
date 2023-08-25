@@ -10,36 +10,36 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
+    using Newtonsoft.Json;
     using System.Collections.Generic;
-using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// Connection information for the default and additional ports.
-/// </summary>
+    
+    
+    /// <summary>
+    /// Connection information for the default and additional ports.
+    /// </summary>
     public class ConnectionInfoV2
     {
-        
         [JsonProperty("additionalExposedPorts")]
         public List<ExposedPort> AdditionalExposedPorts { get; set; }
         
-    /// <summary>
-    /// Connection information to an exposed port on an active process.
-    /// </summary>
-        
+        /// <summary>
+        /// Connection details for an active process.
+        /// </summary>
         [JsonProperty("exposedPort")]
         public ExposedPort? ExposedPort { get; set; }
         
-    /// <summary>
-    /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
-    /// </summary>
-        
+        /// <summary>
+        /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
+        /// </summary>
         [JsonProperty("roomId")]
         public string RoomId { get; set; }
         
-        
+        /// <summary>
+        /// `exposedPort` will only be available when the `status` of a room is "active".
+        /// </summary>
         [JsonProperty("status")]
         public ConnectionInfoV2Status Status { get; set; }
         
     }
+    
 }

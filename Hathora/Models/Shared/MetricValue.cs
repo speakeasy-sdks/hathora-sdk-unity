@@ -11,16 +11,16 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-    using System.Collections.Generic;
+    
+    
     public class MetricValue
     {
-        
         [JsonProperty("timestamp")]
         public float Timestamp { get; set; }
-        
         
         [JsonProperty("value")]
         public float Value { get; set; }
         
     }
+    
 }

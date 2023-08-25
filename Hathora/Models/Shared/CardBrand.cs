@@ -11,6 +11,8 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    
     
     public enum CardBrand
     {
@@ -33,4 +35,27 @@ namespace Hathora.Models.Shared
 		[JsonProperty("card")]
 		Card,
     }
+    
+    public static class CardBrandExtension
+    {
+        public static string Value(this CardBrand value)
+        {
+            return ((JsonPropertyAttribute)value.GetType().GetMember(value.ToString())[0].GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0]).PropertyName ?? value.ToString();
+        }
+
+        public static CardBrand ToEnum(this string value)
+        {
+            foreach(var field in typeof(CardBrand).GetFields())
+            {
+                var attribute = field.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0] as JsonPropertyAttribute;
+                if (attribute != null && attribute.PropertyName == value)
+                {
+                    return (CardBrand)field.GetValue(null);
+                }
+            }
+
+            throw new Exception($"Unknown value {value} for enum CardBrand");
+        }
+    }
+    
 }

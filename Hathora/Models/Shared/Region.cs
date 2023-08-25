@@ -11,9 +11,11 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    
     
     /// <summary>
-    /// Available regions to request a game server.
+    /// Region to filter by. If omitted, active public lobbies in all regions will be returned.
     /// </summary>
     public enum Region
     {
@@ -38,4 +40,27 @@ namespace Hathora.Models.Shared
 		[JsonProperty("Sao_Paulo")]
 		SaoPaulo,
     }
+    
+    public static class RegionExtension
+    {
+        public static string Value(this Region value)
+        {
+            return ((JsonPropertyAttribute)value.GetType().GetMember(value.ToString())[0].GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0]).PropertyName ?? value.ToString();
+        }
+
+        public static Region ToEnum(this string value)
+        {
+            foreach(var field in typeof(Region).GetFields())
+            {
+                var attribute = field.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0] as JsonPropertyAttribute;
+                if (attribute != null && attribute.PropertyName == value)
+                {
+                    return (Region)field.GetValue(null);
+                }
+            }
+
+            throw new Exception($"Unknown value {value} for enum Region");
+        }
+    }
+    
 }

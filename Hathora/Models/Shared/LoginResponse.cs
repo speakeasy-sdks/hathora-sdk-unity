@@ -11,15 +11,19 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-    using System.Collections.Generic;
-/// <summary>
-/// Ok
-/// </summary>
+    
+    
+    /// <summary>
+    /// Ok
+    /// </summary>
     public class LoginResponse
     {
-        
+        /// <summary>
+        /// A unique Hathora-signed JWT player token.
+        /// </summary>
         [JsonProperty("token")]
         public string Token { get; set; }
         
     }
+    
 }

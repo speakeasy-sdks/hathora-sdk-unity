@@ -10,12 +10,14 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-/// <summary>
-/// User input to initialize the game state. Object must be smaller than 64KB.
-/// </summary>
+
+    
+    
+    /// <summary>
+    /// User input to initialize the game state. Object must be smaller than 64KB.
+    /// </summary>
     public class LobbyInitialConfig
     {
     }
+    
 }

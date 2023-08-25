@@ -10,12 +10,14 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-/// <summary>
-/// Construct a type with a set of properties K of type T
-/// </summary>
+
+    
+    
+    /// <summary>
+    /// Construct a type with a set of properties K of type T
+    /// </summary>
     public class RecordStringNever
     {
     }
+    
 }

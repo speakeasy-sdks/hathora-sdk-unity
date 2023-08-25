@@ -11,6 +11,8 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    
     
     /// <summary>
     /// Types of lobbies a player can create.
@@ -33,4 +35,27 @@ namespace Hathora.Models.Shared
 		[JsonProperty("local")]
 		Local,
     }
+    
+    public static class LobbyVisibilityExtension
+    {
+        public static string Value(this LobbyVisibility value)
+        {
+            return ((JsonPropertyAttribute)value.GetType().GetMember(value.ToString())[0].GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0]).PropertyName ?? value.ToString();
+        }
+
+        public static LobbyVisibility ToEnum(this string value)
+        {
+            foreach(var field in typeof(LobbyVisibility).GetFields())
+            {
+                var attribute = field.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0] as JsonPropertyAttribute;
+                if (attribute != null && attribute.PropertyName == value)
+                {
+                    return (LobbyVisibility)field.GetValue(null);
+                }
+            }
+
+            throw new Exception($"Unknown value {value} for enum LobbyVisibility");
+        }
+    }
+    
 }

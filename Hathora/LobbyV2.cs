@@ -8,468 +8,694 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 #nullable enable
-namespace Hathora.LobbyV2
+namespace Hathora
 {
+    using Hathora.Models.Operations;
+    using Hathora.Models.Shared;
+    using Hathora.Utils;
+    using Newtonsoft.Json;
+    using System.Collections.Generic;
+    using System.Threading.Tasks;
     using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using Hathora.Models.LobbyV2;
-using Hathora.Models.Shared;
-using Hathora.Utils;
+    using UnityEngine.Networking;
 
     public interface ILobbyV2SDK
     {
-        Task<CreateLobbyResponse> CreateLobbyAsync(CreateLobbyRequest request);
+        Task<CreateLobbyResponse> CreateLobbyAsync(Models.Operations.CreateLobbyRequest request);
         Task<CreateLocalLobbyResponse> CreateLocalLobbyAsync(CreateLocalLobbyRequest request);
         Task<CreatePrivateLobbyResponse> CreatePrivateLobbyAsync(CreatePrivateLobbyRequest request);
         Task<CreatePublicLobbyResponse> CreatePublicLobbyAsync(CreatePublicLobbyRequest request);
         Task<GetLobbyInfoResponse> GetLobbyInfoAsync(GetLobbyInfoRequest? request = null);
         Task<ListActivePublicLobbiesResponse> ListActivePublicLobbiesAsync(ListActivePublicLobbiesRequest? request = null);
-        Task<SetLobbyStateResponse> SetLobbyStateAsync(SetLobbyStateSecurity security, SetLobbyStateRequest request);
+        Task<SetLobbyStateResponse> SetLobbyStateAsync(SetLobbyStateSecurity security, Models.Operations.SetLobbyStateRequest request);
     }
 
     public class LobbyV2SDK: ILobbyV2SDK
     {
-
         public SDKConfig Config { get; private set; }
-        private const string _language = "csharp";
+        private const string _target = "unity";
         private const string _sdkVersion = "0.0.1";
         private const string _sdkGenVersion = "internal";
         private const string _openapiDocVersion = "0.0.1";
-        // TODO: code review, is this more work required here to convert to a base URL?
-        public Uri ServerUrl { get { return new Uri(_defaultClient.Client.url); } }
-        private SpeakeasyHttpClient _defaultClient;
-        private SpeakeasyHttpClient _securityClient;
+        private string _serverUrl = "";
+        private ISpeakeasyHttpClient _defaultClient;
+        private ISpeakeasyHttpClient _securityClient;
 
-        public LobbyV2SDK(SpeakeasyHttpClient defaultClient, SpeakeasyHttpClient securityClient, SDKConfig config)
+        public LobbyV2SDK(ISpeakeasyHttpClient defaultClient, ISpeakeasyHttpClient securityClient, string serverUrl, SDKConfig config)
         {
             _defaultClient = defaultClient;
             _securityClient = securityClient;
+            _serverUrl = serverUrl;
             Config = config;
         }
-
         
+
     /// <summary>
     /// Create a new [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
     /// </summary>
-    public async Task<CreateLobbyResponse> CreateLobbyAsync(CreateLobbyRequest request)
-    {
-        string baseUrl = "";
-        var message = CreateLobbyRequest.BuildHttpRequestMessage("CreateLobby", request, baseUrl);
-        var client = _defaultClient;
+        public async Task<CreateLobbyResponse> CreateLobbyAsync(Models.Operations.CreateLobbyRequest request)
+        {
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/lobby/v2/{appId}/create", request);
+            
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new CreateLobbyResponse
-        {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 201))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            HeaderSerializer.PopulateHeaders(ref httpRequest, request);
+            
+            var serializedBody = RequestBodySerializer.Serialize(request, "CreateLobbyRequestValue", "json");
+            if (serializedBody == null) 
             {
-                response.Lobby = JsonConvert.DeserializeObject<Lobby>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                throw new ArgumentNullException("request body is required");
             }
-            return response;
-        }
-        if((response.StatusCode == 400))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            else
             {
-                response.CreateLobby400ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                httpRequest.uploadHandler = new UploadHandlerRaw(serializedBody.Body);
+                httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
             }
-            return response;
-        }
-        if((response.StatusCode == 401))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            
+            var client = _defaultClient;
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
             {
-                response.CreateLobby401ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
             }
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateLobby404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 422))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateLobby422ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 429))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateLobby429ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateLobby500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
 
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new CreateLobbyResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 201))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Lobby = JsonConvert.DeserializeObject<Lobby>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 400))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLobby400ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 401))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLobby401ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLobby404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 422))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLobby422ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 429))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLobby429ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLobby500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            return response;
+        }
         
-    [Obsolete("This method will be removed in a future release, please migrate away from it as soon as possible")]
-    public async Task<CreateLocalLobbyResponse> CreateLocalLobbyAsync(CreateLocalLobbyRequest request)
-    {
-        string baseUrl = "";
-        var message = CreateLocalLobbyRequest.BuildHttpRequestMessage("CreateLocalLobby", request, baseUrl);
-        var client = _defaultClient;
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new CreateLocalLobbyResponse
+        [Obsolete("This method will be removed in a future release, please migrate away from it as soon as possible")]
+        public async Task<CreateLocalLobbyResponse> CreateLocalLobbyAsync(CreateLocalLobbyRequest request)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 201))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.Lobby = JsonConvert.DeserializeObject<Lobby>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
             }
-            return response;
-        }
-        if((response.StatusCode == 400))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateLocalLobby400ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 401))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateLocalLobby401ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateLocalLobby404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 422))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateLocalLobby422ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 429))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateLocalLobby429ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreateLocalLobby500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
+            var urlString = URLBuilder.Build(baseUrl, "/lobby/v2/{appId}/create/local", request);
+            
 
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            HeaderSerializer.PopulateHeaders(ref httpRequest, request);
+            
+            var serializedBody = RequestBodySerializer.Serialize(request, "RequestBody", "json");
+            if (serializedBody == null) 
+            {
+                throw new ArgumentNullException("request body is required");
+            }
+            else
+            {
+                httpRequest.uploadHandler = new UploadHandlerRaw(serializedBody.Body);
+                httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
+            }
+            
+            var client = _defaultClient;
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new CreateLocalLobbyResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 201))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Lobby = JsonConvert.DeserializeObject<Lobby>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 400))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLocalLobby400ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 401))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLocalLobby401ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLocalLobby404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 422))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLocalLobby422ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 429))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLocalLobby429ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreateLocalLobby500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            return response;
+        }
         
-    [Obsolete("This method will be removed in a future release, please migrate away from it as soon as possible")]
-    public async Task<CreatePrivateLobbyResponse> CreatePrivateLobbyAsync(CreatePrivateLobbyRequest request)
-    {
-        string baseUrl = "";
-        var message = CreatePrivateLobbyRequest.BuildHttpRequestMessage("CreatePrivateLobby", request, baseUrl);
-        var client = _defaultClient;
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new CreatePrivateLobbyResponse
+        [Obsolete("This method will be removed in a future release, please migrate away from it as soon as possible")]
+        public async Task<CreatePrivateLobbyResponse> CreatePrivateLobbyAsync(CreatePrivateLobbyRequest request)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 201))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.Lobby = JsonConvert.DeserializeObject<Lobby>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
             }
-            return response;
-        }
-        if((response.StatusCode == 400))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePrivateLobby400ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 401))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePrivateLobby401ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePrivateLobby404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 422))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePrivateLobby422ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 429))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePrivateLobby429ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePrivateLobby500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
+            var urlString = URLBuilder.Build(baseUrl, "/lobby/v2/{appId}/create/private", request);
+            
 
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            HeaderSerializer.PopulateHeaders(ref httpRequest, request);
+            
+            var serializedBody = RequestBodySerializer.Serialize(request, "RequestBody", "json");
+            if (serializedBody == null) 
+            {
+                throw new ArgumentNullException("request body is required");
+            }
+            else
+            {
+                httpRequest.uploadHandler = new UploadHandlerRaw(serializedBody.Body);
+                httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
+            }
+            
+            var client = _defaultClient;
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new CreatePrivateLobbyResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 201))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Lobby = JsonConvert.DeserializeObject<Lobby>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 400))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePrivateLobby400ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 401))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePrivateLobby401ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePrivateLobby404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 422))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePrivateLobby422ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 429))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePrivateLobby429ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePrivateLobby500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            return response;
+        }
         
-    [Obsolete("This method will be removed in a future release, please migrate away from it as soon as possible")]
-    public async Task<CreatePublicLobbyResponse> CreatePublicLobbyAsync(CreatePublicLobbyRequest request)
-    {
-        string baseUrl = "";
-        var message = CreatePublicLobbyRequest.BuildHttpRequestMessage("CreatePublicLobby", request, baseUrl);
-        var client = _defaultClient;
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new CreatePublicLobbyResponse
+        [Obsolete("This method will be removed in a future release, please migrate away from it as soon as possible")]
+        public async Task<CreatePublicLobbyResponse> CreatePublicLobbyAsync(CreatePublicLobbyRequest request)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 201))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.Lobby = JsonConvert.DeserializeObject<Lobby>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
             }
-            return response;
-        }
-        if((response.StatusCode == 400))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePublicLobby400ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 401))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePublicLobby401ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePublicLobby404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 422))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePublicLobby422ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 429))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePublicLobby429ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        if((response.StatusCode == 500))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.CreatePublicLobby500ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
+            var urlString = URLBuilder.Build(baseUrl, "/lobby/v2/{appId}/create/public", request);
+            
 
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            HeaderSerializer.PopulateHeaders(ref httpRequest, request);
+            
+            var serializedBody = RequestBodySerializer.Serialize(request, "RequestBody", "json");
+            if (serializedBody == null) 
+            {
+                throw new ArgumentNullException("request body is required");
+            }
+            else
+            {
+                httpRequest.uploadHandler = new UploadHandlerRaw(serializedBody.Body);
+                httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
+            }
+            
+            var client = _defaultClient;
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new CreatePublicLobbyResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 201))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Lobby = JsonConvert.DeserializeObject<Lobby>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 400))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePublicLobby400ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 401))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePublicLobby401ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePublicLobby404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 422))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePublicLobby422ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 429))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePublicLobby429ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 500))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.CreatePublicLobby500ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            return response;
+        }
         
+
     /// <summary>
     /// Get details for an existing [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) using `appId` and `roomId`.
     /// </summary>
-    public async Task<GetLobbyInfoResponse> GetLobbyInfoAsync(GetLobbyInfoRequest? request = null)
-    {
-        string baseUrl = "";
-        var message = GetLobbyInfoRequest.BuildHttpRequestMessage("GetLobbyInfo", request, baseUrl);
-        var client = _defaultClient;
-
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new GetLobbyInfoResponse
+        public async Task<GetLobbyInfoResponse> GetLobbyInfoAsync(GetLobbyInfoRequest? request = null)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.Lobby = JsonConvert.DeserializeObject<Lobby>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/lobby/v2/{appId}/info/{roomId}", request);
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = _defaultClient;
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new GetLobbyInfoResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Lobby = JsonConvert.DeserializeObject<Lobby>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.GetLobbyInfo404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
             }
             return response;
         }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
-            {
-                response.GetLobbyInfo404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
-            }
-            return response;
-        }
-        return response;
-    }
-
         
+
     /// <summary>
     /// Get all active [lobbies](https://hathora.dev/docs/concepts/hathora-entities#lobby) for a given [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a `region`.
     /// </summary>
-    public async Task<ListActivePublicLobbiesResponse> ListActivePublicLobbiesAsync(ListActivePublicLobbiesRequest? request = null)
-    {
-        string baseUrl = "";
-        var message = ListActivePublicLobbiesRequest.BuildHttpRequestMessage("ListActivePublicLobbies", request, baseUrl);
-        var client = _defaultClient;
-
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new ListActivePublicLobbiesResponse
+        public async Task<ListActivePublicLobbiesResponse> ListActivePublicLobbiesAsync(ListActivePublicLobbiesRequest? request = null)
         {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
             {
-                response.Lobbies = JsonConvert.DeserializeObject<List<Lobby>>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/lobby/v2/{appId}/list/public", request);
+            
+
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            
+            var client = _defaultClient;
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
+            {
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
+            }
+
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new ListActivePublicLobbiesResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Lobbies = JsonConvert.DeserializeObject<List<Lobby>>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
             }
             return response;
         }
-        return response;
-    }
-
         
+
     /// <summary>
     /// Set the state of a [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) using `appId` and `roomId`. State is intended to be set by the server and must be smaller than 1MB.
     /// </summary>
-    public async Task<SetLobbyStateResponse> SetLobbyStateAsync(SetLobbyStateSecurity security, SetLobbyStateRequest request)
-    {
-        string baseUrl = "";
-        var message = SetLobbyStateRequest.BuildHttpRequestMessage("SetLobbyState", request, baseUrl);
-        var client = _defaultClient;
-        SetLobbyStateSecurity.Apply(security, message);
+        public async Task<SetLobbyStateResponse> SetLobbyStateAsync(SetLobbyStateSecurity security, Models.Operations.SetLobbyStateRequest request)
+        {
+            string baseUrl = _serverUrl;
+            if (baseUrl.EndsWith("/"))
+            {
+                baseUrl = baseUrl.Substring(0, baseUrl.Length - 1);
+            }
+            var urlString = URLBuilder.Build(baseUrl, "/lobby/v2/{appId}/setState/{roomId}", request);
+            
 
-        message.SetRequestHeader("user-agent", $"speakeasy-sdk/{_language} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
-        var httpResponseMessage = await client.SendAsync(message);
-        var contentType = httpResponseMessage.GetResponseHeader("Content-Type");
-        var response = new SetLobbyStateResponse
-        {
-            StatusCode = (int)httpResponseMessage.responseCode,
-            ContentType = contentType,
-            RawResponse = httpResponseMessage
-        };
-        if((response.StatusCode == 200))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
+            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
+            
+            var serializedBody = RequestBodySerializer.Serialize(request, "SetLobbyStateRequestValue", "json");
+            if (serializedBody == null) 
             {
-                response.Lobby = JsonConvert.DeserializeObject<Lobby>(message.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer() }});
+                throw new ArgumentNullException("request body is required");
             }
-            return response;
-        }
-        if((response.StatusCode == 404))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            else
             {
-                response.SetLobbyState404ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                httpRequest.uploadHandler = new UploadHandlerRaw(serializedBody.Body);
+                httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
             }
-            return response;
-        }
-        if((response.StatusCode == 422))
-        {
-            if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+            
+            var client = SecuritySerializer.Apply(_defaultClient, security);
+            
+            var httpResponse = await client.SendAsync(httpRequest);
+            switch (httpResponse.result)
             {
-                response.SetLobbyState422ApplicationJSONString = httpResponseMessage.downloadHandler.text;
+                case UnityWebRequest.Result.ConnectionError:
+                case UnityWebRequest.Result.DataProcessingError:
+                case UnityWebRequest.Result.ProtocolError:
+                    var errorMsg = httpResponse.error;
+                    httpRequest.Dispose();
+                    throw new Exception(errorMsg);
             }
-            return response;
-        }
-        return response;
-    }
 
+            var contentType = httpResponse.GetResponseHeader("Content-Type");
+            var response = new SetLobbyStateResponse
+            {
+                StatusCode = (int)httpResponse.responseCode,
+                ContentType = contentType,
+                RawResponse = httpResponse
+            };
+            if((response.StatusCode == 200))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.Lobby = JsonConvert.DeserializeObject<Lobby>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 404))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.SetLobbyState404ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            if((response.StatusCode == 422))
+            {
+                if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
+                {
+                    response.SetLobbyState422ApplicationJSONString = httpResponse.downloadHandler.text;
+                }
+                
+                return response;
+            }
+            return response;
+        }
         
     }
 }

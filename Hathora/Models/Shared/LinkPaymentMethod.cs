@@ -11,12 +11,13 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-    using System.Collections.Generic;
+    
+    
     public class LinkPaymentMethod
     {
-        
         [JsonProperty("email")]
         public string? Email { get; set; }
         
     }
+    
 }

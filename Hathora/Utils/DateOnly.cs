@@ -19,7 +19,7 @@ namespace Hathora.Utils
     /// This class is a polyfill for a class in .NET 6
     /// The data only class is not available in the .NET framework.  The .NET framework is what Unity uses.
     ///</summary>
-    readonly struct DateOnly
+    public readonly struct DateOnly
         : IComparable,
           IComparable<DateOnly>,
           IEquatable<DateOnly>
@@ -232,12 +232,12 @@ namespace Hathora.Utils
         public int CompareTo(object? value)
         {
             if (value == null) return 1;
-            if (value is not DateOnly dateOnly)
+            if (value.GetType() != typeof(DateOnly))
             {
                 throw new ArgumentException("Object must be of type DateOnly.");
             }
 
-            return CompareTo(dateOnly);
+            return CompareTo((DateOnly)value);
         }
 
         /// <summary>
@@ -261,5 +261,35 @@ namespace Hathora.Utils
         /// </summary>
         /// <returns>A 32-bit signed integer hash code.</returns>
         public override int GetHashCode() => _dayNumber;
+
+        public override string ToString() => GetEquivalentDateTime().ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
+
+        public static DateOnly Parse(string s)
+        {
+            if (s == null)
+            {
+                throw new ArgumentNullException(nameof(s));
+            }
+
+            if (s.Length != 10)
+            {
+                throw new FormatException("String was not recognized as a valid DateOnly.");
+            }
+
+            int year = Int32.Parse(s.Substring(0, 4));
+            if (s[4] != '-')
+            {
+                throw new FormatException("String was not recognized as a valid DateOnly.");
+            }
+
+            int month = Int32.Parse(s.Substring(5, 2));
+            if (s[7] != '-')
+            {
+                throw new FormatException("String was not recognized as a valid DateOnly.");
+            }
+
+            int day = Int32.Parse(s.Substring(8, 2));
+            return new DateOnly(year, month, day);
+        }
     }
 }

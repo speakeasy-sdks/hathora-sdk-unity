@@ -15,29 +15,61 @@ namespace Hathora.Utils
     using System.Collections.Generic;
     using System.Text.RegularExpressions;
     using Newtonsoft.Json;
-  
-    // This is required for the extension to use await with async web requests
+    using System.Net.Http.Headers;
     using UnityEngine;
     using System.Threading.Tasks;
     using System.Runtime.CompilerServices;
-
-    // This is required for the extension to use await with async web requests
-    using UnityEngine;
-    using System.Threading.Tasks;
-    using System.Runtime.CompilerServices;
+    using System.Collections;
 
     public class Utilities
     {
-        public static bool IsDictionary(object obj) =>
-            obj != null && obj.GetType().GetInterface(typeof(IDictionary<,>).Name) != null;
+        public static string SerializeJSON(object obj)
+        {
+            return JsonConvert.SerializeObject(
+                obj,
+                new JsonSerializerSettings()
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = new JsonConverter[]
+                    {
+                        new IsoDateTimeSerializer(),
+                        new EnumSerializer(),
+                        new DateOnlyConverter()
+                    }
+                }
+            );
+        }
 
-        public static bool IsList(object obj) =>
-            (!Utilities.IsDictionary(obj) && !Utilities.IsString(obj) && obj.GetType().GetInterface(typeof(IEnumerable<>).Name) != null);
+        public static bool IsDictionary(object o)
+        {
+            if (o == null)
+                return false;
+            return o is IDictionary
+                && o.GetType().IsGenericType
+                && o.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(Dictionary<,>));
+        }
+
+        public static bool IsList(object o)
+        {
+            if (o == null)
+                return false;
+            return o is IList
+                && o.GetType().IsGenericType
+                && o.GetType().GetGenericTypeDefinition().IsAssignableFrom(typeof(List<>));
+        }
+
+        public static bool IsClass(object o)
+        {
+            if (o == null)
+                return false;
+            return o.GetType().IsClass && o.GetType().FullName.StartsWith("Hathora.Models");
+        }
 
         // TODO: code review polyfilled for IsAssignableTo
         public static bool IsSameOrSubclass(Type potentialBase, Type potentialDescendant)
         {
-            return potentialDescendant.IsSubclassOf(potentialBase) || potentialDescendant == potentialBase;
+            return potentialDescendant.IsSubclassOf(potentialBase)
+                || potentialDescendant == potentialBase;
         }
 
         public static bool IsString(object obj)
@@ -52,13 +84,10 @@ namespace Hathora.Utils
                 return false;
             }
         }
-        // end of TODO
 
-        public static bool IsPrimitive(object obj) =>
-            obj != null && obj.GetType().IsPrimitive;
+        public static bool IsPrimitive(object obj) => obj != null && obj.GetType().IsPrimitive;
 
-        public static bool IsEnum(object obj) =>
-            obj != null && obj.GetType().IsEnum;
+        public static bool IsEnum(object obj) => obj != null && obj.GetType().IsEnum;
 
         ///<summary>
         /// Check if the object is a 'date time' or 'date only' object.
@@ -71,88 +100,138 @@ namespace Hathora.Utils
             Regex surroundingQuotesRegex = new Regex("^\"(.*)\"$");
             var match = surroundingQuotesRegex.Match(input);
             // TODO: code review, this was modified due to compiler error with the use of values
-            if(match.Groups.Count() == 2)
+            if (match.Groups.Count() == 2)
             {
                 return match.Groups.Last().ToString();
             }
             return input;
         }
 
+        public static string ValueToString(object value)
+        {
+            if (value.GetType() == typeof(DateTime))
+            {
+                return ((DateTime)value)
+                    .ToUniversalTime()
+                    .ToString("o", System.Globalization.CultureInfo.InvariantCulture);
+            }
+            else if (value.GetType() == typeof(bool))
+            {
+                return (bool)value ? "true" : "false";
+            }
+            else if (IsEnum(value))
+            {
+                var method = Type.GetType(value.GetType().FullName + "Extension")
+                    ?.GetMethod("Value");
+                if (method == null)
+                {
+                    return Convert.ChangeType(value, Enum.GetUnderlyingType(value.GetType())).ToString();
+                }
+                return (string)method.Invoke(null, new[] { value });
+            }
+
+            return value.ToString();
+        }
+
         public static string ToString(object obj)
         {
-            if(obj == null)
+            if (obj == null)
             {
                 return null;
             }
 
-            if(IsString(obj))
+            if (IsString(obj))
             {
                 return obj.ToString();
             }
 
-            if(IsPrimitive(obj))
+            if (IsPrimitive(obj))
             {
                 return JsonConvert.SerializeObject(obj);
             }
 
-            if(IsEnum(obj))
+            if (IsEnum(obj))
             {
                 var attributes = obj.GetType().GetMember(obj.ToString()).First().CustomAttributes;
-                if(attributes.Count() == 0)
+                if (attributes.Count() == 0)
                 {
                     return JsonConvert.SerializeObject(obj);
                 }
 
                 var args = attributes.First().ConstructorArguments;
-                if(args.Count() == 0)
+                if (args.Count() == 0)
                 {
                     return JsonConvert.SerializeObject(obj);
                 }
                 return StripSurroundingQuotes(args.First().ToString());
             }
 
-            if(IsDate(obj))
+            if (IsDate(obj))
             {
-                return StripSurroundingQuotes(JsonConvert.SerializeObject(obj, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new IsoDateTimeSerializer(), new EnumSerializer() }}));
+                return StripSurroundingQuotes(
+                    JsonConvert.SerializeObject(
+                        obj,
+                        new JsonSerializerSettings()
+                        {
+                            NullValueHandling = NullValueHandling.Ignore,
+                            Converters = new JsonConverter[]
+                            {
+                                new IsoDateTimeSerializer(),
+                                new EnumSerializer(),
+                                new DateOnlyConverter()
+                            }
+                        }
+                    )
+                );
             }
-            return JsonConvert.SerializeObject(obj, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new IsoDateTimeSerializer(), new EnumSerializer() }});
+            return JsonConvert.SerializeObject(
+                obj,
+                new JsonSerializerSettings()
+                {
+                    NullValueHandling = NullValueHandling.Ignore,
+                    Converters = new JsonConverter[]
+                    {
+                        new IsoDateTimeSerializer(),
+                        new EnumSerializer(),
+                        new DateOnlyConverter()
+                    }
+                }
+            );
         }
 
         public static bool IsContentTypeMatch(string expected, string actual)
         {
-            if(expected == actual || expected == "*" || expected == "*/*")
+            if (expected == actual || expected == "*" || expected == "*/*")
             {
                 return true;
             }
 
-            var expectedSubs = expected.Split('/');
-            var actualSubs = actual.Split('/');
-
-            var expectedMediaType = expectedSubs[0];
-            var expectedEncoding = expectedSubs[1];
-            var actualMediaType = actualSubs[0];
-            var actualEncoding = actualSubs[1];
-
-            if(expectedMediaType == "*" && expectedEncoding == actualEncoding)
+            try
             {
-                return true;
-            }
+                var mediaType = MediaTypeHeaderValue.Parse(actual).MediaType;
 
-            if(expectedMediaType != actualMediaType)
-            {
-                return false;
-            }
+                if (expected == mediaType)
+                {
+                    return true;
+                }
 
-            if(expectedEncoding == "*" || expectedEncoding == actualEncoding)
-            {
-                return true;
+                var parts = mediaType.Split('/');
+                if (parts.Length == 2)
+                {
+                    if (parts[0] + "/*" == expected || "*/" + parts[1] == expected)
+                    {
+                        return true;
+                    }
+                }
             }
+            catch (Exception) { }
+
             return false;
         }
 
         public static string PrefixBearer(string authHeaderValue)
         {
-            if(authHeaderValue.StartsWith("bearer ", StringComparison.InvariantCultureIgnoreCase))
+            if (authHeaderValue.StartsWith("bearer ", StringComparison.InvariantCultureIgnoreCase))
             {
                 return authHeaderValue;
             }
@@ -169,9 +248,11 @@ namespace Hathora.Utils
         public static TaskAwaiter GetAwaiter(this AsyncOperation asyncOp)
         {
             var tcs = new TaskCompletionSource<object>();
-            asyncOp.completed += obj => { tcs.SetResult(null); };
+            asyncOp.completed += obj =>
+            {
+                tcs.SetResult(null);
+            };
             return ((Task)tcs.Task).GetAwaiter();
         }
     }
-    
 }

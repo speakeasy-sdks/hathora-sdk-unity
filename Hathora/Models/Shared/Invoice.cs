@@ -10,42 +10,36 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
+    using Newtonsoft.Json;
     using System;
-using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// Billing types
-/// </summary>
+    
+    
+    /// <summary>
+    /// Billing types
+    /// </summary>
     public class Invoice
     {
-        
         [JsonProperty("amountDue")]
         public float AmountDue { get; set; }
-        
         
         [JsonProperty("dueDate")]
         public DateTime DueDate { get; set; }
         
-        
         [JsonProperty("id")]
         public string Id { get; set; }
-        
         
         [JsonProperty("month")]
         public float Month { get; set; }
         
-        
         [JsonProperty("pdfUrl")]
         public string PdfUrl { get; set; }
         
-        
         [JsonProperty("status")]
         public InvoiceStatus Status { get; set; }
-        
         
         [JsonProperty("year")]
         public float Year { get; set; }
         
     }
+    
 }

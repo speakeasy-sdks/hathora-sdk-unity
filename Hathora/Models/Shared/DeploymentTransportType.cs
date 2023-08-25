@@ -10,8 +10,9 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
+    using Newtonsoft.Json;
     using System;
-using Newtonsoft.Json;
+    
     [Obsolete("This enum will be removed in a future release, please migrate away from it as soon as possible")]
     public enum DeploymentTransportType
     {
@@ -22,4 +23,27 @@ using Newtonsoft.Json;
 		[JsonProperty("tls")]
 		Tls,
     }
+    
+    public static class DeploymentTransportTypeExtension
+    {
+        public static string Value(this DeploymentTransportType value)
+        {
+            return ((JsonPropertyAttribute)value.GetType().GetMember(value.ToString())[0].GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0]).PropertyName ?? value.ToString();
+        }
+
+        public static DeploymentTransportType ToEnum(this string value)
+        {
+            foreach(var field in typeof(DeploymentTransportType).GetFields())
+            {
+                var attribute = field.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0] as JsonPropertyAttribute;
+                if (attribute != null && attribute.PropertyName == value)
+                {
+                    return (DeploymentTransportType)field.GetValue(null);
+                }
+            }
+
+            throw new Exception($"Unknown value {value} for enum DeploymentTransportType");
+        }
+    }
+    
 }

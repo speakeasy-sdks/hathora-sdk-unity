@@ -11,17 +11,16 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
+    
+    
     public class CardPaymentMethod
     {
-        
         [JsonProperty("brand")]
         public CardBrand Brand { get; set; }
-        
         
         [JsonProperty("last4")]
         public string Last4 { get; set; }
         
     }
+    
 }

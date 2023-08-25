@@ -11,38 +11,34 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// Connection information to the default port.
-/// </summary>
+    
+    
+    /// <summary>
+    /// Connection information to the default port.
+    /// </summary>
     public class ActiveConnectionInfo
     {
-        
         [JsonProperty("host")]
         public string Host { get; set; }
-        
         
         [JsonProperty("port")]
         public float Port { get; set; }
         
-    /// <summary>
-    /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
-    /// </summary>
-        
+        /// <summary>
+        /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
+        /// </summary>
         [JsonProperty("roomId")]
         public string RoomId { get; set; }
-        
         
         [JsonProperty("status")]
         public ActiveConnectionInfoStatus Status { get; set; }
         
-    /// <summary>
-    /// Transport type specifies the underlying communication protocol to the exposed port.
-    /// </summary>
-        
+        /// <summary>
+        /// Transport type specifies the underlying communication protocol to the exposed port.
+        /// </summary>
         [JsonProperty("transportType")]
         public TransportType TransportType { get; set; }
         
     }
+    
 }

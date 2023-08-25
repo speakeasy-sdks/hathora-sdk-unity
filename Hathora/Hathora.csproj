@@ -4,7 +4,7 @@
     <PackageId>hathora</PackageId>
     <Version>0.0.1</Version>
     <Authors>Speakeasy</Authors>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <Nullable>enable</Nullable>
     <PackageReadmeFile>README.md</PackageReadmeFile>
   </PropertyGroup>
@@ -15,5 +15,11 @@
 
     <PackageReference Include="newtonsoft.json" Version="13.0.3" />
     <PackageReference Include="nodatime" Version="3.1.9" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>$(UNITY_PATH)/Data/Managed/UnityEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
 </Project>

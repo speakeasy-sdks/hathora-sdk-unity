@@ -11,6 +11,8 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    
     
     /// <summary>
     /// Status of creating a build.
@@ -37,4 +39,27 @@ namespace Hathora.Models.Shared
 		[JsonProperty("failed")]
 		Failed,
     }
+    
+    public static class BuildStatusExtension
+    {
+        public static string Value(this BuildStatus value)
+        {
+            return ((JsonPropertyAttribute)value.GetType().GetMember(value.ToString())[0].GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0]).PropertyName ?? value.ToString();
+        }
+
+        public static BuildStatus ToEnum(this string value)
+        {
+            foreach(var field in typeof(BuildStatus).GetFields())
+            {
+                var attribute = field.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0] as JsonPropertyAttribute;
+                if (attribute != null && attribute.PropertyName == value)
+                {
+                    return (BuildStatus)field.GetValue(null);
+                }
+            }
+
+            throw new Exception($"Unknown value {value} for enum BuildStatus");
+        }
+    }
+    
 }

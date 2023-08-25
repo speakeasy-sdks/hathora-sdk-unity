@@ -10,84 +10,75 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
+    using Newtonsoft.Json;
     using System;
-using Newtonsoft.Json;
-using Hathora.Models.Shared;
-    using System.Collections.Generic;
-/// <summary>
-/// An application object is the top level namespace for the game server.
-/// </summary>
+    
+    
+    /// <summary>
+    /// An application object is the top level namespace for the game server.
+    /// </summary>
     public class ApplicationWithDeployment
     {
-    /// <summary>
-    /// System generated unique identifier for an application.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated unique identifier for an application.
+        /// </summary>
         [JsonProperty("appId")]
         public string AppId { get; set; }
         
-    /// <summary>
-    /// Readable name for an application. Must be unique within an organization.
-    /// </summary>
-        
+        /// <summary>
+        /// Readable name for an application. Must be unique within an organization.
+        /// </summary>
         [JsonProperty("appName")]
         public string AppName { get; set; }
         
-    /// <summary>
-    /// Secret that is used for identity and access management.
-    /// </summary>
-        
+        /// <summary>
+        /// Secret that is used for identity and access management.
+        /// </summary>
         [JsonProperty("appSecret")]
         public string AppSecret { get; set; }
         
-    /// <summary>
-    /// Used to authenticate player requests. Use your own authentication or Hathora's Auth Client.
-    /// </summary>
-        
+        /// <summary>
+        /// Configure [player authentication](https://hathora.dev/docs/lobbies-and-matchmaking/auth-service) for your application. Use Hathora's built-in auth providers or use your own [custom authentication](https://hathora.dev/docs/lobbies-and-matchmaking/auth-service#custom-auth-provider).
+        /// </summary>
         [JsonProperty("authConfiguration")]
-        public ApplicationWithDeploymentAuthConfiguration AuthConfiguration { get; set; }
+        public AuthConfiguration AuthConfiguration { get; set; }
         
-    /// <summary>
-    /// When the application was created.
-    /// </summary>
-        
+        /// <summary>
+        /// When the application was created.
+        /// </summary>
         [JsonProperty("createdAt")]
         public DateTime CreatedAt { get; set; }
         
-    /// <summary>
-    /// Email address for the user that deleted the application.
-    /// </summary>
-        
+        /// <summary>
+        /// Email address for the user that deleted the application.
+        /// </summary>
         [JsonProperty("createdBy")]
         public string CreatedBy { get; set; }
         
-    /// <summary>
-    /// When the application was deleted.
-    /// </summary>
-        
+        /// <summary>
+        /// When the application was deleted.
+        /// </summary>
         [JsonProperty("deletedAt")]
         public DateTime DeletedAt { get; set; }
         
-    /// <summary>
-    /// Email address for the user that deleted the application.
-    /// </summary>
-        
+        /// <summary>
+        /// Email address for the user that deleted the application.
+        /// </summary>
         [JsonProperty("deletedBy")]
         public string DeletedBy { get; set; }
         
-    /// <summary>
-    /// Deployment is a versioned configuration for a build that describes runtime behavior.
-    /// </summary>
-        
+        /// <summary>
+        /// Deployment is a versioned configuration for a build that describes runtime behavior.
+        /// </summary>
         [JsonProperty("deployment")]
         public Deployment Deployment { get; set; }
         
-    /// <summary>
-    /// System generated unique identifier for an organization.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated unique identifier for an organization.
+        /// </summary>
         [JsonProperty("orgId")]
         public string OrgId { get; set; }
         
     }
+    
 }

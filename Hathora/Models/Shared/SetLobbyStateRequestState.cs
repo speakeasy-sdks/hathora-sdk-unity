@@ -10,12 +10,14 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
-    using Newtonsoft.Json;
-    using System.Collections.Generic;
-/// <summary>
-/// JSON blob to store metadata for a room. Must be smaller than 1MB.
-/// </summary>
+
+    
+    
+    /// <summary>
+    /// JSON blob to store metadata for a room. Must be smaller than 1MB.
+    /// </summary>
     public class SetLobbyStateRequestState
     {
     }
+    
 }

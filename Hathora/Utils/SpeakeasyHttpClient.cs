@@ -10,44 +10,85 @@
 #nullable enable
 namespace Hathora.Utils
 {
-    using System;
     using System.Collections.Generic;
     using UnityEngine.Networking;
     using System.Threading.Tasks;
 
-    public class SpeakeasyHttpClient
+    public interface ISpeakeasyHttpClient
     {
-        public UnityWebRequest Client { get; private set; }
-        private Dictionary<string, string> _headers { get; } = new Dictionary<string, string>();
+        void AddHeader(string key, string value);
+        void AddQueryParam(string key, string value);
+        Task<UnityWebRequest> SendAsync(UnityWebRequest message);
+    }
 
-        internal SpeakeasyHttpClient(UnityWebRequest client)
-        {
-            if(client == null)
-            {
-                client = new UnityWebRequest();
-            }
-            Client = client;
-        }
+    public class SpeakeasyHttpClient : ISpeakeasyHttpClient
+    {
+        private ISpeakeasyHttpClient? client;
 
-        public void SetBaseUrl(string url)
+        private Dictionary<string, List<string>> headers { get; } =
+            new Dictionary<string, List<string>>();
+
+        private Dictionary<string, List<string>> queryParams { get; } =
+            new Dictionary<string, List<string>>();
+
+        internal SpeakeasyHttpClient(ISpeakeasyHttpClient? client = null)
         {
-            Client.uri = new Uri(url);
+            this.client = client;
         }
 
         public void AddHeader(string key, string value)
         {
-            // TODO: code review
-            _headers.Add(key, value);
+            if (headers.ContainsKey(key))
+            {
+                headers[key].Add(value);
+            }
+            else
+            {
+                headers.Add(key, new List<string> { value });
+            }
+        }
+
+        public void AddQueryParam(string key, string value)
+        {
+            if (queryParams.ContainsKey(key))
+            {
+                queryParams[key].Add(value);
+            }
+            else
+            {
+                queryParams.Add(key, new List<string> { value });
+            }
         }
 
         public async Task<UnityWebRequest> SendAsync(UnityWebRequest message)
         {
-            foreach(var h in _headers)
+            foreach (var hh in headers)
             {
-                message.SetRequestHeader(h.Key, h.Value);
+                foreach (var hv in hh.Value)
+                {
+                    message.SetRequestHeader(hh.Key, hv);
+                }
             }
 
-            // TODO: code review, this compiles but is it correct
+            var qp = URLBuilder.SerializeQueryParams(queryParams);
+
+            if (qp != "")
+            {
+                if (message.uri.Query == "")
+                {
+                    message.url += "?" + qp;
+                }
+                else
+                {
+                    message.url += "&" + qp;
+                }
+            }
+
+            if (client != null)
+            {
+                return await client.SendAsync(message);
+            }
+
             await message.SendWebRequest();
             return message;
         }

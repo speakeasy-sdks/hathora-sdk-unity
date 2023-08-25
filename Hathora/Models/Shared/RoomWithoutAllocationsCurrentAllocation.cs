@@ -10,35 +10,33 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
+    using Newtonsoft.Json;
     using System;
-using Newtonsoft.Json;
-    using System.Collections.Generic;
-/// <summary>
-/// Metadata on allocated instances of a room.
-/// </summary>
+    
+    
+    /// <summary>
+    /// Metadata on an allocated instance of a room.
+    /// </summary>
     public class RoomWithoutAllocationsCurrentAllocation
     {
-    /// <summary>
-    /// System generated unique identifier to a runtime instance of your game server.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated unique identifier to a runtime instance of your game server.
+        /// </summary>
         [JsonProperty("processId")]
         public string ProcessId { get; set; }
         
-    /// <summary>
-    /// System generated unique identifier to an allocated instance of a room.
-    /// </summary>
-        
+        /// <summary>
+        /// System generated unique identifier to an allocated instance of a room.
+        /// </summary>
         [JsonProperty("roomAllocationId")]
         public string RoomAllocationId { get; set; }
         
-        
         [JsonProperty("scheduledAt")]
         public DateTime ScheduledAt { get; set; }
-        
         
         [JsonProperty("unscheduledAt")]
         public DateTime UnscheduledAt { get; set; }
         
     }
+    
 }

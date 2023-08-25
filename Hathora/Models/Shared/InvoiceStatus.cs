@@ -11,6 +11,8 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    
     
     public enum InvoiceStatus
     {
@@ -21,4 +23,27 @@ namespace Hathora.Models.Shared
 		[JsonProperty("overdue")]
 		Overdue,
     }
+    
+    public static class InvoiceStatusExtension
+    {
+        public static string Value(this InvoiceStatus value)
+        {
+            return ((JsonPropertyAttribute)value.GetType().GetMember(value.ToString())[0].GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0]).PropertyName ?? value.ToString();
+        }
+
+        public static InvoiceStatus ToEnum(this string value)
+        {
+            foreach(var field in typeof(InvoiceStatus).GetFields())
+            {
+                var attribute = field.GetCustomAttributes(typeof(JsonPropertyAttribute), false)[0] as JsonPropertyAttribute;
+                if (attribute != null && attribute.PropertyName == value)
+                {
+                    return (InvoiceStatus)field.GetValue(null);
+                }
+            }
+
+            throw new Exception($"Unknown value {value} for enum InvoiceStatus");
+        }
+    }
+    
 }
