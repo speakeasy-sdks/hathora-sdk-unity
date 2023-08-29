@@ -378,7 +378,7 @@ namespace Hathora
             {
                 if(Utilities.IsContentTypeMatch("text/plain",response.ContentType))
                 {
-                    response.RunBuild200TextPlainByteString = httpResponse.downloadHandler.text;
+                    response.RunBuild200TextPlainBinString = httpResponse.downloadHandler.text;
                 }
                 
                 return response;

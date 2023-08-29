@@ -23,7 +23,7 @@ namespace Hathora.Models.Operations
         /// Ok
         /// </summary>
         
-        public string? RunBuild200TextPlainByteString { get; set; }
+        public string? RunBuild200TextPlainBinString { get; set; }
         
         
         public string? RunBuild404ApplicationJSONString { get; set; }

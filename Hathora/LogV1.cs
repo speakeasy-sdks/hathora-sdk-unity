@@ -86,7 +86,7 @@ namespace Hathora
             {
                 if(Utilities.IsContentTypeMatch("text/plain",response.ContentType))
                 {
-                    response.GetLogsForApp200TextPlainByteString = httpResponse.downloadHandler.text;
+                    response.GetLogsForApp200TextPlainBinaryString = downloadHandler.Stream;
                 }
                 
                 return response;
@@ -147,7 +147,7 @@ namespace Hathora
             {
                 if(Utilities.IsContentTypeMatch("text/plain",response.ContentType))
                 {
-                    response.GetLogsForDeployment200TextPlainByteString = httpResponse.downloadHandler.text;
+                    response.GetLogsForDeployment200TextPlainBinaryString = downloadHandler.Stream;
                 }
                 
                 return response;
@@ -208,7 +208,7 @@ namespace Hathora
             {
                 if(Utilities.IsContentTypeMatch("text/plain",response.ContentType))
                 {
-                    response.GetLogsForProcess200TextPlainByteString = httpResponse.downloadHandler.text;
+                    response.GetLogsForProcess200TextPlainBinaryString = downloadHandler.Stream;
                 }
                 
                 return response;
