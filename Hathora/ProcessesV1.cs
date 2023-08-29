@@ -46,9 +46,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Get details for an existing [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
-    /// </summary>
+        /// <summary>
+        /// Get details for an existing [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
+        /// </summary>
         public async Task<GetProcessInfoResponse> GetProcessInfoAsync(GetProcessInfoSecurity security, GetProcessInfoRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -60,7 +60,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
@@ -106,9 +107,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Returns an array of active [process](https://hathora.dev/docs/concepts/hathora-entities#process) objects for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a region.
-    /// </summary>
+        /// <summary>
+        /// Returns an array of active [process](https://hathora.dev/docs/concepts/hathora-entities#process) objects for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a region.
+        /// </summary>
         public async Task<GetRunningProcessesResponse> GetRunningProcessesAsync(GetRunningProcessesSecurity security, GetRunningProcessesRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -120,7 +121,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
@@ -166,9 +168,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Returns an array of stopped [process](https://hathora.dev/docs/concepts/hathora-entities#process) objects for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a region.
-    /// </summary>
+        /// <summary>
+        /// Returns an array of stopped [process](https://hathora.dev/docs/concepts/hathora-entities#process) objects for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a region.
+        /// </summary>
         public async Task<GetStoppedProcessesResponse> GetStoppedProcessesAsync(GetStoppedProcessesSecurity security, GetStoppedProcessesRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -180,7 +182,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             

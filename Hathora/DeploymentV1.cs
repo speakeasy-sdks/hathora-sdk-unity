@@ -46,9 +46,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Create a new [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) and [build](https://hathora.dev/docs/concepts/hathora-entities#build).
-    /// </summary>
+        /// <summary>
+        /// Create a new [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) and [build](https://hathora.dev/docs/concepts/hathora-entities#build).
+        /// </summary>
         public async Task<CreateDeploymentResponse> CreateDeploymentAsync(CreateDeploymentSecurity security, CreateDeploymentRequest request)
         {
             string baseUrl = _serverUrl;
@@ -60,7 +60,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             var serializedBody = RequestBodySerializer.Serialize(request, "DeploymentConfig", "json");
@@ -134,9 +135,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Get details for an existing [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) using `appId`.
-    /// </summary>
+        /// <summary>
+        /// Get details for an existing [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) using `appId`.
+        /// </summary>
         public async Task<GetDeploymentInfoResponse> GetDeploymentInfoAsync(GetDeploymentInfoSecurity security, GetDeploymentInfoRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -148,7 +149,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
@@ -194,9 +196,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Returns an array of [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) objects for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
-    /// </summary>
+        /// <summary>
+        /// Returns an array of [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) objects for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
+        /// </summary>
         public async Task<GetDeploymentsResponse> GetDeploymentsAsync(GetDeploymentsSecurity security, GetDeploymentsRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -208,7 +210,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             

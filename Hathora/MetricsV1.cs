@@ -43,9 +43,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Get metrics for a [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
-    /// </summary>
+        /// <summary>
+        /// Get metrics for a [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
+        /// </summary>
         public async Task<GetMetricsResponse> GetMetricsAsync(GetMetricsSecurity security, GetMetricsRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -57,7 +57,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             

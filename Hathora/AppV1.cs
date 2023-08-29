@@ -48,9 +48,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Create a new [application](https://hathora.dev/docs/concepts/hathora-entities#application).
-    /// </summary>
+        /// <summary>
+        /// Create a new [application](https://hathora.dev/docs/concepts/hathora-entities#application).
+        /// </summary>
         public async Task<CreateAppResponse> CreateAppAsync(CreateAppSecurity security, AppConfig request)
         {
             string baseUrl = _serverUrl;
@@ -62,7 +62,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             var serializedBody = RequestBodySerializer.Serialize(request, "Request", "json");
@@ -127,9 +128,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Delete an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Your organization will lose access to this application.
-    /// </summary>
+        /// <summary>
+        /// Delete an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Your organization will lose access to this application.
+        /// </summary>
         public async Task<DeleteAppResponse> DeleteAppAsync(DeleteAppSecurity security, DeleteAppRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -141,7 +142,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbDELETE);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
@@ -192,9 +194,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Get details for an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
-    /// </summary>
+        /// <summary>
+        /// Get details for an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
+        /// </summary>
         public async Task<GetAppInfoResponse> GetAppInfoAsync(GetAppInfoSecurity security, GetAppInfoRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -206,7 +208,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
@@ -252,9 +255,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Returns an unsorted list of your organization’s [applications](https://hathora.dev/docs/concepts/hathora-entities#application). An application is uniquely identified by an `appId`.
-    /// </summary>
+        /// <summary>
+        /// Returns an unsorted list of your organization’s [applications](https://hathora.dev/docs/concepts/hathora-entities#application). An application is uniquely identified by an `appId`.
+        /// </summary>
         public async Task<GetAppsResponse> GetAppsAsync(GetAppsSecurity security)
         {
             string baseUrl = _serverUrl;
@@ -266,7 +269,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
@@ -303,9 +307,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Update data for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
-    /// </summary>
+        /// <summary>
+        /// Update data for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
+        /// </summary>
         public async Task<UpdateAppResponse> UpdateAppAsync(UpdateAppSecurity security, UpdateAppRequest request)
         {
             string baseUrl = _serverUrl;
@@ -317,7 +321,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             var serializedBody = RequestBodySerializer.Serialize(request, "AppConfig", "json");

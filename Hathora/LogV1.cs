@@ -43,9 +43,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Returns a stream of logs for an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
-    /// </summary>
+        /// <summary>
+        /// Returns a stream of logs for an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
+        /// </summary>
         public async Task<GetLogsForAppResponse> GetLogsForAppAsync(GetLogsForAppSecurity security, GetLogsForAppRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -57,7 +57,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
@@ -103,9 +104,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Returns a stream of logs for a [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) using `appId` and `deploymentId`.
-    /// </summary>
+        /// <summary>
+        /// Returns a stream of logs for a [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) using `appId` and `deploymentId`.
+        /// </summary>
         public async Task<GetLogsForDeploymentResponse> GetLogsForDeploymentAsync(GetLogsForDeploymentSecurity security, GetLogsForDeploymentRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -117,7 +118,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
@@ -163,9 +165,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Returns a stream of logs for a [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
-    /// </summary>
+        /// <summary>
+        /// Returns a stream of logs for a [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
+        /// </summary>
         public async Task<GetLogsForProcessResponse> GetLogsForProcessAsync(GetLogsForProcessSecurity security, GetLogsForProcessRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -177,7 +179,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbGET);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             

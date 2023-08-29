@@ -6,6 +6,7 @@ features:
   unity:
     core: 0.0.1
     deprecations: 0.0.1
+    downloadStreams: 0.0.1
     globalSecurity: 0.0.1
     globalServerURLs: 0.0.1
     methodSecurity: 0.0.1

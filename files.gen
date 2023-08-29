@@ -15,10 +15,12 @@ Hathora/RoomV2.cs
 Hathora/HathoraSDK.cs
 Hathora/Utils/DateOnly.cs
 Hathora/Utils/DateOnlyConverter.cs
+Hathora/Utils/DownloadHandlerStream.cs
 Hathora/Utils/EnumSerializer.cs
 Hathora/Utils/FlexibleObjectDeserializer.cs
 Hathora/Utils/HeaderSerializer.cs
 Hathora/Utils/IsoDateTimeSerializer.cs
+Hathora/Utils/MemoryQueueBufferStream.cs
 Hathora/Utils/RequestBodySerializer.cs
 Hathora/Utils/SecuritySerializer.cs
 Hathora/Utils/SpeakeasyHttpClient.cs

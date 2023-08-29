@@ -45,9 +45,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Returns a unique player token for an anonymous user.
-    /// </summary>
+        /// <summary>
+        /// Returns a unique player token for an anonymous user.
+        /// </summary>
         public async Task<LoginAnonymousResponse> LoginAnonymousAsync(LoginAnonymousRequest? request = null)
         {
             string baseUrl = _serverUrl;
@@ -59,7 +59,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
@@ -105,9 +106,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Returns a unique player token using a Google-signed OIDC `idToken`.
-    /// </summary>
+        /// <summary>
+        /// Returns a unique player token using a Google-signed OIDC `idToken`.
+        /// </summary>
         public async Task<LoginGoogleResponse> LoginGoogleAsync(Models.Operations.LoginGoogleRequest request)
         {
             string baseUrl = _serverUrl;
@@ -119,7 +120,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             var serializedBody = RequestBodySerializer.Serialize(request, "LoginGoogleRequestValue", "json");
@@ -184,9 +186,9 @@ namespace Hathora
         }
         
 
-    /// <summary>
-    /// Returns a unique player token with a specified nickname for a user.
-    /// </summary>
+        /// <summary>
+        /// Returns a unique player token with a specified nickname for a user.
+        /// </summary>
         public async Task<LoginNicknameResponse> LoginNicknameAsync(Models.Operations.LoginNicknameRequest request)
         {
             string baseUrl = _serverUrl;
@@ -198,7 +200,8 @@ namespace Hathora
             
 
             var httpRequest = new UnityWebRequest(urlString, UnityWebRequest.kHttpVerbPOST);
-            httpRequest.downloadHandler = new DownloadHandlerBuffer();
+            DownloadHandlerStream downloadHandler = new DownloadHandlerStream();
+            httpRequest.downloadHandler = downloadHandler;
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             var serializedBody = RequestBodySerializer.Serialize(request, "LoginNicknameRequestValue", "json");

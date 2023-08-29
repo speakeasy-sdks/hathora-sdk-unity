@@ -31,7 +31,9 @@ namespace Hathora
         public IProcessesV1SDK ProcessesV1 { get; }
         public IRoomV1SDK RoomV1 { get; }
         public IRoomV2SDK RoomV2 { get; }
-    }public class SDKConfig
+    }
+    
+    public class SDKConfig
     {
     }
 
@@ -73,10 +75,10 @@ namespace Hathora
             _defaultClient = new SpeakeasyHttpClient(client);
             _securityClient = _defaultClient;
             
-
             Config = new SDKConfig()
             {
             };
+
             AppV1 = new AppV1SDK(_defaultClient, _securityClient, _serverUrl, Config);
             AuthV1 = new AuthV1SDK(_defaultClient, _securityClient, _serverUrl, Config);
             BillingV1 = new BillingV1SDK(_defaultClient, _securityClient, _serverUrl, Config);
