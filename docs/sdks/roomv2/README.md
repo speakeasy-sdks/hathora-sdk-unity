@@ -32,7 +32,7 @@ using(var res = await sdk.RoomV2.CreateRoomAsync(new CreateRoomSecurity() {
     }, new Models.Operations.CreateRoomRequest() {
         CreateRoomRequest = new Models.Shared.CreateRoomRequest() {
             Region = Hathora.Models.Shared.Region.Tokyo,
-            RoomConfig = "{"name":"my-room"}",
+            RoomConfig = "{\"name\":\"my-room\"}",
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         RoomId = "2swovpy1fnunu",
