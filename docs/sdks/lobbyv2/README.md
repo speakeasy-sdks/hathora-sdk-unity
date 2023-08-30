@@ -43,9 +43,9 @@ using(var res = await sdk.LobbyV2.CreateLobbyAsync(new Models.Operations.CreateL
 
 ### Parameters
 
-| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
-| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `request`                                                                         | [Models.Operations.CreateLobbyRequest](../../models/shared/CreateLobbyRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [Models.Operations.CreateLobbyRequest](../../models/operations/CreateLobbyRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
 
 
 ### Response
@@ -263,10 +263,10 @@ using(var res = await sdk.LobbyV2.SetLobbyStateAsync(new SetLobbyStateSecurity()
 
 ### Parameters
 
-| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `request`                                                                             | [Models.Operations.SetLobbyStateRequest](../../models/shared/SetLobbyStateRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
-| `security`                                                                            | [SetLobbyStateSecurity](../../models/operations/SetLobbyStateSecurity.md)             | :heavy_check_mark:                                                                    | The security requirements to use for the request.                                     |
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [Models.Operations.SetLobbyStateRequest](../../models/operations/SetLobbyStateRequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+| `security`                                                                                | [SetLobbyStateSecurity](../../models/operations/SetLobbyStateSecurity.md)                 | :heavy_check_mark:                                                                        | The security requirements to use for the request.                                         |
 
 
 ### Response

@@ -44,10 +44,10 @@ using(var res = await sdk.RoomV2.CreateRoomAsync(new CreateRoomSecurity() {
 
 ### Parameters
 
-| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
-| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `request`                                                                       | [Models.Operations.CreateRoomRequest](../../models/shared/CreateRoomRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
-| `security`                                                                      | [CreateRoomSecurity](../../models/operations/CreateRoomSecurity.md)             | :heavy_check_mark:                                                              | The security requirements to use for the request.                               |
+| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
+| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| `request`                                                                           | [Models.Operations.CreateRoomRequest](../../models/operations/CreateRoomRequest.md) | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
+| `security`                                                                          | [CreateRoomSecurity](../../models/operations/CreateRoomSecurity.md)                 | :heavy_check_mark:                                                                  | The security requirements to use for the request.                                   |
 
 
 ### Response

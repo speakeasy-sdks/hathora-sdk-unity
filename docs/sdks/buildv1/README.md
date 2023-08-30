@@ -40,10 +40,10 @@ using(var res = await sdk.BuildV1.CreateBuildAsync(new CreateBuildSecurity() {
 
 ### Parameters
 
-| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
-| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `request`                                                                         | [Models.Operations.CreateBuildRequest](../../models/shared/CreateBuildRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
-| `security`                                                                        | [CreateBuildSecurity](../../models/operations/CreateBuildSecurity.md)             | :heavy_check_mark:                                                                | The security requirements to use for the request.                                 |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [Models.Operations.CreateBuildRequest](../../models/operations/CreateBuildRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
+| `security`                                                                            | [CreateBuildSecurity](../../models/operations/CreateBuildSecurity.md)                 | :heavy_check_mark:                                                                    | The security requirements to use for the request.                                     |
 
 
 ### Response

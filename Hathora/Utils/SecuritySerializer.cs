@@ -52,6 +52,7 @@ namespace Hathora.Utils
                     if (metadata.SubType == "basic" && !Utilities.IsClass(value))
                     {
                         ApplyScheme(ref client, metadata, security);
+                        return client;
                     }
                     else
                     {

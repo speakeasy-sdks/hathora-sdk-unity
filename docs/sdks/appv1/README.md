@@ -194,7 +194,7 @@ using(var res = await sdk.AppV1.UpdateAppAsync(new UpdateAppSecurity() {
 
 | Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
 | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `request`                                                         | [UpdateAppRequest](../../models/shared/UpdateAppRequest.md)       | :heavy_check_mark:                                                | The request object to use for the request.                        |
+| `request`                                                         | [UpdateAppRequest](../../models/operations/UpdateAppRequest.md)   | :heavy_check_mark:                                                | The request object to use for the request.                        |
 | `security`                                                        | [UpdateAppSecurity](../../models/operations/UpdateAppSecurity.md) | :heavy_check_mark:                                                | The security requirements to use for the request.                 |
 
 

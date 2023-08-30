@@ -75,7 +75,7 @@ using(var res = await sdk.DeploymentV1.CreateDeploymentAsync(new CreateDeploymen
 
 | Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `request`                                                                       | [CreateDeploymentRequest](../../models/shared/CreateDeploymentRequest.md)       | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+| `request`                                                                       | [CreateDeploymentRequest](../../models/operations/CreateDeploymentRequest.md)   | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
 | `security`                                                                      | [CreateDeploymentSecurity](../../models/operations/CreateDeploymentSecurity.md) | :heavy_check_mark:                                                              | The security requirements to use for the request.                               |
 
 
