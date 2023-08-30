@@ -17,7 +17,7 @@ namespace Hathora.Models.Operations
     public class LoginGoogleRequest
     {
         [SpeakeasyMetadata("request:mediaType=application/json")]
-        public LoginGoogleRequest LoginGoogleRequestValue { get; set; }
+        public Models.Shared.LoginGoogleRequest LoginGoogleRequestValue { get; set; }
         
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
         public string AppId { get; set; }

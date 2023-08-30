@@ -27,8 +27,8 @@ var sdk = new HathoraSDK();
 
 using(var res = await sdk.BuildV1.CreateBuildAsync(new CreateBuildSecurity() {
         Auth0 = "",
-    }, new CreateBuildRequest() {
-        CreateBuildRequest = new CreateBuildRequest() {
+    }, new Models.Operations.CreateBuildRequest() {
+        CreateBuildRequest = new Models.Shared.CreateBuildRequest() {
             BuildTag = "0.1.14-14c793",
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
@@ -40,15 +40,15 @@ using(var res = await sdk.BuildV1.CreateBuildAsync(new CreateBuildSecurity() {
 
 ### Parameters
 
-| Parameter                                                          | Type                                                               | Required                                                           | Description                                                        |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `request`                                                          | [CreateBuildRequest](../../Models/Shared/CreateBuildRequest.md)    | :heavy_check_mark:                                                 | The request object to use for the request.                         |
-| `security`                                                         | [CreateBuildSecurity](../../Models/BuildV1/CreateBuildSecurity.md) | :heavy_check_mark:                                                 | The security requirements to use for the request.                  |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [Models.Operations.CreateBuildRequest](../../models/shared/CreateBuildRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+| `security`                                                                        | [CreateBuildSecurity](../../models/operations/CreateBuildSecurity.md)             | :heavy_check_mark:                                                                | The security requirements to use for the request.                                 |
 
 
 ### Response
 
-**[CreateBuildResponse](../../Models/BuildV1/CreateBuildResponse.md)**
+**[CreateBuildResponse](../../models/operations/CreateBuildResponse.md)**
 
 
 ## DeleteBuild
@@ -76,15 +76,15 @@ using(var res = await sdk.BuildV1.DeleteBuildAsync(new DeleteBuildSecurity() {
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `request`                                                           | [DeleteBuildRequest](../../Models/Operations/DeleteBuildRequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
-| `security`                                                          | [DeleteBuildSecurity](../../Models/BuildV1/DeleteBuildSecurity.md)  | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
+| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `request`                                                             | [DeleteBuildRequest](../../models/operations/DeleteBuildRequest.md)   | :heavy_check_mark:                                                    | The request object to use for the request.                            |
+| `security`                                                            | [DeleteBuildSecurity](../../models/operations/DeleteBuildSecurity.md) | :heavy_check_mark:                                                    | The security requirements to use for the request.                     |
 
 
 ### Response
 
-**[DeleteBuildResponse](../../Models/BuildV1/DeleteBuildResponse.md)**
+**[DeleteBuildResponse](../../models/operations/DeleteBuildResponse.md)**
 
 
 ## GetBuildInfo
@@ -112,15 +112,15 @@ using(var res = await sdk.BuildV1.GetBuildInfoAsync(new GetBuildInfoSecurity() {
 
 ### Parameters
 
-| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `request`                                                             | [GetBuildInfoRequest](../../Models/Operations/GetBuildInfoRequest.md) | :heavy_check_mark:                                                    | The request object to use for the request.                            |
-| `security`                                                            | [GetBuildInfoSecurity](../../Models/BuildV1/GetBuildInfoSecurity.md)  | :heavy_check_mark:                                                    | The security requirements to use for the request.                     |
+| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `request`                                                               | [GetBuildInfoRequest](../../models/operations/GetBuildInfoRequest.md)   | :heavy_check_mark:                                                      | The request object to use for the request.                              |
+| `security`                                                              | [GetBuildInfoSecurity](../../models/operations/GetBuildInfoSecurity.md) | :heavy_check_mark:                                                      | The security requirements to use for the request.                       |
 
 
 ### Response
 
-**[GetBuildInfoResponse](../../Models/BuildV1/GetBuildInfoResponse.md)**
+**[GetBuildInfoResponse](../../models/operations/GetBuildInfoResponse.md)**
 
 
 ## GetBuilds
@@ -147,15 +147,15 @@ using(var res = await sdk.BuildV1.GetBuildsAsync(new GetBuildsSecurity() {
 
 ### Parameters
 
-| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
-| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
-| `request`                                                       | [GetBuildsRequest](../../Models/Operations/GetBuildsRequest.md) | :heavy_check_mark:                                              | The request object to use for the request.                      |
-| `security`                                                      | [GetBuildsSecurity](../../Models/BuildV1/GetBuildsSecurity.md)  | :heavy_check_mark:                                              | The security requirements to use for the request.               |
+| Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `request`                                                         | [GetBuildsRequest](../../models/operations/GetBuildsRequest.md)   | :heavy_check_mark:                                                | The request object to use for the request.                        |
+| `security`                                                        | [GetBuildsSecurity](../../models/operations/GetBuildsSecurity.md) | :heavy_check_mark:                                                | The security requirements to use for the request.                 |
 
 
 ### Response
 
-**[GetBuildsResponse](../../Models/BuildV1/GetBuildsResponse.md)**
+**[GetBuildsResponse](../../models/operations/GetBuildsResponse.md)**
 
 
 ## RunBuild
@@ -189,13 +189,13 @@ using(var res = await sdk.BuildV1.RunBuildAsync(new RunBuildSecurity() {
 
 ### Parameters
 
-| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
-| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
-| `request`                                                     | [RunBuildRequest](../../Models/Operations/RunBuildRequest.md) | :heavy_check_mark:                                            | The request object to use for the request.                    |
-| `security`                                                    | [RunBuildSecurity](../../Models/BuildV1/RunBuildSecurity.md)  | :heavy_check_mark:                                            | The security requirements to use for the request.             |
+| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `request`                                                       | [RunBuildRequest](../../models/operations/RunBuildRequest.md)   | :heavy_check_mark:                                              | The request object to use for the request.                      |
+| `security`                                                      | [RunBuildSecurity](../../models/operations/RunBuildSecurity.md) | :heavy_check_mark:                                              | The security requirements to use for the request.               |
 
 
 ### Response
 
-**[RunBuildResponse](../../Models/BuildV1/RunBuildResponse.md)**
+**[RunBuildResponse](../../models/operations/RunBuildResponse.md)**
 

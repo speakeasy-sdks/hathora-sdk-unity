@@ -17,7 +17,7 @@ namespace Hathora.Models.Operations
     public class LoginNicknameRequest
     {
         [SpeakeasyMetadata("request:mediaType=application/json")]
-        public LoginNicknameRequest LoginNicknameRequestValue { get; set; }
+        public Models.Shared.LoginNicknameRequest LoginNicknameRequestValue { get; set; }
         
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
         public string AppId { get; set; }

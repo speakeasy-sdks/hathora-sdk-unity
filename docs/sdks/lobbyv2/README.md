@@ -27,8 +27,8 @@ using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK();
 
-using(var res = await sdk.LobbyV2.CreateLobbyAsync(new CreateLobbyRequest() {
-        CreateLobbyRequest = new CreateLobbyRequest() {
+using(var res = await sdk.LobbyV2.CreateLobbyAsync(new Models.Operations.CreateLobbyRequest() {
+        CreateLobbyRequest = new Models.Shared.CreateLobbyRequest() {
             InitialConfig = new LobbyInitialConfig() {},
             Region = Hathora.Models.Shared.Region.Seattle,
             Visibility = Hathora.Models.Shared.LobbyVisibility.Private,
@@ -43,14 +43,14 @@ using(var res = await sdk.LobbyV2.CreateLobbyAsync(new CreateLobbyRequest() {
 
 ### Parameters
 
-| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
-| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
-| `request`                                                       | [CreateLobbyRequest](../../Models/Shared/CreateLobbyRequest.md) | :heavy_check_mark:                                              | The request object to use for the request.                      |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [Models.Operations.CreateLobbyRequest](../../models/shared/CreateLobbyRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
 
 
 ### Response
 
-**[CreateLobbyResponse](../../Models/LobbyV2/CreateLobbyResponse.md)**
+**[CreateLobbyResponse](../../models/operations/CreateLobbyResponse.md)**
 
 
 ## ~~CreateLocalLobby~~
@@ -83,12 +83,12 @@ using(var res = await sdk.LobbyV2.CreateLocalLobbyAsync(new CreateLocalLobbyRequ
 
 | Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
 | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `request`                                                                     | [CreateLocalLobbyRequest](../../Models/Operations/CreateLocalLobbyRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
+| `request`                                                                     | [CreateLocalLobbyRequest](../../models/operations/CreateLocalLobbyRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
 
 
 ### Response
 
-**[CreateLocalLobbyResponse](../../Models/LobbyV2/CreateLocalLobbyResponse.md)**
+**[CreateLocalLobbyResponse](../../models/operations/CreateLocalLobbyResponse.md)**
 
 
 ## ~~CreatePrivateLobby~~
@@ -121,12 +121,12 @@ using(var res = await sdk.LobbyV2.CreatePrivateLobbyAsync(new CreatePrivateLobby
 
 | Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
 | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `request`                                                                         | [CreatePrivateLobbyRequest](../../Models/Operations/CreatePrivateLobbyRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+| `request`                                                                         | [CreatePrivateLobbyRequest](../../models/operations/CreatePrivateLobbyRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
 
 
 ### Response
 
-**[CreatePrivateLobbyResponse](../../Models/LobbyV2/CreatePrivateLobbyResponse.md)**
+**[CreatePrivateLobbyResponse](../../models/operations/CreatePrivateLobbyResponse.md)**
 
 
 ## ~~CreatePublicLobby~~
@@ -159,12 +159,12 @@ using(var res = await sdk.LobbyV2.CreatePublicLobbyAsync(new CreatePublicLobbyRe
 
 | Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `request`                                                                       | [CreatePublicLobbyRequest](../../Models/Operations/CreatePublicLobbyRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+| `request`                                                                       | [CreatePublicLobbyRequest](../../models/operations/CreatePublicLobbyRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
 
 
 ### Response
 
-**[CreatePublicLobbyResponse](../../Models/LobbyV2/CreatePublicLobbyResponse.md)**
+**[CreatePublicLobbyResponse](../../models/operations/CreatePublicLobbyResponse.md)**
 
 
 ## GetLobbyInfo
@@ -192,12 +192,12 @@ using(var res = await sdk.LobbyV2.GetLobbyInfoAsync(new GetLobbyInfoRequest() {
 
 | Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
 | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `request`                                                             | [GetLobbyInfoRequest](../../Models/Operations/GetLobbyInfoRequest.md) | :heavy_check_mark:                                                    | The request object to use for the request.                            |
+| `request`                                                             | [GetLobbyInfoRequest](../../models/operations/GetLobbyInfoRequest.md) | :heavy_check_mark:                                                    | The request object to use for the request.                            |
 
 
 ### Response
 
-**[GetLobbyInfoResponse](../../Models/LobbyV2/GetLobbyInfoResponse.md)**
+**[GetLobbyInfoResponse](../../models/operations/GetLobbyInfoResponse.md)**
 
 
 ## ListActivePublicLobbies
@@ -226,12 +226,12 @@ using(var res = await sdk.LobbyV2.ListActivePublicLobbiesAsync(new ListActivePub
 
 | Parameter                                                                                   | Type                                                                                        | Required                                                                                    | Description                                                                                 |
 | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------- |
-| `request`                                                                                   | [ListActivePublicLobbiesRequest](../../Models/Operations/ListActivePublicLobbiesRequest.md) | :heavy_check_mark:                                                                          | The request object to use for the request.                                                  |
+| `request`                                                                                   | [ListActivePublicLobbiesRequest](../../models/operations/ListActivePublicLobbiesRequest.md) | :heavy_check_mark:                                                                          | The request object to use for the request.                                                  |
 
 
 ### Response
 
-**[ListActivePublicLobbiesResponse](../../Models/LobbyV2/ListActivePublicLobbiesResponse.md)**
+**[ListActivePublicLobbiesResponse](../../models/operations/ListActivePublicLobbiesResponse.md)**
 
 
 ## SetLobbyState
@@ -249,8 +249,8 @@ var sdk = new HathoraSDK();
 
 using(var res = await sdk.LobbyV2.SetLobbyStateAsync(new SetLobbyStateSecurity() {
         Auth0 = "",
-    }, new SetLobbyStateRequest() {
-        SetLobbyStateRequest = new SetLobbyStateRequest() {
+    }, new Models.Operations.SetLobbyStateRequest() {
+        SetLobbyStateRequest = new Models.Shared.SetLobbyStateRequest() {
             State = new SetLobbyStateRequestState() {},
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
@@ -263,13 +263,13 @@ using(var res = await sdk.LobbyV2.SetLobbyStateAsync(new SetLobbyStateSecurity()
 
 ### Parameters
 
-| Parameter                                                              | Type                                                                   | Required                                                               | Description                                                            |
-| ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| `request`                                                              | [SetLobbyStateRequest](../../Models/Shared/SetLobbyStateRequest.md)    | :heavy_check_mark:                                                     | The request object to use for the request.                             |
-| `security`                                                             | [SetLobbyStateSecurity](../../Models/LobbyV2/SetLobbyStateSecurity.md) | :heavy_check_mark:                                                     | The security requirements to use for the request.                      |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [Models.Operations.SetLobbyStateRequest](../../models/shared/SetLobbyStateRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
+| `security`                                                                            | [SetLobbyStateSecurity](../../models/operations/SetLobbyStateSecurity.md)             | :heavy_check_mark:                                                                    | The security requirements to use for the request.                                     |
 
 
 ### Response
 
-**[SetLobbyStateResponse](../../Models/LobbyV2/SetLobbyStateResponse.md)**
+**[SetLobbyStateResponse](../../models/operations/SetLobbyStateResponse.md)**
 

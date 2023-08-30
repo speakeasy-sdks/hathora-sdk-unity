@@ -43,13 +43,13 @@ using(var res = await sdk.MetricsV1.GetMetricsAsync(new GetMetricsSecurity() {
 
 ### Parameters
 
-| Parameter                                                          | Type                                                               | Required                                                           | Description                                                        |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `request`                                                          | [GetMetricsRequest](../../Models/Operations/GetMetricsRequest.md)  | :heavy_check_mark:                                                 | The request object to use for the request.                         |
-| `security`                                                         | [GetMetricsSecurity](../../Models/MetricsV1/GetMetricsSecurity.md) | :heavy_check_mark:                                                 | The security requirements to use for the request.                  |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `request`                                                           | [GetMetricsRequest](../../models/operations/GetMetricsRequest.md)   | :heavy_check_mark:                                                  | The request object to use for the request.                          |
+| `security`                                                          | [GetMetricsSecurity](../../models/operations/GetMetricsSecurity.md) | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
 
 
 ### Response
 
-**[GetMetricsResponse](../../Models/MetricsV1/GetMetricsResponse.md)**
+**[GetMetricsResponse](../../models/operations/GetMetricsResponse.md)**
 

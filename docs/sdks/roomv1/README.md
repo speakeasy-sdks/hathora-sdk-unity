@@ -26,7 +26,7 @@ var sdk = new HathoraSDK();
 using(var res = await sdk.RoomV1.CreateRoomDeprecatedAsync(new CreateRoomDeprecatedSecurity() {
         Auth0 = "",
     }, new CreateRoomDeprecatedRequest() {
-        CreateRoomRequest = new CreateRoomRequest() {
+        CreateRoomRequest = new Models.Shared.CreateRoomRequest() {
             Region = Hathora.Models.Shared.Region.SaoPaulo,
             RoomConfig = "{"name":"my-room"}",
         },
@@ -40,15 +40,15 @@ using(var res = await sdk.RoomV1.CreateRoomDeprecatedAsync(new CreateRoomDepreca
 
 ### Parameters
 
-| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
-| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `request`                                                                           | [CreateRoomDeprecatedRequest](../../Models/Shared/CreateRoomDeprecatedRequest.md)   | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
-| `security`                                                                          | [CreateRoomDeprecatedSecurity](../../Models/RoomV1/CreateRoomDeprecatedSecurity.md) | :heavy_check_mark:                                                                  | The security requirements to use for the request.                                   |
+| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `request`                                                                               | [CreateRoomDeprecatedRequest](../../models/shared/CreateRoomDeprecatedRequest.md)       | :heavy_check_mark:                                                                      | The request object to use for the request.                                              |
+| `security`                                                                              | [CreateRoomDeprecatedSecurity](../../models/operations/CreateRoomDeprecatedSecurity.md) | :heavy_check_mark:                                                                      | The security requirements to use for the request.                                       |
 
 
 ### Response
 
-**[CreateRoomDeprecatedResponse](../../Models/RoomV1/CreateRoomDeprecatedResponse.md)**
+**[CreateRoomDeprecatedResponse](../../models/operations/CreateRoomDeprecatedResponse.md)**
 
 
 ## ~~DestroyRoomDeprecated~~
@@ -76,15 +76,15 @@ using(var res = await sdk.RoomV1.DestroyRoomDeprecatedAsync(new DestroyRoomDepre
 
 ### Parameters
 
-| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
-| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `request`                                                                               | [DestroyRoomDeprecatedRequest](../../Models/Operations/DestroyRoomDeprecatedRequest.md) | :heavy_check_mark:                                                                      | The request object to use for the request.                                              |
-| `security`                                                                              | [DestroyRoomDeprecatedSecurity](../../Models/RoomV1/DestroyRoomDeprecatedSecurity.md)   | :heavy_check_mark:                                                                      | The security requirements to use for the request.                                       |
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [DestroyRoomDeprecatedRequest](../../models/operations/DestroyRoomDeprecatedRequest.md)   | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+| `security`                                                                                | [DestroyRoomDeprecatedSecurity](../../models/operations/DestroyRoomDeprecatedSecurity.md) | :heavy_check_mark:                                                                        | The security requirements to use for the request.                                         |
 
 
 ### Response
 
-**[DestroyRoomDeprecatedResponse](../../Models/RoomV1/DestroyRoomDeprecatedResponse.md)**
+**[DestroyRoomDeprecatedResponse](../../models/operations/DestroyRoomDeprecatedResponse.md)**
 
 
 ## ~~GetActiveRoomsForProcessDeprecated~~
@@ -112,15 +112,15 @@ using(var res = await sdk.RoomV1.GetActiveRoomsForProcessDeprecatedAsync(new Get
 
 ### Parameters
 
-| Parameter                                                                                                         | Type                                                                                                              | Required                                                                                                          | Description                                                                                                       |
-| ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| `request`                                                                                                         | [GetActiveRoomsForProcessDeprecatedRequest](../../Models/Operations/GetActiveRoomsForProcessDeprecatedRequest.md) | :heavy_check_mark:                                                                                                | The request object to use for the request.                                                                        |
-| `security`                                                                                                        | [GetActiveRoomsForProcessDeprecatedSecurity](../../Models/RoomV1/GetActiveRoomsForProcessDeprecatedSecurity.md)   | :heavy_check_mark:                                                                                                | The security requirements to use for the request.                                                                 |
+| Parameter                                                                                                           | Type                                                                                                                | Required                                                                                                            | Description                                                                                                         |
+| ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                           | [GetActiveRoomsForProcessDeprecatedRequest](../../models/operations/GetActiveRoomsForProcessDeprecatedRequest.md)   | :heavy_check_mark:                                                                                                  | The request object to use for the request.                                                                          |
+| `security`                                                                                                          | [GetActiveRoomsForProcessDeprecatedSecurity](../../models/operations/GetActiveRoomsForProcessDeprecatedSecurity.md) | :heavy_check_mark:                                                                                                  | The security requirements to use for the request.                                                                   |
 
 
 ### Response
 
-**[GetActiveRoomsForProcessDeprecatedResponse](../../Models/RoomV1/GetActiveRoomsForProcessDeprecatedResponse.md)**
+**[GetActiveRoomsForProcessDeprecatedResponse](../../models/operations/GetActiveRoomsForProcessDeprecatedResponse.md)**
 
 
 ## ~~GetConnectionInfoDeprecated~~
@@ -148,12 +148,12 @@ using(var res = await sdk.RoomV1.GetConnectionInfoDeprecatedAsync(new GetConnect
 
 | Parameter                                                                                           | Type                                                                                                | Required                                                                                            | Description                                                                                         |
 | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `request`                                                                                           | [GetConnectionInfoDeprecatedRequest](../../Models/Operations/GetConnectionInfoDeprecatedRequest.md) | :heavy_check_mark:                                                                                  | The request object to use for the request.                                                          |
+| `request`                                                                                           | [GetConnectionInfoDeprecatedRequest](../../models/operations/GetConnectionInfoDeprecatedRequest.md) | :heavy_check_mark:                                                                                  | The request object to use for the request.                                                          |
 
 
 ### Response
 
-**[GetConnectionInfoDeprecatedResponse](../../Models/RoomV1/GetConnectionInfoDeprecatedResponse.md)**
+**[GetConnectionInfoDeprecatedResponse](../../models/operations/GetConnectionInfoDeprecatedResponse.md)**
 
 
 ## ~~GetInactiveRoomsForProcessDeprecated~~
@@ -181,15 +181,15 @@ using(var res = await sdk.RoomV1.GetInactiveRoomsForProcessDeprecatedAsync(new G
 
 ### Parameters
 
-| Parameter                                                                                                             | Type                                                                                                                  | Required                                                                                                              | Description                                                                                                           |
-| --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------- |
-| `request`                                                                                                             | [GetInactiveRoomsForProcessDeprecatedRequest](../../Models/Operations/GetInactiveRoomsForProcessDeprecatedRequest.md) | :heavy_check_mark:                                                                                                    | The request object to use for the request.                                                                            |
-| `security`                                                                                                            | [GetInactiveRoomsForProcessDeprecatedSecurity](../../Models/RoomV1/GetInactiveRoomsForProcessDeprecatedSecurity.md)   | :heavy_check_mark:                                                                                                    | The security requirements to use for the request.                                                                     |
+| Parameter                                                                                                               | Type                                                                                                                    | Required                                                                                                                | Description                                                                                                             |
+| ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
+| `request`                                                                                                               | [GetInactiveRoomsForProcessDeprecatedRequest](../../models/operations/GetInactiveRoomsForProcessDeprecatedRequest.md)   | :heavy_check_mark:                                                                                                      | The request object to use for the request.                                                                              |
+| `security`                                                                                                              | [GetInactiveRoomsForProcessDeprecatedSecurity](../../models/operations/GetInactiveRoomsForProcessDeprecatedSecurity.md) | :heavy_check_mark:                                                                                                      | The security requirements to use for the request.                                                                       |
 
 
 ### Response
 
-**[GetInactiveRoomsForProcessDeprecatedResponse](../../Models/RoomV1/GetInactiveRoomsForProcessDeprecatedResponse.md)**
+**[GetInactiveRoomsForProcessDeprecatedResponse](../../models/operations/GetInactiveRoomsForProcessDeprecatedResponse.md)**
 
 
 ## ~~GetRoomInfoDeprecated~~
@@ -217,15 +217,15 @@ using(var res = await sdk.RoomV1.GetRoomInfoDeprecatedAsync(new GetRoomInfoDepre
 
 ### Parameters
 
-| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
-| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `request`                                                                               | [GetRoomInfoDeprecatedRequest](../../Models/Operations/GetRoomInfoDeprecatedRequest.md) | :heavy_check_mark:                                                                      | The request object to use for the request.                                              |
-| `security`                                                                              | [GetRoomInfoDeprecatedSecurity](../../Models/RoomV1/GetRoomInfoDeprecatedSecurity.md)   | :heavy_check_mark:                                                                      | The security requirements to use for the request.                                       |
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [GetRoomInfoDeprecatedRequest](../../models/operations/GetRoomInfoDeprecatedRequest.md)   | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+| `security`                                                                                | [GetRoomInfoDeprecatedSecurity](../../models/operations/GetRoomInfoDeprecatedSecurity.md) | :heavy_check_mark:                                                                        | The security requirements to use for the request.                                         |
 
 
 ### Response
 
-**[GetRoomInfoDeprecatedResponse](../../Models/RoomV1/GetRoomInfoDeprecatedResponse.md)**
+**[GetRoomInfoDeprecatedResponse](../../models/operations/GetRoomInfoDeprecatedResponse.md)**
 
 
 ## ~~SuspendRoomDeprecated~~
@@ -253,13 +253,13 @@ using(var res = await sdk.RoomV1.SuspendRoomDeprecatedAsync(new SuspendRoomDepre
 
 ### Parameters
 
-| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
-| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `request`                                                                               | [SuspendRoomDeprecatedRequest](../../Models/Operations/SuspendRoomDeprecatedRequest.md) | :heavy_check_mark:                                                                      | The request object to use for the request.                                              |
-| `security`                                                                              | [SuspendRoomDeprecatedSecurity](../../Models/RoomV1/SuspendRoomDeprecatedSecurity.md)   | :heavy_check_mark:                                                                      | The security requirements to use for the request.                                       |
+| Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
+| ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
+| `request`                                                                                 | [SuspendRoomDeprecatedRequest](../../models/operations/SuspendRoomDeprecatedRequest.md)   | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+| `security`                                                                                | [SuspendRoomDeprecatedSecurity](../../models/operations/SuspendRoomDeprecatedSecurity.md) | :heavy_check_mark:                                                                        | The security requirements to use for the request.                                         |
 
 
 ### Response
 
-**[SuspendRoomDeprecatedResponse](../../Models/RoomV1/SuspendRoomDeprecatedResponse.md)**
+**[SuspendRoomDeprecatedResponse](../../models/operations/SuspendRoomDeprecatedResponse.md)**
 

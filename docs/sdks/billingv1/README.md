@@ -27,14 +27,14 @@ using(var res = await sdk.BillingV1.GetBalanceAsync(new GetBalanceSecurity() {
 
 ### Parameters
 
-| Parameter                                                          | Type                                                               | Required                                                           | Description                                                        |
-| ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ | ------------------------------------------------------------------ |
-| `security`                                                         | [GetBalanceSecurity](../../Models/BillingV1/GetBalanceSecurity.md) | :heavy_check_mark:                                                 | The security requirements to use for the request.                  |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `security`                                                          | [GetBalanceSecurity](../../models/operations/GetBalanceSecurity.md) | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
 
 
 ### Response
 
-**[GetBalanceResponse](../../Models/BillingV1/GetBalanceResponse.md)**
+**[GetBalanceResponse](../../models/operations/GetBalanceResponse.md)**
 
 
 ## GetInvoices
@@ -57,14 +57,14 @@ using(var res = await sdk.BillingV1.GetInvoicesAsync(new GetInvoicesSecurity() {
 
 ### Parameters
 
-| Parameter                                                            | Type                                                                 | Required                                                             | Description                                                          |
-| -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
-| `security`                                                           | [GetInvoicesSecurity](../../Models/BillingV1/GetInvoicesSecurity.md) | :heavy_check_mark:                                                   | The security requirements to use for the request.                    |
+| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `security`                                                            | [GetInvoicesSecurity](../../models/operations/GetInvoicesSecurity.md) | :heavy_check_mark:                                                    | The security requirements to use for the request.                     |
 
 
 ### Response
 
-**[GetInvoicesResponse](../../Models/BillingV1/GetInvoicesResponse.md)**
+**[GetInvoicesResponse](../../models/operations/GetInvoicesResponse.md)**
 
 
 ## GetPaymentMethod
@@ -87,14 +87,14 @@ using(var res = await sdk.BillingV1.GetPaymentMethodAsync(new GetPaymentMethodSe
 
 ### Parameters
 
-| Parameter                                                                      | Type                                                                           | Required                                                                       | Description                                                                    |
-| ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------------ |
-| `security`                                                                     | [GetPaymentMethodSecurity](../../Models/BillingV1/GetPaymentMethodSecurity.md) | :heavy_check_mark:                                                             | The security requirements to use for the request.                              |
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `security`                                                                      | [GetPaymentMethodSecurity](../../models/operations/GetPaymentMethodSecurity.md) | :heavy_check_mark:                                                              | The security requirements to use for the request.                               |
 
 
 ### Response
 
-**[GetPaymentMethodResponse](../../Models/BillingV1/GetPaymentMethodResponse.md)**
+**[GetPaymentMethodResponse](../../models/operations/GetPaymentMethodResponse.md)**
 
 
 ## InitStripeCustomerPortalUrl
@@ -120,13 +120,13 @@ using(var res = await sdk.BillingV1.InitStripeCustomerPortalUrlAsync(new InitStr
 
 ### Parameters
 
-| Parameter                                                                                            | Type                                                                                                 | Required                                                                                             | Description                                                                                          |
-| ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `request`                                                                                            | [CustomerPortalUrl](../../Models/Shared/CustomerPortalUrl.md)                                        | :heavy_check_mark:                                                                                   | The request object to use for the request.                                                           |
-| `security`                                                                                           | [InitStripeCustomerPortalUrlSecurity](../../Models/BillingV1/InitStripeCustomerPortalUrlSecurity.md) | :heavy_check_mark:                                                                                   | The security requirements to use for the request.                                                    |
+| Parameter                                                                                             | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
+| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
+| `request`                                                                                             | [CustomerPortalUrl](../../models/shared/CustomerPortalUrl.md)                                         | :heavy_check_mark:                                                                                    | The request object to use for the request.                                                            |
+| `security`                                                                                            | [InitStripeCustomerPortalUrlSecurity](../../models/operations/InitStripeCustomerPortalUrlSecurity.md) | :heavy_check_mark:                                                                                    | The security requirements to use for the request.                                                     |
 
 
 ### Response
 
-**[InitStripeCustomerPortalUrlResponse](../../Models/BillingV1/InitStripeCustomerPortalUrlResponse.md)**
+**[InitStripeCustomerPortalUrlResponse](../../models/operations/InitStripeCustomerPortalUrlResponse.md)**
 

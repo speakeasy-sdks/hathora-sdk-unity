@@ -35,15 +35,15 @@ using(var res = await sdk.ProcessesV1.GetProcessInfoAsync(new GetProcessInfoSecu
 
 ### Parameters
 
-| Parameter                                                                    | Type                                                                         | Required                                                                     | Description                                                                  |
-| ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
-| `request`                                                                    | [GetProcessInfoRequest](../../Models/Operations/GetProcessInfoRequest.md)    | :heavy_check_mark:                                                           | The request object to use for the request.                                   |
-| `security`                                                                   | [GetProcessInfoSecurity](../../Models/ProcessesV1/GetProcessInfoSecurity.md) | :heavy_check_mark:                                                           | The security requirements to use for the request.                            |
+| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `request`                                                                   | [GetProcessInfoRequest](../../models/operations/GetProcessInfoRequest.md)   | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+| `security`                                                                  | [GetProcessInfoSecurity](../../models/operations/GetProcessInfoSecurity.md) | :heavy_check_mark:                                                          | The security requirements to use for the request.                           |
 
 
 ### Response
 
-**[GetProcessInfoResponse](../../Models/ProcessesV1/GetProcessInfoResponse.md)**
+**[GetProcessInfoResponse](../../models/operations/GetProcessInfoResponse.md)**
 
 
 ## GetRunningProcesses
@@ -72,15 +72,15 @@ using(var res = await sdk.ProcessesV1.GetRunningProcessesAsync(new GetRunningPro
 
 ### Parameters
 
-| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `request`                                                                              | [GetRunningProcessesRequest](../../Models/Operations/GetRunningProcessesRequest.md)    | :heavy_check_mark:                                                                     | The request object to use for the request.                                             |
-| `security`                                                                             | [GetRunningProcessesSecurity](../../Models/ProcessesV1/GetRunningProcessesSecurity.md) | :heavy_check_mark:                                                                     | The security requirements to use for the request.                                      |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [GetRunningProcessesRequest](../../models/operations/GetRunningProcessesRequest.md)   | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
+| `security`                                                                            | [GetRunningProcessesSecurity](../../models/operations/GetRunningProcessesSecurity.md) | :heavy_check_mark:                                                                    | The security requirements to use for the request.                                     |
 
 
 ### Response
 
-**[GetRunningProcessesResponse](../../Models/ProcessesV1/GetRunningProcessesResponse.md)**
+**[GetRunningProcessesResponse](../../models/operations/GetRunningProcessesResponse.md)**
 
 
 ## GetStoppedProcesses
@@ -109,13 +109,13 @@ using(var res = await sdk.ProcessesV1.GetStoppedProcessesAsync(new GetStoppedPro
 
 ### Parameters
 
-| Parameter                                                                              | Type                                                                                   | Required                                                                               | Description                                                                            |
-| -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| `request`                                                                              | [GetStoppedProcessesRequest](../../Models/Operations/GetStoppedProcessesRequest.md)    | :heavy_check_mark:                                                                     | The request object to use for the request.                                             |
-| `security`                                                                             | [GetStoppedProcessesSecurity](../../Models/ProcessesV1/GetStoppedProcessesSecurity.md) | :heavy_check_mark:                                                                     | The security requirements to use for the request.                                      |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [GetStoppedProcessesRequest](../../models/operations/GetStoppedProcessesRequest.md)   | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
+| `security`                                                                            | [GetStoppedProcessesSecurity](../../models/operations/GetStoppedProcessesSecurity.md) | :heavy_check_mark:                                                                    | The security requirements to use for the request.                                     |
 
 
 ### Response
 
-**[GetStoppedProcessesResponse](../../Models/ProcessesV1/GetStoppedProcessesResponse.md)**
+**[GetStoppedProcessesResponse](../../models/operations/GetStoppedProcessesResponse.md)**
 

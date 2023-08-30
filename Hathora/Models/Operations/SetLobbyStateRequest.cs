@@ -17,7 +17,7 @@ namespace Hathora.Models.Operations
     public class SetLobbyStateRequest
     {
         [SpeakeasyMetadata("request:mediaType=application/json")]
-        public SetLobbyStateRequest SetLobbyStateRequestValue { get; set; }
+        public Models.Shared.SetLobbyStateRequest SetLobbyStateRequestValue { get; set; }
         
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
         public string AppId { get; set; }

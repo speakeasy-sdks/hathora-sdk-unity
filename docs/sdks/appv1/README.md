@@ -44,15 +44,15 @@ using(var res = await sdk.AppV1.CreateAppAsync(new CreateAppSecurity() {
 
 ### Parameters
 
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `request`                                                    | [AppConfig](../../Models/Shared/AppConfig.md)                | :heavy_check_mark:                                           | The request object to use for the request.                   |
-| `security`                                                   | [CreateAppSecurity](../../Models/AppV1/CreateAppSecurity.md) | :heavy_check_mark:                                           | The security requirements to use for the request.            |
+| Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `request`                                                         | [AppConfig](../../models/shared/AppConfig.md)                     | :heavy_check_mark:                                                | The request object to use for the request.                        |
+| `security`                                                        | [CreateAppSecurity](../../models/operations/CreateAppSecurity.md) | :heavy_check_mark:                                                | The security requirements to use for the request.                 |
 
 
 ### Response
 
-**[CreateAppResponse](../../Models/AppV1/CreateAppResponse.md)**
+**[CreateAppResponse](../../models/operations/CreateAppResponse.md)**
 
 
 ## DeleteApp
@@ -79,15 +79,15 @@ using(var res = await sdk.AppV1.DeleteAppAsync(new DeleteAppSecurity() {
 
 ### Parameters
 
-| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
-| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
-| `request`                                                       | [DeleteAppRequest](../../Models/Operations/DeleteAppRequest.md) | :heavy_check_mark:                                              | The request object to use for the request.                      |
-| `security`                                                      | [DeleteAppSecurity](../../Models/AppV1/DeleteAppSecurity.md)    | :heavy_check_mark:                                              | The security requirements to use for the request.               |
+| Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `request`                                                         | [DeleteAppRequest](../../models/operations/DeleteAppRequest.md)   | :heavy_check_mark:                                                | The request object to use for the request.                        |
+| `security`                                                        | [DeleteAppSecurity](../../models/operations/DeleteAppSecurity.md) | :heavy_check_mark:                                                | The security requirements to use for the request.                 |
 
 
 ### Response
 
-**[DeleteAppResponse](../../Models/AppV1/DeleteAppResponse.md)**
+**[DeleteAppResponse](../../models/operations/DeleteAppResponse.md)**
 
 
 ## GetAppInfo
@@ -114,15 +114,15 @@ using(var res = await sdk.AppV1.GetAppInfoAsync(new GetAppInfoSecurity() {
 
 ### Parameters
 
-| Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
-| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `request`                                                         | [GetAppInfoRequest](../../Models/Operations/GetAppInfoRequest.md) | :heavy_check_mark:                                                | The request object to use for the request.                        |
-| `security`                                                        | [GetAppInfoSecurity](../../Models/AppV1/GetAppInfoSecurity.md)    | :heavy_check_mark:                                                | The security requirements to use for the request.                 |
+| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
+| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
+| `request`                                                           | [GetAppInfoRequest](../../models/operations/GetAppInfoRequest.md)   | :heavy_check_mark:                                                  | The request object to use for the request.                          |
+| `security`                                                          | [GetAppInfoSecurity](../../models/operations/GetAppInfoSecurity.md) | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
 
 
 ### Response
 
-**[GetAppInfoResponse](../../Models/AppV1/GetAppInfoResponse.md)**
+**[GetAppInfoResponse](../../models/operations/GetAppInfoResponse.md)**
 
 
 ## GetApps
@@ -147,14 +147,14 @@ using(var res = await sdk.AppV1.GetAppsAsync(new GetAppsSecurity() {
 
 ### Parameters
 
-| Parameter                                                | Type                                                     | Required                                                 | Description                                              |
-| -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
-| `security`                                               | [GetAppsSecurity](../../Models/AppV1/GetAppsSecurity.md) | :heavy_check_mark:                                       | The security requirements to use for the request.        |
+| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
+| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
+| `security`                                                    | [GetAppsSecurity](../../models/operations/GetAppsSecurity.md) | :heavy_check_mark:                                            | The security requirements to use for the request.             |
 
 
 ### Response
 
-**[GetAppsResponse](../../Models/AppV1/GetAppsResponse.md)**
+**[GetAppsResponse](../../models/operations/GetAppsResponse.md)**
 
 
 ## UpdateApp
@@ -192,13 +192,13 @@ using(var res = await sdk.AppV1.UpdateAppAsync(new UpdateAppSecurity() {
 
 ### Parameters
 
-| Parameter                                                    | Type                                                         | Required                                                     | Description                                                  |
-| ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ | ------------------------------------------------------------ |
-| `request`                                                    | [UpdateAppRequest](../../Models/Shared/UpdateAppRequest.md)  | :heavy_check_mark:                                           | The request object to use for the request.                   |
-| `security`                                                   | [UpdateAppSecurity](../../Models/AppV1/UpdateAppSecurity.md) | :heavy_check_mark:                                           | The security requirements to use for the request.            |
+| Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `request`                                                         | [UpdateAppRequest](../../models/shared/UpdateAppRequest.md)       | :heavy_check_mark:                                                | The request object to use for the request.                        |
+| `security`                                                        | [UpdateAppSecurity](../../models/operations/UpdateAppSecurity.md) | :heavy_check_mark:                                                | The security requirements to use for the request.                 |
 
 
 ### Response
 
-**[UpdateAppResponse](../../Models/AppV1/UpdateAppResponse.md)**
+**[UpdateAppResponse](../../models/operations/UpdateAppResponse.md)**
 

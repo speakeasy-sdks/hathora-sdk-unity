@@ -17,7 +17,7 @@ namespace Hathora.Models.Operations
     public class CreateRoomDeprecatedRequest
     {
         [SpeakeasyMetadata("request:mediaType=application/json")]
-        public CreateRoomRequest CreateRoomRequest { get; set; }
+        public Models.Shared.CreateRoomRequest CreateRoomRequest { get; set; }
         
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
         public string AppId { get; set; }

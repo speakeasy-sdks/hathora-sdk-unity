@@ -17,7 +17,7 @@ namespace Hathora.Models.Operations
     public class CreateBuildRequest
     {
         [SpeakeasyMetadata("request:mediaType=application/json")]
-        public CreateBuildRequest CreateBuildRequestValue { get; set; }
+        public Models.Shared.CreateBuildRequest CreateBuildRequestValue { get; set; }
         
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
         public string AppId { get; set; }

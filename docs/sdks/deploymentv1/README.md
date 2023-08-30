@@ -73,15 +73,15 @@ using(var res = await sdk.DeploymentV1.CreateDeploymentAsync(new CreateDeploymen
 
 ### Parameters
 
-| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
-| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `request`                                                                         | [CreateDeploymentRequest](../../Models/Shared/CreateDeploymentRequest.md)         | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
-| `security`                                                                        | [CreateDeploymentSecurity](../../Models/DeploymentV1/CreateDeploymentSecurity.md) | :heavy_check_mark:                                                                | The security requirements to use for the request.                                 |
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [CreateDeploymentRequest](../../models/shared/CreateDeploymentRequest.md)       | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+| `security`                                                                      | [CreateDeploymentSecurity](../../models/operations/CreateDeploymentSecurity.md) | :heavy_check_mark:                                                              | The security requirements to use for the request.                               |
 
 
 ### Response
 
-**[CreateDeploymentResponse](../../Models/DeploymentV1/CreateDeploymentResponse.md)**
+**[CreateDeploymentResponse](../../models/operations/CreateDeploymentResponse.md)**
 
 
 ## GetDeploymentInfo
@@ -109,15 +109,15 @@ using(var res = await sdk.DeploymentV1.GetDeploymentInfoAsync(new GetDeploymentI
 
 ### Parameters
 
-| Parameter                                                                           | Type                                                                                | Required                                                                            | Description                                                                         |
-| ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| `request`                                                                           | [GetDeploymentInfoRequest](../../Models/Operations/GetDeploymentInfoRequest.md)     | :heavy_check_mark:                                                                  | The request object to use for the request.                                          |
-| `security`                                                                          | [GetDeploymentInfoSecurity](../../Models/DeploymentV1/GetDeploymentInfoSecurity.md) | :heavy_check_mark:                                                                  | The security requirements to use for the request.                                   |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [GetDeploymentInfoRequest](../../models/operations/GetDeploymentInfoRequest.md)   | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+| `security`                                                                        | [GetDeploymentInfoSecurity](../../models/operations/GetDeploymentInfoSecurity.md) | :heavy_check_mark:                                                                | The security requirements to use for the request.                                 |
 
 
 ### Response
 
-**[GetDeploymentInfoResponse](../../Models/DeploymentV1/GetDeploymentInfoResponse.md)**
+**[GetDeploymentInfoResponse](../../models/operations/GetDeploymentInfoResponse.md)**
 
 
 ## GetDeployments
@@ -144,13 +144,13 @@ using(var res = await sdk.DeploymentV1.GetDeploymentsAsync(new GetDeploymentsSec
 
 ### Parameters
 
-| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
-| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
-| `request`                                                                     | [GetDeploymentsRequest](../../Models/Operations/GetDeploymentsRequest.md)     | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
-| `security`                                                                    | [GetDeploymentsSecurity](../../Models/DeploymentV1/GetDeploymentsSecurity.md) | :heavy_check_mark:                                                            | The security requirements to use for the request.                             |
+| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
+| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| `request`                                                                   | [GetDeploymentsRequest](../../models/operations/GetDeploymentsRequest.md)   | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+| `security`                                                                  | [GetDeploymentsSecurity](../../models/operations/GetDeploymentsSecurity.md) | :heavy_check_mark:                                                          | The security requirements to use for the request.                           |
 
 
 ### Response
 
-**[GetDeploymentsResponse](../../Models/DeploymentV1/GetDeploymentsResponse.md)**
+**[GetDeploymentsResponse](../../models/operations/GetDeploymentsResponse.md)**
 

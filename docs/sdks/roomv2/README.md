@@ -29,8 +29,8 @@ var sdk = new HathoraSDK();
 
 using(var res = await sdk.RoomV2.CreateRoomAsync(new CreateRoomSecurity() {
         Auth0 = "",
-    }, new CreateRoomRequest() {
-        CreateRoomRequest = new CreateRoomRequest() {
+    }, new Models.Operations.CreateRoomRequest() {
+        CreateRoomRequest = new Models.Shared.CreateRoomRequest() {
             Region = Hathora.Models.Shared.Region.Tokyo,
             RoomConfig = "{"name":"my-room"}",
         },
@@ -44,15 +44,15 @@ using(var res = await sdk.RoomV2.CreateRoomAsync(new CreateRoomSecurity() {
 
 ### Parameters
 
-| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
-| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
-| `request`                                                       | [CreateRoomRequest](../../Models/Shared/CreateRoomRequest.md)   | :heavy_check_mark:                                              | The request object to use for the request.                      |
-| `security`                                                      | [CreateRoomSecurity](../../Models/RoomV2/CreateRoomSecurity.md) | :heavy_check_mark:                                              | The security requirements to use for the request.               |
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [Models.Operations.CreateRoomRequest](../../models/shared/CreateRoomRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+| `security`                                                                      | [CreateRoomSecurity](../../models/operations/CreateRoomSecurity.md)             | :heavy_check_mark:                                                              | The security requirements to use for the request.                               |
 
 
 ### Response
 
-**[CreateRoomResponse](../../Models/RoomV2/CreateRoomResponse.md)**
+**[CreateRoomResponse](../../models/operations/CreateRoomResponse.md)**
 
 
 ## DestroyRoom
@@ -80,15 +80,15 @@ using(var res = await sdk.RoomV2.DestroyRoomAsync(new DestroyRoomSecurity() {
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `request`                                                           | [DestroyRoomRequest](../../Models/Operations/DestroyRoomRequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
-| `security`                                                          | [DestroyRoomSecurity](../../Models/RoomV2/DestroyRoomSecurity.md)   | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
+| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `request`                                                             | [DestroyRoomRequest](../../models/operations/DestroyRoomRequest.md)   | :heavy_check_mark:                                                    | The request object to use for the request.                            |
+| `security`                                                            | [DestroyRoomSecurity](../../models/operations/DestroyRoomSecurity.md) | :heavy_check_mark:                                                    | The security requirements to use for the request.                     |
 
 
 ### Response
 
-**[DestroyRoomResponse](../../Models/RoomV2/DestroyRoomResponse.md)**
+**[DestroyRoomResponse](../../models/operations/DestroyRoomResponse.md)**
 
 
 ## GetActiveRoomsForProcess
@@ -116,15 +116,15 @@ using(var res = await sdk.RoomV2.GetActiveRoomsForProcessAsync(new GetActiveRoom
 
 ### Parameters
 
-| Parameter                                                                                     | Type                                                                                          | Required                                                                                      | Description                                                                                   |
-| --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
-| `request`                                                                                     | [GetActiveRoomsForProcessRequest](../../Models/Operations/GetActiveRoomsForProcessRequest.md) | :heavy_check_mark:                                                                            | The request object to use for the request.                                                    |
-| `security`                                                                                    | [GetActiveRoomsForProcessSecurity](../../Models/RoomV2/GetActiveRoomsForProcessSecurity.md)   | :heavy_check_mark:                                                                            | The security requirements to use for the request.                                             |
+| Parameter                                                                                       | Type                                                                                            | Required                                                                                        | Description                                                                                     |
+| ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------- |
+| `request`                                                                                       | [GetActiveRoomsForProcessRequest](../../models/operations/GetActiveRoomsForProcessRequest.md)   | :heavy_check_mark:                                                                              | The request object to use for the request.                                                      |
+| `security`                                                                                      | [GetActiveRoomsForProcessSecurity](../../models/operations/GetActiveRoomsForProcessSecurity.md) | :heavy_check_mark:                                                                              | The security requirements to use for the request.                                               |
 
 
 ### Response
 
-**[GetActiveRoomsForProcessResponse](../../Models/RoomV2/GetActiveRoomsForProcessResponse.md)**
+**[GetActiveRoomsForProcessResponse](../../models/operations/GetActiveRoomsForProcessResponse.md)**
 
 
 ## GetConnectionInfo
@@ -152,12 +152,12 @@ using(var res = await sdk.RoomV2.GetConnectionInfoAsync(new GetConnectionInfoReq
 
 | Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
 | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `request`                                                                       | [GetConnectionInfoRequest](../../Models/Operations/GetConnectionInfoRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
+| `request`                                                                       | [GetConnectionInfoRequest](../../models/operations/GetConnectionInfoRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
 
 
 ### Response
 
-**[GetConnectionInfoResponse](../../Models/RoomV2/GetConnectionInfoResponse.md)**
+**[GetConnectionInfoResponse](../../models/operations/GetConnectionInfoResponse.md)**
 
 
 ## GetInactiveRoomsForProcess
@@ -185,15 +185,15 @@ using(var res = await sdk.RoomV2.GetInactiveRoomsForProcessAsync(new GetInactive
 
 ### Parameters
 
-| Parameter                                                                                         | Type                                                                                              | Required                                                                                          | Description                                                                                       |
-| ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
-| `request`                                                                                         | [GetInactiveRoomsForProcessRequest](../../Models/Operations/GetInactiveRoomsForProcessRequest.md) | :heavy_check_mark:                                                                                | The request object to use for the request.                                                        |
-| `security`                                                                                        | [GetInactiveRoomsForProcessSecurity](../../Models/RoomV2/GetInactiveRoomsForProcessSecurity.md)   | :heavy_check_mark:                                                                                | The security requirements to use for the request.                                                 |
+| Parameter                                                                                           | Type                                                                                                | Required                                                                                            | Description                                                                                         |
+| --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `request`                                                                                           | [GetInactiveRoomsForProcessRequest](../../models/operations/GetInactiveRoomsForProcessRequest.md)   | :heavy_check_mark:                                                                                  | The request object to use for the request.                                                          |
+| `security`                                                                                          | [GetInactiveRoomsForProcessSecurity](../../models/operations/GetInactiveRoomsForProcessSecurity.md) | :heavy_check_mark:                                                                                  | The security requirements to use for the request.                                                   |
 
 
 ### Response
 
-**[GetInactiveRoomsForProcessResponse](../../Models/RoomV2/GetInactiveRoomsForProcessResponse.md)**
+**[GetInactiveRoomsForProcessResponse](../../models/operations/GetInactiveRoomsForProcessResponse.md)**
 
 
 ## GetRoomInfo
@@ -221,15 +221,15 @@ using(var res = await sdk.RoomV2.GetRoomInfoAsync(new GetRoomInfoSecurity() {
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `request`                                                           | [GetRoomInfoRequest](../../Models/Operations/GetRoomInfoRequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
-| `security`                                                          | [GetRoomInfoSecurity](../../Models/RoomV2/GetRoomInfoSecurity.md)   | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
+| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `request`                                                             | [GetRoomInfoRequest](../../models/operations/GetRoomInfoRequest.md)   | :heavy_check_mark:                                                    | The request object to use for the request.                            |
+| `security`                                                            | [GetRoomInfoSecurity](../../models/operations/GetRoomInfoSecurity.md) | :heavy_check_mark:                                                    | The security requirements to use for the request.                     |
 
 
 ### Response
 
-**[GetRoomInfoResponse](../../Models/RoomV2/GetRoomInfoResponse.md)**
+**[GetRoomInfoResponse](../../models/operations/GetRoomInfoResponse.md)**
 
 
 ## SuspendRoom
@@ -257,13 +257,13 @@ using(var res = await sdk.RoomV2.SuspendRoomAsync(new SuspendRoomSecurity() {
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `request`                                                           | [SuspendRoomRequest](../../Models/Operations/SuspendRoomRequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
-| `security`                                                          | [SuspendRoomSecurity](../../Models/RoomV2/SuspendRoomSecurity.md)   | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
+| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
+| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
+| `request`                                                             | [SuspendRoomRequest](../../models/operations/SuspendRoomRequest.md)   | :heavy_check_mark:                                                    | The request object to use for the request.                            |
+| `security`                                                            | [SuspendRoomSecurity](../../models/operations/SuspendRoomSecurity.md) | :heavy_check_mark:                                                    | The security requirements to use for the request.                     |
 
 
 ### Response
 
-**[SuspendRoomResponse](../../Models/RoomV2/SuspendRoomResponse.md)**
+**[SuspendRoomResponse](../../models/operations/SuspendRoomResponse.md)**
 

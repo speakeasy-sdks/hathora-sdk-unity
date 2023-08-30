@@ -33,12 +33,12 @@ using(var res = await sdk.LobbyV1.CreatePrivateLobbyDeprecatedAsync(new CreatePr
 
 | Parameter                                                                                             | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
 | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `request`                                                                                             | [CreatePrivateLobbyDeprecatedRequest](../../Models/Operations/CreatePrivateLobbyDeprecatedRequest.md) | :heavy_check_mark:                                                                                    | The request object to use for the request.                                                            |
+| `request`                                                                                             | [CreatePrivateLobbyDeprecatedRequest](../../models/operations/CreatePrivateLobbyDeprecatedRequest.md) | :heavy_check_mark:                                                                                    | The request object to use for the request.                                                            |
 
 
 ### Response
 
-**[CreatePrivateLobbyDeprecatedResponse](../../Models/LobbyV1/CreatePrivateLobbyDeprecatedResponse.md)**
+**[CreatePrivateLobbyDeprecatedResponse](../../models/operations/CreatePrivateLobbyDeprecatedResponse.md)**
 
 
 ## ~~CreatePublicLobbyDeprecated~~
@@ -68,12 +68,12 @@ using(var res = await sdk.LobbyV1.CreatePublicLobbyDeprecatedAsync(new CreatePub
 
 | Parameter                                                                                           | Type                                                                                                | Required                                                                                            | Description                                                                                         |
 | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| `request`                                                                                           | [CreatePublicLobbyDeprecatedRequest](../../Models/Operations/CreatePublicLobbyDeprecatedRequest.md) | :heavy_check_mark:                                                                                  | The request object to use for the request.                                                          |
+| `request`                                                                                           | [CreatePublicLobbyDeprecatedRequest](../../models/operations/CreatePublicLobbyDeprecatedRequest.md) | :heavy_check_mark:                                                                                  | The request object to use for the request.                                                          |
 
 
 ### Response
 
-**[CreatePublicLobbyDeprecatedResponse](../../Models/LobbyV1/CreatePublicLobbyDeprecatedResponse.md)**
+**[CreatePublicLobbyDeprecatedResponse](../../models/operations/CreatePublicLobbyDeprecatedResponse.md)**
 
 
 ## ~~ListActivePublicLobbiesDeprecated~~
@@ -103,10 +103,10 @@ using(var res = await sdk.LobbyV1.ListActivePublicLobbiesDeprecatedAsync(new Lis
 
 | Parameter                                                                                                       | Type                                                                                                            | Required                                                                                                        | Description                                                                                                     |
 | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
-| `request`                                                                                                       | [ListActivePublicLobbiesDeprecatedRequest](../../Models/Operations/ListActivePublicLobbiesDeprecatedRequest.md) | :heavy_check_mark:                                                                                              | The request object to use for the request.                                                                      |
+| `request`                                                                                                       | [ListActivePublicLobbiesDeprecatedRequest](../../models/operations/ListActivePublicLobbiesDeprecatedRequest.md) | :heavy_check_mark:                                                                                              | The request object to use for the request.                                                                      |
 
 
 ### Response
 
-**[ListActivePublicLobbiesDeprecatedResponse](../../Models/LobbyV1/ListActivePublicLobbiesDeprecatedResponse.md)**
+**[ListActivePublicLobbiesDeprecatedResponse](../../models/operations/ListActivePublicLobbiesDeprecatedResponse.md)**
 

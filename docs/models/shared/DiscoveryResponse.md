@@ -7,4 +7,4 @@
 | --------------------------------------- | --------------------------------------- | --------------------------------------- | --------------------------------------- |
 | `host`                                  | *string*                                | :heavy_check_mark:                      | N/A                                     |
 | `port`                                  | *float*                                 | :heavy_check_mark:                      | N/A                                     |
-| `region`                                | [Region](../../Models/Shared/Region.md) | :heavy_check_mark:                      | N/A                                     |
+| `region`                                | [Region](../../models/shared/Region.md) | :heavy_check_mark:                      | N/A                                     |

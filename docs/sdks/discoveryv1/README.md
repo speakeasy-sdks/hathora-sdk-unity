@@ -28,5 +28,5 @@ using(var res = await sdk.DiscoveryV1.GetPingServiceEndpointsAsync())
 
 ### Response
 
-**[GetPingServiceEndpointsResponse](../../Models/DiscoveryV1/GetPingServiceEndpointsResponse.md)**
+**[GetPingServiceEndpointsResponse](../../models/operations/GetPingServiceEndpointsResponse.md)**
 

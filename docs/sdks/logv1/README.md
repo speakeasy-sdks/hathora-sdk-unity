@@ -38,15 +38,15 @@ using(var res = await sdk.LogV1.GetLogsForAppAsync(new GetLogsForAppSecurity() {
 
 ### Parameters
 
-| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
-| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
-| `request`                                                               | [GetLogsForAppRequest](../../Models/Operations/GetLogsForAppRequest.md) | :heavy_check_mark:                                                      | The request object to use for the request.                              |
-| `security`                                                              | [GetLogsForAppSecurity](../../Models/LogV1/GetLogsForAppSecurity.md)    | :heavy_check_mark:                                                      | The security requirements to use for the request.                       |
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [GetLogsForAppRequest](../../models/operations/GetLogsForAppRequest.md)   | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+| `security`                                                                | [GetLogsForAppSecurity](../../models/operations/GetLogsForAppSecurity.md) | :heavy_check_mark:                                                        | The security requirements to use for the request.                         |
 
 
 ### Response
 
-**[GetLogsForAppResponse](../../Models/LogV1/GetLogsForAppResponse.md)**
+**[GetLogsForAppResponse](../../models/operations/GetLogsForAppResponse.md)**
 
 
 ## GetLogsForDeployment
@@ -76,15 +76,15 @@ using(var res = await sdk.LogV1.GetLogsForDeploymentAsync(new GetLogsForDeployme
 
 ### Parameters
 
-| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
-| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
-| `request`                                                                             | [GetLogsForDeploymentRequest](../../Models/Operations/GetLogsForDeploymentRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
-| `security`                                                                            | [GetLogsForDeploymentSecurity](../../Models/LogV1/GetLogsForDeploymentSecurity.md)    | :heavy_check_mark:                                                                    | The security requirements to use for the request.                                     |
+| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
+| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
+| `request`                                                                               | [GetLogsForDeploymentRequest](../../models/operations/GetLogsForDeploymentRequest.md)   | :heavy_check_mark:                                                                      | The request object to use for the request.                                              |
+| `security`                                                                              | [GetLogsForDeploymentSecurity](../../models/operations/GetLogsForDeploymentSecurity.md) | :heavy_check_mark:                                                                      | The security requirements to use for the request.                                       |
 
 
 ### Response
 
-**[GetLogsForDeploymentResponse](../../Models/LogV1/GetLogsForDeploymentResponse.md)**
+**[GetLogsForDeploymentResponse](../../models/operations/GetLogsForDeploymentResponse.md)**
 
 
 ## GetLogsForProcess
@@ -114,13 +114,13 @@ using(var res = await sdk.LogV1.GetLogsForProcessAsync(new GetLogsForProcessSecu
 
 ### Parameters
 
-| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
-| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `request`                                                                       | [GetLogsForProcessRequest](../../Models/Operations/GetLogsForProcessRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
-| `security`                                                                      | [GetLogsForProcessSecurity](../../Models/LogV1/GetLogsForProcessSecurity.md)    | :heavy_check_mark:                                                              | The security requirements to use for the request.                               |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [GetLogsForProcessRequest](../../models/operations/GetLogsForProcessRequest.md)   | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
+| `security`                                                                        | [GetLogsForProcessSecurity](../../models/operations/GetLogsForProcessSecurity.md) | :heavy_check_mark:                                                                | The security requirements to use for the request.                                 |
 
 
 ### Response
 
-**[GetLogsForProcessResponse](../../Models/LogV1/GetLogsForProcessResponse.md)**
+**[GetLogsForProcessResponse](../../models/operations/GetLogsForProcessResponse.md)**
 

@@ -34,12 +34,12 @@ using(var res = await sdk.AuthV1.LoginAnonymousAsync(new LoginAnonymousRequest()
 
 | Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
 | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| `request`                                                                 | [LoginAnonymousRequest](../../Models/Operations/LoginAnonymousRequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
+| `request`                                                                 | [LoginAnonymousRequest](../../models/operations/LoginAnonymousRequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
 
 
 ### Response
 
-**[LoginAnonymousResponse](../../Models/AuthV1/LoginAnonymousResponse.md)**
+**[LoginAnonymousResponse](../../models/operations/LoginAnonymousResponse.md)**
 
 
 ## LoginGoogle
@@ -55,8 +55,8 @@ using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK();
 
-using(var res = await sdk.AuthV1.LoginGoogleAsync(new LoginGoogleRequest() {
-        LoginGoogleRequest = new LoginGoogleRequest() {
+using(var res = await sdk.AuthV1.LoginGoogleAsync(new Models.Operations.LoginGoogleRequest() {
+        LoginGoogleRequest = new Models.Shared.LoginGoogleRequest() {
             IdToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImZkNDhhNzUxMzhkOWQ0OGYwYWE2MzVlZjU2OWM0ZTE5NmY3YWU4ZDYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiODQ4NDEyODI2Nzg4LW00bXNyYjZxNDRkbTJ1ZTNrZ3Z1aTBmcTdrZGE1NWxzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiODQ4NDEyODI2Nzg4LW00bXNyYjZxNDRkbTJ1ZTNrZ3Z1aTBmcTdrZGE1NWxzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE0NTQyMzMwNzI3MTU2MTMzNzc2IiwiZW1haWwiOiJocGFdkeivmeuzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoidno1NGhhdTNxbnVR",
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
@@ -68,14 +68,14 @@ using(var res = await sdk.AuthV1.LoginGoogleAsync(new LoginGoogleRequest() {
 
 ### Parameters
 
-| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
-| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
-| `request`                                                       | [LoginGoogleRequest](../../Models/Shared/LoginGoogleRequest.md) | :heavy_check_mark:                                              | The request object to use for the request.                      |
+| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
+| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
+| `request`                                                                         | [Models.Operations.LoginGoogleRequest](../../models/shared/LoginGoogleRequest.md) | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
 
 
 ### Response
 
-**[LoginGoogleResponse](../../Models/AuthV1/LoginGoogleResponse.md)**
+**[LoginGoogleResponse](../../models/operations/LoginGoogleResponse.md)**
 
 
 ## LoginNickname
@@ -91,8 +91,8 @@ using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK();
 
-using(var res = await sdk.AuthV1.LoginNicknameAsync(new LoginNicknameRequest() {
-        LoginNicknameRequest = new LoginNicknameRequest() {
+using(var res = await sdk.AuthV1.LoginNicknameAsync(new Models.Operations.LoginNicknameRequest() {
+        LoginNicknameRequest = new Models.Shared.LoginNicknameRequest() {
             Nickname = "squiddytwoshoes",
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
@@ -104,12 +104,12 @@ using(var res = await sdk.AuthV1.LoginNicknameAsync(new LoginNicknameRequest() {
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `request`                                                           | [LoginNicknameRequest](../../Models/Shared/LoginNicknameRequest.md) | :heavy_check_mark:                                                  | The request object to use for the request.                          |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [Models.Operations.LoginNicknameRequest](../../models/shared/LoginNicknameRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
 
 
 ### Response
 
-**[LoginNicknameResponse](../../Models/AuthV1/LoginNicknameResponse.md)**
+**[LoginNicknameResponse](../../models/operations/LoginNicknameResponse.md)**
 

@@ -26,10 +26,10 @@ using(var res = await sdk.ManagementV1.SendVerificationEmailAsync(new Verificati
 
 | Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
 | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `request`                                                                   | [VerificationEmailRequest](../../Models/Shared/VerificationEmailRequest.md) | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
+| `request`                                                                   | [VerificationEmailRequest](../../models/shared/VerificationEmailRequest.md) | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
 
 
 ### Response
 
-**[SendVerificationEmailResponse](../../Models/ManagementV1/SendVerificationEmailResponse.md)**
+**[SendVerificationEmailResponse](../../models/operations/SendVerificationEmailResponse.md)**
 

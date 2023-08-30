@@ -17,7 +17,7 @@ namespace Hathora.Models.Operations
     public class CreateLobbyRequest
     {
         [SpeakeasyMetadata("request:mediaType=application/json")]
-        public CreateLobbyRequest CreateLobbyRequestValue { get; set; }
+        public Models.Shared.CreateLobbyRequest CreateLobbyRequestValue { get; set; }
         
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
         public string AppId { get; set; }
