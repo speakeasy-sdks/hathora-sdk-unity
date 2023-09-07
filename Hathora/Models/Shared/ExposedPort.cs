@@ -11,27 +11,34 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Connection details for an active process.
     /// </summary>
+    [Serializable]
     public class ExposedPort
     {
+        [SerializeField]
         [JsonProperty("host")]
-        public string Host { get; set; }
+        public string Host { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("port")]
-        public float Port { get; set; }
+        public double Port { get; set; } = default!;
         
         /// <summary>
         /// Transport type specifies the underlying communication protocol to the exposed port.
         /// </summary>
+        [SerializeField]
         [JsonProperty("transportType")]
-        public TransportType TransportType { get; set; }
+        public TransportType TransportType { get; set; } = default!;
         
     }
     

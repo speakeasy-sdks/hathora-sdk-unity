@@ -11,18 +11,22 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Enable google auth for your application.
     /// </summary>
+    [Serializable]
     public class AuthConfigurationGoogle
     {
         /// <summary>
         /// A Google generated token representing the developer's credentials for [Google's API Console](https://console.cloud.google.com/apis/dashboard?pli=1&project=discourse-login-388921). Learn how to get a `clientId` [here](https://developers.google.com/identity/gsi/web/guides/get-google-api-clientid).
         /// </summary>
+        [SerializeField]
         [JsonProperty("clientId")]
-        public string ClientId { get; set; }
+        public string ClientId { get; set; } = default!;
         
     }
     

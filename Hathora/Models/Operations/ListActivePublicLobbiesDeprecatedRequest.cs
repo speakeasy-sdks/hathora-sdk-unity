@@ -12,16 +12,22 @@ namespace Hathora.Models.Operations
 {
     using Hathora.Models.Shared;
     using Hathora.Utils;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class ListActivePublicLobbiesDeprecatedRequest
     {
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
+        [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=local")]
         public bool? Local { get; set; }
         
+        [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=region")]
         public Region? Region { get; set; }
         

@@ -13,64 +13,75 @@ namespace Hathora.Models.Shared
     using Newtonsoft.Json;
     using System.Collections.Generic;
     using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Deployment is a versioned configuration for a build that describes runtime behavior.
     /// </summary>
+    [Serializable]
     public class Deployment
     {
         /// <summary>
         /// Additional ports your server listens on.
         /// </summary>
+        [SerializeField]
         [JsonProperty("additionalContainerPorts")]
-        public List<ContainerPort> AdditionalContainerPorts { get; set; }
+        public List<ContainerPort> AdditionalContainerPorts { get; set; } = default!;
         
         /// <summary>
         /// System generated unique identifier for an application.
         /// </summary>
+        [SerializeField]
         [JsonProperty("appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
         /// <summary>
         /// System generated id for a build associated with this deployment. Increments by 1.
         /// </summary>
+        [SerializeField]
         [JsonProperty("buildId")]
-        public int BuildId { get; set; }
+        public int BuildId { get; set; } = default!;
         
         [Obsolete("This field will be removed in a future release, please migrate away from it as soon as possible")]
+        [SerializeField]
         [JsonProperty("containerPort")]
-        public float ContainerPort { get; set; }
+        public double ContainerPort { get; set; } = default!;
         
         /// <summary>
         /// When the deployment was created.
         /// </summary>
+        [SerializeField]
         [JsonProperty("createdAt")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = default!;
         
         /// <summary>
         /// Email address for the user that created the deployment.
         /// </summary>
+        [SerializeField]
         [JsonProperty("createdBy")]
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; set; } = default!;
         
         /// <summary>
         /// A container port object represents the transport configruations for how your server will listen.
         /// </summary>
+        [SerializeField]
         [JsonProperty("defaultContainerPort")]
-        public ContainerPort DefaultContainerPort { get; set; }
+        public ContainerPort DefaultContainerPort { get; set; } = default!;
         
         /// <summary>
         /// System generated id for a deployment. Increments by 1.
         /// </summary>
+        [SerializeField]
         [JsonProperty("deploymentId")]
-        public int DeploymentId { get; set; }
+        public int DeploymentId { get; set; } = default!;
         
         /// <summary>
         /// The environment variable that our process will have access to at runtime.
         /// </summary>
+        [SerializeField]
         [JsonProperty("env")]
-        public List<DeploymentEnv> Env { get; set; }
+        public List<DeploymentEnv> Env { get; set; } = default!;
         
         /// <summary>
         /// A plan defines how much CPU and memory is required to run an instance of your game server.
@@ -86,30 +97,35 @@ namespace Hathora.Models.Shared
         /// `large`: 4 core, 8gb memory
         /// </remarks>
         /// </summary>
+        [SerializeField]
         [JsonProperty("planName")]
-        public PlanName PlanName { get; set; }
+        public PlanName PlanName { get; set; } = default!;
         
         /// <summary>
         /// The number of cores allocated to your process.
         /// </summary>
+        [SerializeField]
         [JsonProperty("requestedCPU")]
-        public float RequestedCPU { get; set; }
+        public double RequestedCPU { get; set; } = default!;
         
         /// <summary>
         /// The amount of memory allocated to your process.
         /// </summary>
+        [SerializeField]
         [JsonProperty("requestedMemoryMB")]
-        public float RequestedMemoryMB { get; set; }
+        public double RequestedMemoryMB { get; set; } = default!;
         
         /// <summary>
         /// Governs how many [rooms](https://hathora.dev/docs/concepts/hathora-entities#room) can be scheduled in a process.
         /// </summary>
+        [SerializeField]
         [JsonProperty("roomsPerProcess")]
-        public int RoomsPerProcess { get; set; }
+        public int RoomsPerProcess { get; set; } = default!;
         
         [Obsolete("This field will be removed in a future release, please migrate away from it as soon as possible")]
+        [SerializeField]
         [JsonProperty("transportType")]
-        public DeploymentTransportType TransportType { get; set; }
+        public DeploymentTransportType TransportType { get; set; } = default!;
         
     }
     

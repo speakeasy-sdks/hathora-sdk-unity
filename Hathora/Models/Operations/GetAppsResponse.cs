@@ -14,23 +14,25 @@ namespace Hathora.Models.Operations
     using System.Collections.Generic;
     using System;
     using UnityEngine.Networking;
+    using UnityEngine;
     
     
+    [Serializable]
     public class GetAppsResponse: IDisposable
     {
         /// <summary>
         /// Ok
         /// </summary>
-        
+        [SerializeField]
         public List<ApplicationWithDeployment>? ApplicationWithDeployments { get; set; }
         
+        [SerializeField]
+        public string? ContentType { get; set; } = default!;
         
-        public string? ContentType { get; set; }
+        [SerializeField]
+        public int StatusCode { get; set; } = default!;
         
-        
-        public int StatusCode { get; set; }
-        
-        
+        [SerializeField]
         public UnityWebRequest? RawResponse { get; set; }
         
         public void Dispose() {

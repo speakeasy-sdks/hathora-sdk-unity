@@ -27,7 +27,7 @@ using(var res = await sdk.RoomV1.CreateRoomDeprecatedAsync(new CreateRoomDepreca
         Auth0 = "",
     }, new CreateRoomDeprecatedRequest() {
         CreateRoomRequest = new Models.Shared.CreateRoomRequest() {
-            Region = Hathora.Models.Shared.Region.SaoPaulo,
+            Region = Hathora.Models.Shared.Region.Sydney,
             RoomConfig = "{\"name\":\"my-room\"}",
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",

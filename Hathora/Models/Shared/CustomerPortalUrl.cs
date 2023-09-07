@@ -11,12 +11,16 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class CustomerPortalUrl
     {
+        [SerializeField]
         [JsonProperty("returnUrl")]
-        public string ReturnUrl { get; set; }
+        public string ReturnUrl { get; set; } = default!;
         
     }
     

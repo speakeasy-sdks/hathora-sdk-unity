@@ -11,13 +11,18 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class AchPaymentMethod
     {
+        [SerializeField]
         [JsonProperty("bankName")]
         public string? BankName { get; set; }
         
+        [SerializeField]
         [JsonProperty("last4")]
         public string? Last4 { get; set; }
         

@@ -11,15 +11,20 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class DeploymentConfigEnv
     {
+        [SerializeField]
         [JsonProperty("name")]
-        public string Name { get; set; }
+        public string Name { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("value")]
-        public string Value { get; set; }
+        public string Value { get; set; } = default!;
         
     }
     

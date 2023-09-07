@@ -11,15 +11,20 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class CardPaymentMethod
     {
+        [SerializeField]
         [JsonProperty("brand")]
-        public CardBrand Brand { get; set; }
+        public CardBrand Brand { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("last4")]
-        public string Last4 { get; set; }
+        public string Last4 { get; set; } = default!;
         
     }
     

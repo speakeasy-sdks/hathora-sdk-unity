@@ -11,15 +11,19 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class LoginNicknameRequest
     {
         /// <summary>
         /// An alias to represent a player.
         /// </summary>
+        [SerializeField]
         [JsonProperty("nickname")]
-        public string Nickname { get; set; }
+        public string Nickname { get; set; } = default!;
         
     }
     

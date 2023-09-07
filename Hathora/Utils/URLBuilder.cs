@@ -18,7 +18,7 @@ namespace Hathora.Utils
 
     internal static class URLBuilder
     {
-        public static string Build(string baseUrl, string path, object request)
+        public static string Build(string baseUrl, string path, object? request)
         {
             var url = baseUrl;
 
@@ -67,7 +67,7 @@ namespace Hathora.Utils
             return string.Join("&", queries);
         }
 
-        private static Dictionary<string, string> GetPathParameters(object request)
+        private static Dictionary<string, string> GetPathParameters(object? request)
         {
             var parameters = new Dictionary<string, string>();
 
@@ -139,7 +139,7 @@ namespace Hathora.Utils
             return parameters;
         }
 
-        private static Dictionary<string, List<string>> TrySerializeQueryParams(object request)
+        private static Dictionary<string, List<string>> TrySerializeQueryParams(object? request)
         {
             var parameters = new Dictionary<string, List<string>>();
 

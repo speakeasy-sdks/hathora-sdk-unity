@@ -13,29 +13,31 @@ namespace Hathora.Models.Operations
     using Hathora.Utils;
     using System;
     using UnityEngine.Networking;
+    using UnityEngine;
     
     
+    [Serializable]
     public class RunBuildResponse: IDisposable
     {
-        
-        public string? ContentType { get; set; }
+        [SerializeField]
+        public string? ContentType { get; set; } = default!;
         
         /// <summary>
         /// Ok
         /// </summary>
-        
+        [SerializeField]
         public MemoryQueueBufferStream? RunBuild200TextPlainBinaryString { get; set; }
         
-        
+        [SerializeField]
         public string? RunBuild404ApplicationJSONString { get; set; }
         
+        [SerializeField]
+        public int StatusCode { get; set; } = default!;
         
-        public int StatusCode { get; set; }
-        
-        
+        [SerializeField]
         public UnityWebRequest? RawResponse { get; set; }
         
-        
+        [SerializeField]
         public string? RunBuild500ApplicationJSONString { get; set; }
         
         public void Dispose() {

@@ -12,15 +12,20 @@ namespace Hathora.Models.Operations
 {
     using Hathora.Models.Shared;
     using Hathora.Utils;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class LoginGoogleRequest
     {
+        [SerializeField]
         [SpeakeasyMetadata("request:mediaType=application/json")]
-        public Models.Shared.LoginGoogleRequest LoginGoogleRequestValue { get; set; }
+        public Models.Shared.LoginGoogleRequest LoginGoogleRequestValue { get; set; } = default!;
         
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
     }
     

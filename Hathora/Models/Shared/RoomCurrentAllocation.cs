@@ -12,30 +12,36 @@ namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
     using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Metadata on an allocated instance of a room.
     /// </summary>
+    [Serializable]
     public class RoomCurrentAllocation
     {
         /// <summary>
         /// System generated unique identifier to a runtime instance of your game server.
         /// </summary>
+        [SerializeField]
         [JsonProperty("processId")]
-        public string ProcessId { get; set; }
+        public string ProcessId { get; set; } = default!;
         
         /// <summary>
         /// System generated unique identifier to an allocated instance of a room.
         /// </summary>
+        [SerializeField]
         [JsonProperty("roomAllocationId")]
-        public string RoomAllocationId { get; set; }
+        public string RoomAllocationId { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("scheduledAt")]
-        public DateTime ScheduledAt { get; set; }
+        public DateTime ScheduledAt { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("unscheduledAt")]
-        public DateTime UnscheduledAt { get; set; }
+        public DateTime UnscheduledAt { get; set; } = default!;
         
     }
     

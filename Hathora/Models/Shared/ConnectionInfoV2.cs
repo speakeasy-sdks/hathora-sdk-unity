@@ -12,33 +12,40 @@ namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
     using System.Collections.Generic;
+    using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Connection information for the default and additional ports.
     /// </summary>
+    [Serializable]
     public class ConnectionInfoV2
     {
+        [SerializeField]
         [JsonProperty("additionalExposedPorts")]
-        public List<ExposedPort> AdditionalExposedPorts { get; set; }
+        public List<ExposedPort> AdditionalExposedPorts { get; set; } = default!;
         
         /// <summary>
         /// Connection details for an active process.
         /// </summary>
+        [SerializeField]
         [JsonProperty("exposedPort")]
         public ExposedPort? ExposedPort { get; set; }
         
         /// <summary>
         /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
         /// </summary>
+        [SerializeField]
         [JsonProperty("roomId")]
-        public string RoomId { get; set; }
+        public string RoomId { get; set; } = default!;
         
         /// <summary>
         /// `exposedPort` will only be available when the `status` of a room is "active".
         /// </summary>
+        [SerializeField]
         [JsonProperty("status")]
-        public ConnectionInfoV2Status Status { get; set; }
+        public ConnectionInfoV2Status Status { get; set; } = default!;
         
     }
     

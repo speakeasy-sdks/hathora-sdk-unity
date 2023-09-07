@@ -14,26 +14,28 @@ namespace Hathora.Models.Operations
     using System.Collections.Generic;
     using System;
     using UnityEngine.Networking;
+    using UnityEngine;
     
     
+    [Serializable]
     public class GetInvoicesResponse: IDisposable
     {
+        [SerializeField]
+        public string? ContentType { get; set; } = default!;
         
-        public string? ContentType { get; set; }
-        
-        
+        [SerializeField]
         public string? GetInvoices404ApplicationJSONString { get; set; }
         
         /// <summary>
         /// Ok
         /// </summary>
-        
+        [SerializeField]
         public List<Invoice>? Invoices { get; set; }
         
+        [SerializeField]
+        public int StatusCode { get; set; } = default!;
         
-        public int StatusCode { get; set; }
-        
-        
+        [SerializeField]
         public UnityWebRequest? RawResponse { get; set; }
         
         public void Dispose() {

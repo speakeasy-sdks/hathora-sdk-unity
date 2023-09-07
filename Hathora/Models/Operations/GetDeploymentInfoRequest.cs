@@ -11,15 +11,20 @@
 namespace Hathora.Models.Operations
 {
     using Hathora.Utils;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class GetDeploymentInfoRequest
     {
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=deploymentId")]
-        public int DeploymentId { get; set; }
+        public int DeploymentId { get; set; } = default!;
         
     }
     

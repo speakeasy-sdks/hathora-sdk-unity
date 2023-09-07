@@ -11,16 +11,22 @@
 namespace Hathora.Models.Operations
 {
     using Hathora.Utils;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class CreateLocalLobbyRequest
     {
+        [SerializeField]
         [SpeakeasyMetadata("request:mediaType=application/json")]
-        public CreateLocalLobbyRequestBody RequestBody { get; set; }
+        public CreateLocalLobbyRequestBody RequestBody { get; set; } = default!;
         
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
+        [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=roomId")]
         public string? RoomId { get; set; }
         

@@ -137,6 +137,11 @@ namespace Hathora.Utils
             object value
         )
         {
+            if (valueMetadata.Name == null || valueMetadata.Name == "")
+            {
+                return;
+            }
+
             switch (schemeMetadata.Type)
             {
                 case "apiKey":

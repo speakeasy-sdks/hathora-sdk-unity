@@ -13,38 +13,40 @@ namespace Hathora.Models.Operations
     using Hathora.Models.Shared;
     using System;
     using UnityEngine.Networking;
+    using UnityEngine;
     
     
+    [Serializable]
     public class CreateLocalLobbyResponse: IDisposable
     {
+        [SerializeField]
+        public string? ContentType { get; set; } = default!;
         
-        public string? ContentType { get; set; }
-        
-        
+        [SerializeField]
         public string? CreateLocalLobby400ApplicationJSONString { get; set; }
         
-        
+        [SerializeField]
         public string? CreateLocalLobby401ApplicationJSONString { get; set; }
         
-        
+        [SerializeField]
         public string? CreateLocalLobby404ApplicationJSONString { get; set; }
         
-        
+        [SerializeField]
         public string? CreateLocalLobby422ApplicationJSONString { get; set; }
         
-        
+        [SerializeField]
         public string? CreateLocalLobby429ApplicationJSONString { get; set; }
         
-        
+        [SerializeField]
         public string? CreateLocalLobby500ApplicationJSONString { get; set; }
         
-        
+        [SerializeField]
         public Lobby? Lobby { get; set; }
         
+        [SerializeField]
+        public int StatusCode { get; set; } = default!;
         
-        public int StatusCode { get; set; }
-        
-        
+        [SerializeField]
         public UnityWebRequest? RawResponse { get; set; }
         
         public void Dispose() {

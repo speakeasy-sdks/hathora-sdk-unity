@@ -133,11 +133,11 @@ namespace Hathora.Utils
             return value.ToString();
         }
 
-        public static string ToString(object obj)
+        public static string ToString(object? obj)
         {
             if (obj == null)
             {
-                return null;
+                return "";
             }
 
             if (IsString(obj))
@@ -247,7 +247,7 @@ namespace Hathora.Utils
         ///</summmary>
         public static TaskAwaiter GetAwaiter(this AsyncOperation asyncOp)
         {
-            var tcs = new TaskCompletionSource<object>();
+            var tcs = new TaskCompletionSource<object?>();
             asyncOp.completed += obj =>
             {
                 tcs.SetResult(null);

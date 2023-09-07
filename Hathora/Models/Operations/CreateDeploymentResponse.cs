@@ -13,29 +13,31 @@ namespace Hathora.Models.Operations
     using Hathora.Models.Shared;
     using System;
     using UnityEngine.Networking;
+    using UnityEngine;
     
     
+    [Serializable]
     public class CreateDeploymentResponse: IDisposable
     {
+        [SerializeField]
+        public string? ContentType { get; set; } = default!;
         
-        public string? ContentType { get; set; }
-        
-        
+        [SerializeField]
         public string? CreateDeployment400ApplicationJSONString { get; set; }
         
-        
+        [SerializeField]
         public string? CreateDeployment404ApplicationJSONString { get; set; }
         
-        
+        [SerializeField]
         public string? CreateDeployment500ApplicationJSONString { get; set; }
         
-        
+        [SerializeField]
         public Deployment? Deployment { get; set; }
         
+        [SerializeField]
+        public int StatusCode { get; set; } = default!;
         
-        public int StatusCode { get; set; }
-        
-        
+        [SerializeField]
         public UnityWebRequest? RawResponse { get; set; }
         
         public void Dispose() {

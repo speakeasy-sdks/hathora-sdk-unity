@@ -12,6 +12,7 @@ namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
     using System;
+    using UnityEngine;
     
     
     /// <summary>

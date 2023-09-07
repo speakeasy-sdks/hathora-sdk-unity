@@ -17,8 +17,13 @@ namespace Hathora.Utils
 
     internal static class HeaderSerializer
     {
-        public static void PopulateHeaders(ref UnityWebRequest httpRequest, object request)
+        public static void PopulateHeaders(ref UnityWebRequest httpRequest, object? request)
         {
+            if (request == null)
+            {
+                return;
+            }
+
             var props = request.GetType().GetProperties();
 
             foreach (var prop in props)

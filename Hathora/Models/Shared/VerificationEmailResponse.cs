@@ -11,15 +11,19 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Ok
     /// </summary>
+    [Serializable]
     public class VerificationEmailResponse
     {
+        [SerializeField]
         [JsonProperty("status")]
-        public VerificationEmailResponseStatus Status { get; set; }
+        public VerificationEmailResponseStatus Status { get; set; } = default!;
         
     }
     

@@ -31,16 +31,6 @@ using(var res = await sdk.DeploymentV1.CreateDeploymentAsync(new CreateDeploymen
                 new ContainerPort() {
                     Name = "default",
                     Port = 8000,
-                    TransportType = Hathora.Models.Shared.TransportType.Tls,
-                },
-                new ContainerPort() {
-                    Name = "default",
-                    Port = 8000,
-                    TransportType = Hathora.Models.Shared.TransportType.Udp,
-                },
-                new ContainerPort() {
-                    Name = "default",
-                    Port = 8000,
                     TransportType = Hathora.Models.Shared.TransportType.Udp,
                 },
             },
@@ -50,18 +40,10 @@ using(var res = await sdk.DeploymentV1.CreateDeploymentAsync(new CreateDeploymen
                     Name = "EULA",
                     Value = "TRUE",
                 },
-                new DeploymentConfigEnv() {
-                    Name = "EULA",
-                    Value = "TRUE",
-                },
-                new DeploymentConfigEnv() {
-                    Name = "EULA",
-                    Value = "TRUE",
-                },
             },
             PlanName = Hathora.Models.Shared.PlanName.Tiny,
             RoomsPerProcess = 3,
-            TransportType = Hathora.Models.Shared.TransportType.Udp,
+            TransportType = Hathora.Models.Shared.TransportType.Tls,
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         BuildId = 1,

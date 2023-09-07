@@ -11,33 +11,41 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Connection information to the default port.
     /// </summary>
+    [Serializable]
     public class ActiveConnectionInfo
     {
+        [SerializeField]
         [JsonProperty("host")]
-        public string Host { get; set; }
+        public string Host { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("port")]
-        public float Port { get; set; }
+        public double Port { get; set; } = default!;
         
         /// <summary>
         /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
         /// </summary>
+        [SerializeField]
         [JsonProperty("roomId")]
-        public string RoomId { get; set; }
+        public string RoomId { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("status")]
-        public ActiveConnectionInfoStatus Status { get; set; }
+        public ActiveConnectionInfoStatus Status { get; set; } = default!;
         
         /// <summary>
         /// Transport type specifies the underlying communication protocol to the exposed port.
         /// </summary>
+        [SerializeField]
         [JsonProperty("transportType")]
-        public TransportType TransportType { get; set; }
+        public TransportType TransportType { get; set; } = default!;
         
     }
     

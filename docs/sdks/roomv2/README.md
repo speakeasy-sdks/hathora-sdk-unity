@@ -31,7 +31,7 @@ using(var res = await sdk.RoomV2.CreateRoomAsync(new CreateRoomSecurity() {
         Auth0 = "",
     }, new Models.Operations.CreateRoomRequest() {
         CreateRoomRequest = new Models.Shared.CreateRoomRequest() {
-            Region = Hathora.Models.Shared.Region.Tokyo,
+            Region = Hathora.Models.Shared.Region.Seattle,
             RoomConfig = "{\"name\":\"my-room\"}",
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",

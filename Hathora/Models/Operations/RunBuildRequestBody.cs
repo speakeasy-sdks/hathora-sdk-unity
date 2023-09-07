@@ -11,12 +11,16 @@
 namespace Hathora.Models.Operations
 {
     using Hathora.Utils;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class RunBuildRequestBody
     {
+        [SerializeField]
         [SpeakeasyMetadata("multipartForm:file")]
-        public RunBuildRequestBodyFile File { get; set; }
+        public RunBuildRequestBodyFile File { get; set; } = default!;
         
     }
     

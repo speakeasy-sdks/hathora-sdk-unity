@@ -12,26 +12,28 @@ namespace Hathora.Models.Operations
 {
     using System;
     using UnityEngine.Networking;
+    using UnityEngine;
     
     
+    [Serializable]
     public class GetBalanceResponse: IDisposable
     {
-        
-        public string? ContentType { get; set; }
+        [SerializeField]
+        public string? ContentType { get; set; } = default!;
         
         /// <summary>
         /// Ok
         /// </summary>
+        [SerializeField]
+        public double? GetBalance200ApplicationJSONDoubleNumber { get; set; }
         
-        public float? GetBalance200ApplicationJSONDoubleNumber { get; set; }
-        
-        
+        [SerializeField]
         public string? GetBalance404ApplicationJSONString { get; set; }
         
+        [SerializeField]
+        public int StatusCode { get; set; } = default!;
         
-        public int StatusCode { get; set; }
-        
-        
+        [SerializeField]
         public UnityWebRequest? RawResponse { get; set; }
         
         public void Dispose() {

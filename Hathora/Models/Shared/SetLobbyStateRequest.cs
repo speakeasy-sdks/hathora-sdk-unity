@@ -11,15 +11,19 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class SetLobbyStateRequest
     {
         /// <summary>
         /// JSON blob to store metadata for a room. Must be smaller than 1MB.
         /// </summary>
+        [SerializeField]
         [JsonProperty("state")]
-        public SetLobbyStateRequestState State { get; set; }
+        public SetLobbyStateRequestState State { get; set; } = default!;
         
     }
     

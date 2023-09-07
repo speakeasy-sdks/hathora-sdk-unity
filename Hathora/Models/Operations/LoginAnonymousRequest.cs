@@ -11,12 +11,16 @@
 namespace Hathora.Models.Operations
 {
     using Hathora.Utils;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class LoginAnonymousRequest
     {
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
     }
     

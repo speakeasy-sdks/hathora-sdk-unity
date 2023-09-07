@@ -11,21 +11,26 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class AppConfig
     {
         /// <summary>
         /// Readable name for an application. Must be unique within an organization.
         /// </summary>
+        [SerializeField]
         [JsonProperty("appName")]
-        public string AppName { get; set; }
+        public string AppName { get; set; } = default!;
         
         /// <summary>
         /// Configure [player authentication](https://hathora.dev/docs/lobbies-and-matchmaking/auth-service) for your application. Use Hathora's built-in auth providers or use your own [custom authentication](https://hathora.dev/docs/lobbies-and-matchmaking/auth-service#custom-auth-provider).
         /// </summary>
+        [SerializeField]
         [JsonProperty("authConfiguration")]
-        public AuthConfiguration AuthConfiguration { get; set; }
+        public AuthConfiguration AuthConfiguration { get; set; } = default!;
         
     }
     

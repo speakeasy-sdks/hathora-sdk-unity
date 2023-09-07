@@ -11,18 +11,24 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class DiscoveryResponse
     {
+        [SerializeField]
         [JsonProperty("host")]
-        public string Host { get; set; }
+        public string Host { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("port")]
-        public float Port { get; set; }
+        public double Port { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("region")]
-        public Region Region { get; set; }
+        public Region Region { get; set; } = default!;
         
     }
     

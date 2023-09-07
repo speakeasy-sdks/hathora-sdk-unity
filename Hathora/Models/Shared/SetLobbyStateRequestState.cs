@@ -10,12 +10,14 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
-
+    using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// JSON blob to store metadata for a room. Must be smaller than 1MB.
     /// </summary>
+    [Serializable]
     public class SetLobbyStateRequestState
     {
     }

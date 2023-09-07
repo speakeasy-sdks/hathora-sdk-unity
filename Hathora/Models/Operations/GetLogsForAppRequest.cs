@@ -12,22 +12,29 @@ namespace Hathora.Models.Operations
 {
     using Hathora.Models.Shared;
     using Hathora.Utils;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class GetLogsForAppRequest
     {
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
+        [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=follow")]
         public bool? Follow { get; set; }
         
         /// <summary>
         /// Region to filter by. If omitted, active public lobbies in all regions will be returned.
         /// </summary>
+        [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=region")]
         public Region? Region { get; set; }
         
+        [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=tailLines")]
         public int? TailLines { get; set; }
         

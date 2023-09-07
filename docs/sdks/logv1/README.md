@@ -28,8 +28,8 @@ using(var res = await sdk.LogV1.GetLogsForAppAsync(new GetLogsForAppSecurity() {
     }, new GetLogsForAppRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         Follow = false,
-        Region = Hathora.Models.Shared.Region.Tokyo,
-        TailLines = 812169,
+        Region = Hathora.Models.Shared.Region.SaoPaulo,
+        TailLines = 272656,
     }))
 {
     // handle response
@@ -67,7 +67,7 @@ using(var res = await sdk.LogV1.GetLogsForDeploymentAsync(new GetLogsForDeployme
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         DeploymentId = 1,
         Follow = false,
-        TailLines = 528895,
+        TailLines = 383441,
     }))
 {
     // handle response
@@ -105,7 +105,7 @@ using(var res = await sdk.LogV1.GetLogsForProcessAsync(new GetLogsForProcessSecu
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         Follow = false,
         ProcessId = "cbfcddd2-0006-43ae-996c-995fff7bed2e",
-        TailLines = 479977,
+        TailLines = 477665,
     }))
 {
     // handle response

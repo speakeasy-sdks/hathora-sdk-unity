@@ -11,30 +11,37 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// From T, pick a set of properties whose keys are in the union K
     /// </summary>
+    [Serializable]
     public class RoomWithoutAllocations
     {
         /// <summary>
         /// System generated unique identifier for an application.
         /// </summary>
+        [SerializeField]
         [JsonProperty("appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("currentAllocation")]
-        public RoomWithoutAllocationsCurrentAllocation CurrentAllocation { get; set; }
+        public RoomWithoutAllocationsCurrentAllocation CurrentAllocation { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("roomConfig")]
-        public string RoomConfig { get; set; }
+        public string RoomConfig { get; set; } = default!;
         
         /// <summary>
         /// Unique identifier to a game session or match. Use either a system generated ID or pass in your own.
         /// </summary>
+        [SerializeField]
         [JsonProperty("roomId")]
-        public string RoomId { get; set; }
+        public string RoomId { get; set; } = default!;
         
         /// <summary>
         /// The allocation status of a room.
@@ -50,8 +57,9 @@ namespace Hathora.Models.Shared
         /// `destroyed`: all associated metadata is deleted
         /// </remarks>
         /// </summary>
+        [SerializeField]
         [JsonProperty("status")]
-        public RoomStatus Status { get; set; }
+        public RoomStatus Status { get; set; } = default!;
         
     }
     

@@ -12,23 +12,25 @@ namespace Hathora.Models.Operations
 {
     using System;
     using UnityEngine.Networking;
+    using UnityEngine;
     
     
+    [Serializable]
     public class DestroyRoomDeprecatedResponse: IDisposable
     {
+        [SerializeField]
+        public string? ContentType { get; set; } = default!;
         
-        public string? ContentType { get; set; }
-        
-        
+        [SerializeField]
         public string? DestroyRoomDeprecated404ApplicationJSONString { get; set; }
         
-        
+        [SerializeField]
         public string? DestroyRoomDeprecated500ApplicationJSONString { get; set; }
         
+        [SerializeField]
+        public int StatusCode { get; set; } = default!;
         
-        public int StatusCode { get; set; }
-        
-        
+        [SerializeField]
         public UnityWebRequest? RawResponse { get; set; }
         
         public void Dispose() {

@@ -11,12 +11,16 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class VerificationEmailRequest
     {
+        [SerializeField]
         [JsonProperty("userId")]
-        public string UserId { get; set; }
+        public string UserId { get; set; } = default!;
         
     }
     

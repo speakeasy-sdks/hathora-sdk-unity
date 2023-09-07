@@ -11,15 +11,19 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class LoginGoogleRequest
     {
         /// <summary>
         /// A Google-signed OIDC ID token representing a player's authenticated identity. Learn how to get an `idToken` [here](https://cloud.google.com/docs/authentication/get-id-token).
         /// </summary>
+        [SerializeField]
         [JsonProperty("idToken")]
-        public string IdToken { get; set; }
+        public string IdToken { get; set; } = default!;
         
     }
     

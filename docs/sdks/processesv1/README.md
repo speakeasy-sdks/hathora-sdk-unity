@@ -100,7 +100,7 @@ using(var res = await sdk.ProcessesV1.GetStoppedProcessesAsync(new GetStoppedPro
         Auth0 = "",
     }, new GetStoppedProcessesRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
-        Region = Hathora.Models.Shared.Region.Sydney,
+        Region = Hathora.Models.Shared.Region.SaoPaulo,
     }))
 {
     // handle response

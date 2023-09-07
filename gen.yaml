@@ -4,7 +4,7 @@ generation:
   singleTagPerOp: false
 features:
   unity:
-    core: 0.0.1
+    core: 0.1.0
     deprecations: 0.0.1
     downloadStreams: 0.0.1
     globalSecurity: 0.0.1

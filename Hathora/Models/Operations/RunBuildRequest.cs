@@ -11,18 +11,24 @@
 namespace Hathora.Models.Operations
 {
     using Hathora.Utils;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class RunBuildRequest
     {
+        [SerializeField]
         [SpeakeasyMetadata("request:mediaType=multipart/form-data")]
-        public RunBuildRequestBody RequestBody { get; set; }
+        public RunBuildRequestBody RequestBody { get; set; } = default!;
         
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=buildId")]
-        public int BuildId { get; set; }
+        public int BuildId { get; set; } = default!;
         
     }
     

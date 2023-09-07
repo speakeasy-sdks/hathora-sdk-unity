@@ -10,12 +10,14 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
-
+    using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Construct a type with a set of properties K of type T
     /// </summary>
+    [Serializable]
     public class RecordStringNever
     {
     }

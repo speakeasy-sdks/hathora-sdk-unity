@@ -15,7 +15,7 @@ using Hathora.Models.Shared;
 var sdk = new HathoraSDK();
 
 using(var res = await sdk.ManagementV1.SendVerificationEmailAsync(new VerificationEmailRequest() {
-        UserId = "excepturi",
+        UserId = "minus",
     }))
 {
     // handle response

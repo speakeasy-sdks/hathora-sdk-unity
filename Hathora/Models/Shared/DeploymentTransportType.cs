@@ -12,6 +12,7 @@ namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
     using System;
+    using UnityEngine;
     
     [Obsolete("This enum will be removed in a future release, please migrate away from it as soon as possible")]
     public enum DeploymentTransportType

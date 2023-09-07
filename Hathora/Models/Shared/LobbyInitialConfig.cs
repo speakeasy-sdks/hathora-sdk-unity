@@ -10,12 +10,14 @@
 #nullable enable
 namespace Hathora.Models.Shared
 {
-
+    using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// User input to initialize the game state. Object must be smaller than 64KB.
     /// </summary>
+    [Serializable]
     public class LobbyInitialConfig
     {
     }

@@ -13,69 +13,81 @@ namespace Hathora.Models.Shared
     using Newtonsoft.Json;
     using System.Collections.Generic;
     using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Build is a versioned artifact for a game server's container image and its data.
     /// </summary>
+    [Serializable]
     public class Build
     {
         /// <summary>
         /// System generated unique identifier for an application.
         /// </summary>
+        [SerializeField]
         [JsonProperty("appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
         /// <summary>
         /// System generated id for a build. Increments by 1.
         /// </summary>
+        [SerializeField]
         [JsonProperty("buildId")]
-        public int BuildId { get; set; }
+        public int BuildId { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("buildTag")]
-        public string BuildTag { get; set; }
+        public string BuildTag { get; set; } = default!;
         
         /// <summary>
         /// When a new `buildId` is generated.
         /// </summary>
+        [SerializeField]
         [JsonProperty("createdAt")]
-        public DateTime CreatedAt { get; set; }
+        public DateTime CreatedAt { get; set; } = default!;
         
         /// <summary>
         /// Email address for the user that created the build.
         /// </summary>
+        [SerializeField]
         [JsonProperty("createdBy")]
-        public string CreatedBy { get; set; }
+        public string CreatedBy { get; set; } = default!;
         
         /// <summary>
         /// When the container image was deleted.
         /// </summary>
+        [SerializeField]
         [JsonProperty("deletedAt")]
-        public DateTime DeletedAt { get; set; }
+        public DateTime DeletedAt { get; set; } = default!;
         
         /// <summary>
         /// When the container image finished being built.
         /// </summary>
+        [SerializeField]
         [JsonProperty("finishedAt")]
-        public DateTime FinishedAt { get; set; }
+        public DateTime FinishedAt { get; set; } = default!;
         
         /// <summary>
         /// Image size in MB.
         /// </summary>
+        [SerializeField]
         [JsonProperty("imageSize")]
-        public float ImageSize { get; set; }
+        public double ImageSize { get; set; } = default!;
         
         /// <summary>
         /// An alias for the container image in our regional registries.
         /// </summary>
+        [SerializeField]
         [JsonProperty("regionalContainerTags")]
-        public List<BuildRegionalContainerTags> RegionalContainerTags { get; set; }
+        public List<BuildRegionalContainerTags> RegionalContainerTags { get; set; } = default!;
         
         /// <summary>
         /// When the container image starts getting built.
         /// </summary>
+        [SerializeField]
         [JsonProperty("startedAt")]
-        public DateTime StartedAt { get; set; }
+        public DateTime StartedAt { get; set; } = default!;
         
         /// <summary>
         /// Status of creating a build.
@@ -91,8 +103,9 @@ namespace Hathora.Models.Shared
         /// `failed`: there was an issue creating and storing the container image in our container registry
         /// </remarks>
         /// </summary>
+        [SerializeField]
         [JsonProperty("status")]
-        public BuildStatus Status { get; set; }
+        public BuildStatus Status { get; set; } = default!;
         
     }
     

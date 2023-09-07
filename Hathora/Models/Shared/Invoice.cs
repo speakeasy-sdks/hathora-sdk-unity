@@ -12,33 +12,42 @@ namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
     using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Billing types
     /// </summary>
+    [Serializable]
     public class Invoice
     {
+        [SerializeField]
         [JsonProperty("amountDue")]
-        public float AmountDue { get; set; }
+        public double AmountDue { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("dueDate")]
-        public DateTime DueDate { get; set; }
+        public DateTime DueDate { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("id")]
-        public string Id { get; set; }
+        public string Id { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("month")]
-        public float Month { get; set; }
+        public double Month { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("pdfUrl")]
-        public string PdfUrl { get; set; }
+        public string PdfUrl { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("status")]
-        public InvoiceStatus Status { get; set; }
+        public InvoiceStatus Status { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("year")]
-        public float Year { get; set; }
+        public double Year { get; set; } = default!;
         
     }
     

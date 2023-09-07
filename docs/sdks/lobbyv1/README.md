@@ -57,7 +57,7 @@ var sdk = new HathoraSDK();
 using(var res = await sdk.LobbyV1.CreatePublicLobbyDeprecatedAsync(new CreatePublicLobbyDeprecatedRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         Local = false,
-        Region = Hathora.Models.Shared.Region.Chicago,
+        Region = Hathora.Models.Shared.Region.Singapore,
     }))
 {
     // handle response
@@ -92,7 +92,7 @@ var sdk = new HathoraSDK();
 using(var res = await sdk.LobbyV1.ListActivePublicLobbiesDeprecatedAsync(new ListActivePublicLobbiesDeprecatedRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         Local = false,
-        Region = Hathora.Models.Shared.Region.Sydney,
+        Region = Hathora.Models.Shared.Region.Singapore,
     }))
 {
     // handle response

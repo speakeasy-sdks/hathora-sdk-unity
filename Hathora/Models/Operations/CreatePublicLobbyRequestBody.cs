@@ -12,18 +12,23 @@ namespace Hathora.Models.Operations
 {
     using Hathora.Models.Shared;
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class CreatePublicLobbyRequestBody
     {
         /// <summary>
         /// User input to initialize the game state. Object must be smaller than 64KB.
         /// </summary>
+        [SerializeField]
         [JsonProperty("initialConfig")]
-        public LobbyInitialConfig InitialConfig { get; set; }
+        public LobbyInitialConfig InitialConfig { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("region")]
-        public Region Region { get; set; }
+        public Region Region { get; set; } = default!;
         
     }
     

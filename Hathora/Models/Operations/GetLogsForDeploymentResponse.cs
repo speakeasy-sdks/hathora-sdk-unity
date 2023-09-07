@@ -13,26 +13,28 @@ namespace Hathora.Models.Operations
     using Hathora.Utils;
     using System;
     using UnityEngine.Networking;
+    using UnityEngine;
     
     
+    [Serializable]
     public class GetLogsForDeploymentResponse: IDisposable
     {
-        
-        public string? ContentType { get; set; }
+        [SerializeField]
+        public string? ContentType { get; set; } = default!;
         
         /// <summary>
         /// Ok
         /// </summary>
-        
+        [SerializeField]
         public MemoryQueueBufferStream? GetLogsForDeployment200TextPlainBinaryString { get; set; }
         
-        
+        [SerializeField]
         public string? GetLogsForDeployment404ApplicationJSONString { get; set; }
         
+        [SerializeField]
+        public int StatusCode { get; set; } = default!;
         
-        public int StatusCode { get; set; }
-        
-        
+        [SerializeField]
         public UnityWebRequest? RawResponse { get; set; }
         
         public void Dispose() {

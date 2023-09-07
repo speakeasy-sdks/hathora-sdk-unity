@@ -30,7 +30,7 @@ var sdk = new HathoraSDK();
 using(var res = await sdk.LobbyV2.CreateLobbyAsync(new Models.Operations.CreateLobbyRequest() {
         CreateLobbyRequest = new Models.Shared.CreateLobbyRequest() {
             InitialConfig = new LobbyInitialConfig() {},
-            Region = Hathora.Models.Shared.Region.Seattle,
+            Region = Hathora.Models.Shared.Region.London,
             Visibility = Hathora.Models.Shared.LobbyVisibility.Private,
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
@@ -69,7 +69,7 @@ var sdk = new HathoraSDK();
 using(var res = await sdk.LobbyV2.CreateLocalLobbyAsync(new CreateLocalLobbyRequest() {
         RequestBody = new CreateLocalLobbyRequestBody() {
             InitialConfig = new LobbyInitialConfig() {},
-            Region = Hathora.Models.Shared.Region.SaoPaulo,
+            Region = Hathora.Models.Shared.Region.Frankfurt,
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         RoomId = "2swovpy1fnunu",
@@ -145,7 +145,7 @@ var sdk = new HathoraSDK();
 using(var res = await sdk.LobbyV2.CreatePublicLobbyAsync(new CreatePublicLobbyRequest() {
         RequestBody = new CreatePublicLobbyRequestBody() {
             InitialConfig = new LobbyInitialConfig() {},
-            Region = Hathora.Models.Shared.Region.London,
+            Region = Hathora.Models.Shared.Region.Sydney,
         },
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         RoomId = "2swovpy1fnunu",
@@ -215,7 +215,7 @@ var sdk = new HathoraSDK();
 
 using(var res = await sdk.LobbyV2.ListActivePublicLobbiesAsync(new ListActivePublicLobbiesRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
-        Region = Hathora.Models.Shared.Region.Frankfurt,
+        Region = Hathora.Models.Shared.Region.Seattle,
     }))
 {
     // handle response

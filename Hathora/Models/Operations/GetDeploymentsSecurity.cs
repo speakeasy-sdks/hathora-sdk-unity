@@ -11,12 +11,16 @@
 namespace Hathora.Models.Operations
 {
     using Hathora.Utils;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class GetDeploymentsSecurity
     {
+        [SerializeField]
         [SpeakeasyMetadata("security:scheme=true,type=http,subType=bearer,name=Authorization")]
-        public string Auth0 { get; set; }
+        public string Auth0 { get; set; } = default!;
         
     }
     

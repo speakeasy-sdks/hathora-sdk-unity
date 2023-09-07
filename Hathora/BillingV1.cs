@@ -87,7 +87,7 @@ namespace Hathora
             {
                 if(Utilities.IsContentTypeMatch("application/json",response.ContentType))
                 {
-                    response.GetBalance200ApplicationJSONDoubleNumber = JsonConvert.DeserializeObject<float>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
+                    response.GetBalance200ApplicationJSONDoubleNumber = JsonConvert.DeserializeObject<double>(httpResponse.downloadHandler.text, new JsonSerializerSettings(){ NullValueHandling = NullValueHandling.Ignore, Converters = new JsonConverter[] { new FlexibleObjectDeserializer(), new DateOnlyConverter() }});
                 }
                 
                 return response;

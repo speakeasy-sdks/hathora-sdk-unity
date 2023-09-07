@@ -11,6 +11,10 @@
 ## SDK Installation
 
 The SDK can either be compiled using `dotnet build` and the resultant `.dll` file can be copied into your Unity project's `Assets` folder, or you can copy the source code directly into your project.
+
+The SDK relies on Newtonsoft's JSON.NET Package which can be installed via the Unity Package Manager.
+
+To do so open the Package Manager via `Window > Package Manager` and click the `+` button then `Add package from git URL...` and enter `com.unity.nuget.newtonsoft-json` and click `Add`.
 <!-- End SDK Installation -->
 
 ## SDK Example Usage

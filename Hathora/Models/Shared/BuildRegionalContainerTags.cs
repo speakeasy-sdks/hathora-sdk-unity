@@ -11,15 +11,20 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class BuildRegionalContainerTags
     {
+        [SerializeField]
         [JsonProperty("containerTag")]
-        public string ContainerTag { get; set; }
+        public string ContainerTag { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("region")]
-        public Region Region { get; set; }
+        public Region Region { get; set; } = default!;
         
     }
     

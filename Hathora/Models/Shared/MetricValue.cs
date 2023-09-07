@@ -11,15 +11,20 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class MetricValue
     {
+        [SerializeField]
         [JsonProperty("timestamp")]
-        public float Timestamp { get; set; }
+        public double Timestamp { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("value")]
-        public float Value { get; set; }
+        public double Value { get; set; } = default!;
         
     }
     

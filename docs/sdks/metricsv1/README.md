@@ -25,16 +25,13 @@ using(var res = await sdk.MetricsV1.GetMetricsAsync(new GetMetricsSecurity() {
         Auth0 = "",
     }, new GetMetricsRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
-        End = 3927.85F,
+        End = 8121.69D,
         Metrics = new List<MetricName>() {
-            Hathora.Models.Shared.MetricName.TotalEgress,
-            Hathora.Models.Shared.MetricName.Cpu,
-            Hathora.Models.Shared.MetricName.Memory,
-            Hathora.Models.Shared.MetricName.Cpu,
+            Hathora.Models.Shared.MetricName.RateEgress,
         },
         ProcessId = "cbfcddd2-0006-43ae-996c-995fff7bed2e",
-        Start = 6481.72F,
-        Step = 20218,
+        Start = 4799.77D,
+        Step = 568045,
     }))
 {
     // handle response

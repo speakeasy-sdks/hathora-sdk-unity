@@ -11,10 +11,14 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class LinkPaymentMethod
     {
+        [SerializeField]
         [JsonProperty("email")]
         public string? Email { get; set; }
         

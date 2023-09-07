@@ -11,18 +11,23 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class CreateLobbyRequest
     {
         /// <summary>
         /// User input to initialize the game state. Object must be smaller than 64KB.
         /// </summary>
+        [SerializeField]
         [JsonProperty("initialConfig")]
-        public LobbyInitialConfig InitialConfig { get; set; }
+        public LobbyInitialConfig InitialConfig { get; set; } = default!;
         
+        [SerializeField]
         [JsonProperty("region")]
-        public Region Region { get; set; }
+        public Region Region { get; set; } = default!;
         
         /// <summary>
         /// Types of lobbies a player can create.
@@ -36,8 +41,9 @@ namespace Hathora.Models.Shared
         /// `local`: for testing with a server running locally
         /// </remarks>
         /// </summary>
+        [SerializeField]
         [JsonProperty("visibility")]
-        public LobbyVisibility Visibility { get; set; }
+        public LobbyVisibility Visibility { get; set; } = default!;
         
     }
     

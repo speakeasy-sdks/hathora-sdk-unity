@@ -11,18 +11,22 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
     /// <summary>
     /// Ok
     /// </summary>
+    [Serializable]
     public class LoginResponse
     {
         /// <summary>
         /// A unique Hathora-signed JWT player token.
         /// </summary>
+        [SerializeField]
         [JsonProperty("token")]
-        public string Token { get; set; }
+        public string Token { get; set; } = default!;
         
     }
     

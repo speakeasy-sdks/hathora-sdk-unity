@@ -13,34 +13,43 @@ namespace Hathora.Models.Operations
     using Hathora.Models.Shared;
     using Hathora.Utils;
     using System.Collections.Generic;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class GetMetricsRequest
     {
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; }
+        public string AppId { get; set; } = default!;
         
         /// <summary>
         /// Unix timestamp. Default is current time.
         /// </summary>
+        [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=end")]
-        public float? End { get; set; }
+        public double? End { get; set; }
         
         /// <summary>
         /// Available metrics to query over time.
         /// </summary>
+        [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=metrics")]
         public List<MetricName>? Metrics { get; set; }
         
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=processId")]
-        public string ProcessId { get; set; }
+        public string ProcessId { get; set; } = default!;
         
         /// <summary>
         /// Unix timestamp. Default is -1 hour from `end`.
         /// </summary>
+        [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=start")]
-        public float? Start { get; set; }
+        public double? Start { get; set; }
         
+        [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=step")]
         public int? Step { get; set; }
         

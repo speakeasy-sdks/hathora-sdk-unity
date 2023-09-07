@@ -13,26 +13,28 @@ namespace Hathora.Models.Operations
     using Hathora.Models.Shared;
     using System;
     using UnityEngine.Networking;
+    using UnityEngine;
     
     
+    [Serializable]
     public class GetRoomInfoDeprecatedResponse: IDisposable
     {
+        [SerializeField]
+        public string? ContentType { get; set; } = default!;
         
-        public string? ContentType { get; set; }
-        
-        
+        [SerializeField]
         public string? GetRoomInfoDeprecated404ApplicationJSONString { get; set; }
         
         /// <summary>
         /// Ok
         /// </summary>
-        
+        [SerializeField]
         public Room? Room { get; set; }
         
+        [SerializeField]
+        public int StatusCode { get; set; } = default!;
         
-        public int StatusCode { get; set; }
-        
-        
+        [SerializeField]
         public UnityWebRequest? RawResponse { get; set; }
         
         public void Dispose() {

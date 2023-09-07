@@ -11,13 +11,17 @@
 namespace Hathora.Models.Shared
 {
     using Newtonsoft.Json;
+    using System;
+    using UnityEngine;
     
     
+    [Serializable]
     public class CreateBuildRequest
     {
         /// <summary>
         /// Build tag to associate a version with a build. It is accessible via getBuildInfo().
         /// </summary>
+        [SerializeField]
         [JsonProperty("buildTag")]
         public string? BuildTag { get; set; }
         
