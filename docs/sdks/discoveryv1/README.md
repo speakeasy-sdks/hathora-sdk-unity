@@ -16,8 +16,13 @@ Returns an array of all regions with a host and port that a client can directly 
 
 ```csharp
 using Hathora;
+using Hathora.Models.Shared;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
 using(var res = await sdk.DiscoveryV1.GetPingServiceEndpointsAsync())
 {

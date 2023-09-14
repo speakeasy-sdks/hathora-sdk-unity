@@ -18,9 +18,9 @@ namespace Hathora
 
     public interface ILogV1SDK
     {
-        Task<GetLogsForAppResponse> GetLogsForAppAsync(GetLogsForAppSecurity security, GetLogsForAppRequest? request = null);
-        Task<GetLogsForDeploymentResponse> GetLogsForDeploymentAsync(GetLogsForDeploymentSecurity security, GetLogsForDeploymentRequest? request = null);
-        Task<GetLogsForProcessResponse> GetLogsForProcessAsync(GetLogsForProcessSecurity security, GetLogsForProcessRequest? request = null);
+        Task<GetLogsForAppResponse> GetLogsForAppAsync(GetLogsForAppRequest? request = null);
+        Task<GetLogsForDeploymentResponse> GetLogsForDeploymentAsync(GetLogsForDeploymentRequest? request = null);
+        Task<GetLogsForProcessResponse> GetLogsForProcessAsync(GetLogsForProcessRequest? request = null);
     }
 
     public class LogV1SDK: ILogV1SDK
@@ -46,7 +46,8 @@ namespace Hathora
         /// <summary>
         /// Returns a stream of logs for an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
         /// </summary>
-        public async Task<GetLogsForAppResponse> GetLogsForAppAsync(GetLogsForAppSecurity security, GetLogsForAppRequest? request = null)
+        [Obsolete("This method will be removed in a future release, please migrate away from it as soon as possible")]
+        public async Task<GetLogsForAppResponse> GetLogsForAppAsync(GetLogsForAppRequest? request = null)
         {
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
@@ -62,7 +63,7 @@ namespace Hathora
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
-            var client = SecuritySerializer.Apply(_defaultClient, security);
+            var client = _securityClient;
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)
@@ -86,7 +87,7 @@ namespace Hathora
             {
                 if(Utilities.IsContentTypeMatch("text/plain",response.ContentType))
                 {
-                    response.GetLogsForApp200TextPlainBinaryString = downloadHandler.Stream;
+                    response.GetLogsForApp200TextPlainByteString = httpResponse.downloadHandler.text;
                 }
                 
                 return response;
@@ -107,7 +108,8 @@ namespace Hathora
         /// <summary>
         /// Returns a stream of logs for a [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) using `appId` and `deploymentId`.
         /// </summary>
-        public async Task<GetLogsForDeploymentResponse> GetLogsForDeploymentAsync(GetLogsForDeploymentSecurity security, GetLogsForDeploymentRequest? request = null)
+        [Obsolete("This method will be removed in a future release, please migrate away from it as soon as possible")]
+        public async Task<GetLogsForDeploymentResponse> GetLogsForDeploymentAsync(GetLogsForDeploymentRequest? request = null)
         {
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
@@ -123,7 +125,7 @@ namespace Hathora
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
-            var client = SecuritySerializer.Apply(_defaultClient, security);
+            var client = _securityClient;
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)
@@ -147,7 +149,7 @@ namespace Hathora
             {
                 if(Utilities.IsContentTypeMatch("text/plain",response.ContentType))
                 {
-                    response.GetLogsForDeployment200TextPlainBinaryString = downloadHandler.Stream;
+                    response.GetLogsForDeployment200TextPlainByteString = httpResponse.downloadHandler.text;
                 }
                 
                 return response;
@@ -168,7 +170,7 @@ namespace Hathora
         /// <summary>
         /// Returns a stream of logs for a [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
         /// </summary>
-        public async Task<GetLogsForProcessResponse> GetLogsForProcessAsync(GetLogsForProcessSecurity security, GetLogsForProcessRequest? request = null)
+        public async Task<GetLogsForProcessResponse> GetLogsForProcessAsync(GetLogsForProcessRequest? request = null)
         {
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
@@ -184,7 +186,7 @@ namespace Hathora
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
-            var client = SecuritySerializer.Apply(_defaultClient, security);
+            var client = _securityClient;
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)
@@ -208,7 +210,7 @@ namespace Hathora
             {
                 if(Utilities.IsContentTypeMatch("text/plain",response.ContentType))
                 {
-                    response.GetLogsForProcess200TextPlainBinaryString = downloadHandler.Stream;
+                    response.GetLogsForProcess200TextPlainByteString = httpResponse.downloadHandler.text;
                 }
                 
                 return response;

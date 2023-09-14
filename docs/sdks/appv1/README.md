@@ -21,13 +21,14 @@ Create a new [application](https://hathora.dev/docs/concepts/hathora-entities#ap
 ```csharp
 using Hathora;
 using Hathora.Models.Shared;
-using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.AppV1.CreateAppAsync(new CreateAppSecurity() {
-        Auth0 = "",
-    }, new AppConfig() {
+using(var res = await sdk.AppV1.CreateAppAsync(new AppConfig() {
         AppName = "minecraft",
         AuthConfiguration = new AuthConfiguration() {
             Anonymous = new RecordStringNever() {},
@@ -44,10 +45,9 @@ using(var res = await sdk.AppV1.CreateAppAsync(new CreateAppSecurity() {
 
 ### Parameters
 
-| Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
-| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `request`                                                         | [AppConfig](../../models/shared/AppConfig.md)                     | :heavy_check_mark:                                                | The request object to use for the request.                        |
-| `security`                                                        | [CreateAppSecurity](../../models/operations/CreateAppSecurity.md) | :heavy_check_mark:                                                | The security requirements to use for the request.                 |
+| Parameter                                     | Type                                          | Required                                      | Description                                   |
+| --------------------------------------------- | --------------------------------------------- | --------------------------------------------- | --------------------------------------------- |
+| `request`                                     | [AppConfig](../../models/shared/AppConfig.md) | :heavy_check_mark:                            | The request object to use for the request.    |
 
 
 ### Response
@@ -63,13 +63,16 @@ Delete an [application](https://hathora.dev/docs/concepts/hathora-entities#appli
 
 ```csharp
 using Hathora;
+using Hathora.Models.Shared;
 using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.AppV1.DeleteAppAsync(new DeleteAppSecurity() {
-        Auth0 = "",
-    }, new DeleteAppRequest() {
+using(var res = await sdk.AppV1.DeleteAppAsync(new DeleteAppRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
     }))
 {
@@ -79,10 +82,9 @@ using(var res = await sdk.AppV1.DeleteAppAsync(new DeleteAppSecurity() {
 
 ### Parameters
 
-| Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
-| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `request`                                                         | [DeleteAppRequest](../../models/operations/DeleteAppRequest.md)   | :heavy_check_mark:                                                | The request object to use for the request.                        |
-| `security`                                                        | [DeleteAppSecurity](../../models/operations/DeleteAppSecurity.md) | :heavy_check_mark:                                                | The security requirements to use for the request.                 |
+| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `request`                                                       | [DeleteAppRequest](../../models/operations/DeleteAppRequest.md) | :heavy_check_mark:                                              | The request object to use for the request.                      |
 
 
 ### Response
@@ -98,13 +100,16 @@ Get details for an [application](https://hathora.dev/docs/concepts/hathora-entit
 
 ```csharp
 using Hathora;
+using Hathora.Models.Shared;
 using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.AppV1.GetAppInfoAsync(new GetAppInfoSecurity() {
-        Auth0 = "",
-    }, new GetAppInfoRequest() {
+using(var res = await sdk.AppV1.GetAppInfoAsync(new GetAppInfoRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
     }))
 {
@@ -114,10 +119,9 @@ using(var res = await sdk.AppV1.GetAppInfoAsync(new GetAppInfoSecurity() {
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `request`                                                           | [GetAppInfoRequest](../../models/operations/GetAppInfoRequest.md)   | :heavy_check_mark:                                                  | The request object to use for the request.                          |
-| `security`                                                          | [GetAppInfoSecurity](../../models/operations/GetAppInfoSecurity.md) | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
+| Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `request`                                                         | [GetAppInfoRequest](../../models/operations/GetAppInfoRequest.md) | :heavy_check_mark:                                                | The request object to use for the request.                        |
 
 
 ### Response
@@ -133,23 +137,19 @@ Returns an unsorted list of your organization’s [applications](https://hathora
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.AppV1.GetAppsAsync(new GetAppsSecurity() {
-        Auth0 = "",
-    }))
+using(var res = await sdk.AppV1.GetAppsAsync())
 {
     // handle response
 }
 ```
-
-### Parameters
-
-| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
-| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
-| `security`                                                    | [GetAppsSecurity](../../models/operations/GetAppsSecurity.md) | :heavy_check_mark:                                            | The security requirements to use for the request.             |
 
 
 ### Response
@@ -165,14 +165,16 @@ Update data for an existing [application](https://hathora.dev/docs/concepts/hath
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.AppV1.UpdateAppAsync(new UpdateAppSecurity() {
-        Auth0 = "",
-    }, new UpdateAppRequest() {
+using(var res = await sdk.AppV1.UpdateAppAsync(new UpdateAppRequest() {
         AppConfig = new AppConfig() {
             AppName = "minecraft",
             AuthConfiguration = new AuthConfiguration() {
@@ -192,10 +194,9 @@ using(var res = await sdk.AppV1.UpdateAppAsync(new UpdateAppSecurity() {
 
 ### Parameters
 
-| Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
-| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
-| `request`                                                         | [UpdateAppRequest](../../models/operations/UpdateAppRequest.md)   | :heavy_check_mark:                                                | The request object to use for the request.                        |
-| `security`                                                        | [UpdateAppSecurity](../../models/operations/UpdateAppSecurity.md) | :heavy_check_mark:                                                | The security requirements to use for the request.                 |
+| Parameter                                                       | Type                                                            | Required                                                        | Description                                                     |
+| --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- | --------------------------------------------------------------- |
+| `request`                                                       | [UpdateAppRequest](../../models/operations/UpdateAppRequest.md) | :heavy_check_mark:                                              | The request object to use for the request.                      |
 
 
 ### Response

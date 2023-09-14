@@ -16,14 +16,16 @@ Get metrics for a [process](https://hathora.dev/docs/concepts/hathora-entities#p
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.MetricsV1.GetMetricsAsync(new GetMetricsSecurity() {
-        Auth0 = "",
-    }, new GetMetricsRequest() {
+using(var res = await sdk.MetricsV1.GetMetricsAsync(new GetMetricsRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         End = 8121.69D,
         Metrics = new List<MetricName>() {
@@ -40,10 +42,9 @@ using(var res = await sdk.MetricsV1.GetMetricsAsync(new GetMetricsSecurity() {
 
 ### Parameters
 
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `request`                                                           | [GetMetricsRequest](../../models/operations/GetMetricsRequest.md)   | :heavy_check_mark:                                                  | The request object to use for the request.                          |
-| `security`                                                          | [GetMetricsSecurity](../../models/operations/GetMetricsSecurity.md) | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
+| Parameter                                                         | Type                                                              | Required                                                          | Description                                                       |
+| ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- | ----------------------------------------------------------------- |
+| `request`                                                         | [GetMetricsRequest](../../models/operations/GetMetricsRequest.md) | :heavy_check_mark:                                                | The request object to use for the request.                        |
 
 
 ### Response

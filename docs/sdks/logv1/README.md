@@ -6,26 +6,30 @@ Operations to get logs by [applications](https://hathora.dev/docs/concepts/hatho
 
 ### Available Operations
 
-* [GetLogsForApp](#getlogsforapp) - Returns a stream of logs for an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
-* [GetLogsForDeployment](#getlogsfordeployment) - Returns a stream of logs for a [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) using `appId` and `deploymentId`.
+* [~~GetLogsForApp~~](#getlogsforapp) - Returns a stream of logs for an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. :warning: **Deprecated**
+* [~~GetLogsForDeployment~~](#getlogsfordeployment) - Returns a stream of logs for a [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) using `appId` and `deploymentId`. :warning: **Deprecated**
 * [GetLogsForProcess](#getlogsforprocess) - Returns a stream of logs for a [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
 
-## GetLogsForApp
+## ~~GetLogsForApp~~
 
 Returns a stream of logs for an [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
+
+> :warning: **DEPRECATED**: This will be removed in a future release, please migrate away from it as soon as possible.
 
 ### Example Usage
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.LogV1.GetLogsForAppAsync(new GetLogsForAppSecurity() {
-        Auth0 = "",
-    }, new GetLogsForAppRequest() {
+using(var res = await sdk.LogV1.GetLogsForAppAsync(new GetLogsForAppRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         Follow = false,
         Region = Hathora.Models.Shared.Region.SaoPaulo,
@@ -38,10 +42,9 @@ using(var res = await sdk.LogV1.GetLogsForAppAsync(new GetLogsForAppSecurity() {
 
 ### Parameters
 
-| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
-| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
-| `request`                                                                 | [GetLogsForAppRequest](../../models/operations/GetLogsForAppRequest.md)   | :heavy_check_mark:                                                        | The request object to use for the request.                                |
-| `security`                                                                | [GetLogsForAppSecurity](../../models/operations/GetLogsForAppSecurity.md) | :heavy_check_mark:                                                        | The security requirements to use for the request.                         |
+| Parameter                                                               | Type                                                                    | Required                                                                | Description                                                             |
+| ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------- |
+| `request`                                                               | [GetLogsForAppRequest](../../models/operations/GetLogsForAppRequest.md) | :heavy_check_mark:                                                      | The request object to use for the request.                              |
 
 
 ### Response
@@ -49,21 +52,26 @@ using(var res = await sdk.LogV1.GetLogsForAppAsync(new GetLogsForAppSecurity() {
 **[GetLogsForAppResponse](../../models/operations/GetLogsForAppResponse.md)**
 
 
-## GetLogsForDeployment
+## ~~GetLogsForDeployment~~
 
 Returns a stream of logs for a [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) using `appId` and `deploymentId`.
+
+> :warning: **DEPRECATED**: This will be removed in a future release, please migrate away from it as soon as possible.
 
 ### Example Usage
 
 ```csharp
 using Hathora;
+using Hathora.Models.Shared;
 using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.LogV1.GetLogsForDeploymentAsync(new GetLogsForDeploymentSecurity() {
-        Auth0 = "",
-    }, new GetLogsForDeploymentRequest() {
+using(var res = await sdk.LogV1.GetLogsForDeploymentAsync(new GetLogsForDeploymentRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         DeploymentId = 1,
         Follow = false,
@@ -76,10 +84,9 @@ using(var res = await sdk.LogV1.GetLogsForDeploymentAsync(new GetLogsForDeployme
 
 ### Parameters
 
-| Parameter                                                                               | Type                                                                                    | Required                                                                                | Description                                                                             |
-| --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- |
-| `request`                                                                               | [GetLogsForDeploymentRequest](../../models/operations/GetLogsForDeploymentRequest.md)   | :heavy_check_mark:                                                                      | The request object to use for the request.                                              |
-| `security`                                                                              | [GetLogsForDeploymentSecurity](../../models/operations/GetLogsForDeploymentSecurity.md) | :heavy_check_mark:                                                                      | The security requirements to use for the request.                                       |
+| Parameter                                                                             | Type                                                                                  | Required                                                                              | Description                                                                           |
+| ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------- |
+| `request`                                                                             | [GetLogsForDeploymentRequest](../../models/operations/GetLogsForDeploymentRequest.md) | :heavy_check_mark:                                                                    | The request object to use for the request.                                            |
 
 
 ### Response
@@ -95,13 +102,16 @@ Returns a stream of logs for a [process](https://hathora.dev/docs/concepts/hatho
 
 ```csharp
 using Hathora;
+using Hathora.Models.Shared;
 using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.LogV1.GetLogsForProcessAsync(new GetLogsForProcessSecurity() {
-        Auth0 = "",
-    }, new GetLogsForProcessRequest() {
+using(var res = await sdk.LogV1.GetLogsForProcessAsync(new GetLogsForProcessRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         Follow = false,
         ProcessId = "cbfcddd2-0006-43ae-996c-995fff7bed2e",
@@ -114,10 +124,9 @@ using(var res = await sdk.LogV1.GetLogsForProcessAsync(new GetLogsForProcessSecu
 
 ### Parameters
 
-| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
-| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `request`                                                                         | [GetLogsForProcessRequest](../../models/operations/GetLogsForProcessRequest.md)   | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
-| `security`                                                                        | [GetLogsForProcessSecurity](../../models/operations/GetLogsForProcessSecurity.md) | :heavy_check_mark:                                                                | The security requirements to use for the request.                                 |
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [GetLogsForProcessRequest](../../models/operations/GetLogsForProcessRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
 
 
 ### Response

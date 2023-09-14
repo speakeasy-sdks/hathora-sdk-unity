@@ -19,7 +19,7 @@ namespace Hathora.Models.Shared
     public class CreateBuildRequest
     {
         /// <summary>
-        /// Build tag to associate a version with a build. It is accessible via getBuildInfo().
+        /// Tag to associate an external version with a build. It is accessible via [`GetBuildInfo()`](https://hathora.dev/api#tag/BuildV1/operation/GetBuildInfo).
         /// </summary>
         [SerializeField]
         [JsonProperty("buildTag")]

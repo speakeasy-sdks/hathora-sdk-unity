@@ -37,7 +37,7 @@ namespace Hathora.Models.Shared
         public string AppId { get; set; } = default!;
         
         /// <summary>
-        /// System generated id for a build associated with this deployment. Increments by 1.
+        /// System generated id for a build. Increments by 1.
         /// </summary>
         [SerializeField]
         [JsonProperty("buildId")]

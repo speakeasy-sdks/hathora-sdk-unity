@@ -27,7 +27,7 @@ namespace Hathora
         Task<CreatePublicLobbyResponse> CreatePublicLobbyAsync(CreatePublicLobbyRequest request);
         Task<GetLobbyInfoResponse> GetLobbyInfoAsync(GetLobbyInfoRequest? request = null);
         Task<ListActivePublicLobbiesResponse> ListActivePublicLobbiesAsync(ListActivePublicLobbiesRequest? request = null);
-        Task<SetLobbyStateResponse> SetLobbyStateAsync(SetLobbyStateSecurity security, Models.Operations.SetLobbyStateRequest request);
+        Task<SetLobbyStateResponse> SetLobbyStateAsync(Models.Operations.SetLobbyStateRequest request);
     }
 
     public class LobbyV2SDK: ILobbyV2SDK
@@ -51,7 +51,7 @@ namespace Hathora
         
 
         /// <summary>
-        /// Create a new [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
+        /// Create a new lobby for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
         /// </summary>
         public async Task<CreateLobbyResponse> CreateLobbyAsync(Models.Operations.CreateLobbyRequest request)
         {
@@ -513,7 +513,7 @@ namespace Hathora
         
 
         /// <summary>
-        /// Get details for an existing [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) using `appId` and `roomId`.
+        /// Get details for an existing lobby using `appId` and `roomId`.
         /// </summary>
         public async Task<GetLobbyInfoResponse> GetLobbyInfoAsync(GetLobbyInfoRequest? request = null)
         {
@@ -574,7 +574,7 @@ namespace Hathora
         
 
         /// <summary>
-        /// Get all active [lobbies](https://hathora.dev/docs/concepts/hathora-entities#lobby) for a given [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a `region`.
+        /// Get all active lobbies for a given [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a `region`.
         /// </summary>
         public async Task<ListActivePublicLobbiesResponse> ListActivePublicLobbiesAsync(ListActivePublicLobbiesRequest? request = null)
         {
@@ -626,9 +626,9 @@ namespace Hathora
         
 
         /// <summary>
-        /// Set the state of a [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) using `appId` and `roomId`. State is intended to be set by the server and must be smaller than 1MB.
+        /// Set the state of a lobby using `appId` and `roomId`. State is intended to be set by the server and must be smaller than 1MB.
         /// </summary>
-        public async Task<SetLobbyStateResponse> SetLobbyStateAsync(SetLobbyStateSecurity security, Models.Operations.SetLobbyStateRequest request)
+        public async Task<SetLobbyStateResponse> SetLobbyStateAsync(Models.Operations.SetLobbyStateRequest request)
         {
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
@@ -654,7 +654,7 @@ namespace Hathora
                 httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
             }
             
-            var client = SecuritySerializer.Apply(_defaultClient, security);
+            var client = _securityClient;
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)

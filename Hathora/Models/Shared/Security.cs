@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 #nullable enable
-namespace Hathora.Models.Operations
+namespace Hathora.Models.Shared
 {
     using Hathora.Utils;
     using System;
@@ -16,11 +16,11 @@ namespace Hathora.Models.Operations
     
     
     [Serializable]
-    public class InitStripeCustomerPortalUrlSecurity
+    public class Security
     {
         [SerializeField]
         [SpeakeasyMetadata("security:scheme=true,type=http,subType=bearer,name=Authorization")]
-        public string Auth0 { get; set; } = default!;
+        public string HathoraDevToken { get; set; } = default!;
         
     }
     

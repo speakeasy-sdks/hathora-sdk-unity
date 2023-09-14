@@ -6,26 +6,30 @@ Operations to create and manage [lobbies](https://hathora.dev/docs/concepts/hath
 
 ### Available Operations
 
-* [CreateLobby](#createlobby) - Create a new [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
+* [CreateLobby](#createlobby) - Create a new lobby for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
 * [~~CreateLocalLobby~~](#createlocallobby) - :warning: **Deprecated**
 * [~~CreatePrivateLobby~~](#createprivatelobby) - :warning: **Deprecated**
 * [~~CreatePublicLobby~~](#createpubliclobby) - :warning: **Deprecated**
-* [GetLobbyInfo](#getlobbyinfo) - Get details for an existing [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) using `appId` and `roomId`.
-* [ListActivePublicLobbies](#listactivepubliclobbies) - Get all active [lobbies](https://hathora.dev/docs/concepts/hathora-entities#lobby) for a given [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a `region`.
-* [SetLobbyState](#setlobbystate) - Set the state of a [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) using `appId` and `roomId`. State is intended to be set by the server and must be smaller than 1MB.
+* [GetLobbyInfo](#getlobbyinfo) - Get details for an existing lobby using `appId` and `roomId`.
+* [ListActivePublicLobbies](#listactivepubliclobbies) - Get all active lobbies for a given [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a `region`.
+* [SetLobbyState](#setlobbystate) - Set the state of a lobby using `appId` and `roomId`. State is intended to be set by the server and must be smaller than 1MB.
 
 ## CreateLobby
 
-Create a new [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
+Create a new lobby for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
 
 ### Example Usage
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
 using(var res = await sdk.LobbyV2.CreateLobbyAsync(new Models.Operations.CreateLobbyRequest() {
         CreateLobbyRequest = new Models.Shared.CreateLobbyRequest() {
@@ -61,10 +65,14 @@ using(var res = await sdk.LobbyV2.CreateLobbyAsync(new Models.Operations.CreateL
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
 using(var res = await sdk.LobbyV2.CreateLocalLobbyAsync(new CreateLocalLobbyRequest() {
         RequestBody = new CreateLocalLobbyRequestBody() {
@@ -99,10 +107,14 @@ using(var res = await sdk.LobbyV2.CreateLocalLobbyAsync(new CreateLocalLobbyRequ
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
 using(var res = await sdk.LobbyV2.CreatePrivateLobbyAsync(new CreatePrivateLobbyRequest() {
         RequestBody = new CreatePrivateLobbyRequestBody() {
@@ -137,10 +149,14 @@ using(var res = await sdk.LobbyV2.CreatePrivateLobbyAsync(new CreatePrivateLobby
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
 using(var res = await sdk.LobbyV2.CreatePublicLobbyAsync(new CreatePublicLobbyRequest() {
         RequestBody = new CreatePublicLobbyRequestBody() {
@@ -169,15 +185,20 @@ using(var res = await sdk.LobbyV2.CreatePublicLobbyAsync(new CreatePublicLobbyRe
 
 ## GetLobbyInfo
 
-Get details for an existing [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) using `appId` and `roomId`.
+Get details for an existing lobby using `appId` and `roomId`.
 
 ### Example Usage
 
 ```csharp
 using Hathora;
+using Hathora.Models.Shared;
 using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
 using(var res = await sdk.LobbyV2.GetLobbyInfoAsync(new GetLobbyInfoRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
@@ -202,16 +223,20 @@ using(var res = await sdk.LobbyV2.GetLobbyInfoAsync(new GetLobbyInfoRequest() {
 
 ## ListActivePublicLobbies
 
-Get all active [lobbies](https://hathora.dev/docs/concepts/hathora-entities#lobby) for a given [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a `region`.
+Get all active lobbies for a given [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`. Filter the array by optionally passing in a `region`.
 
 ### Example Usage
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
 using(var res = await sdk.LobbyV2.ListActivePublicLobbiesAsync(new ListActivePublicLobbiesRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
@@ -236,20 +261,22 @@ using(var res = await sdk.LobbyV2.ListActivePublicLobbiesAsync(new ListActivePub
 
 ## SetLobbyState
 
-Set the state of a [lobby](https://hathora.dev/docs/concepts/hathora-entities#lobby) using `appId` and `roomId`. State is intended to be set by the server and must be smaller than 1MB.
+Set the state of a lobby using `appId` and `roomId`. State is intended to be set by the server and must be smaller than 1MB.
 
 ### Example Usage
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.LobbyV2.SetLobbyStateAsync(new SetLobbyStateSecurity() {
-        Auth0 = "",
-    }, new Models.Operations.SetLobbyStateRequest() {
+using(var res = await sdk.LobbyV2.SetLobbyStateAsync(new Models.Operations.SetLobbyStateRequest() {
         SetLobbyStateRequest = new Models.Shared.SetLobbyStateRequest() {
             State = new SetLobbyStateRequestState() {},
         },
@@ -266,7 +293,6 @@ using(var res = await sdk.LobbyV2.SetLobbyStateAsync(new SetLobbyStateSecurity()
 | Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
 | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | `request`                                                                                 | [Models.Operations.SetLobbyStateRequest](../../models/operations/SetLobbyStateRequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
-| `security`                                                                                | [SetLobbyStateSecurity](../../models/operations/SetLobbyStateSecurity.md)                 | :heavy_check_mark:                                                                        | The security requirements to use for the request.                                         |
 
 
 ### Response

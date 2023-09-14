@@ -12,7 +12,11 @@
 using Hathora;
 using Hathora.Models.Shared;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
 using(var res = await sdk.ManagementV1.SendVerificationEmailAsync(new VerificationEmailRequest() {
         UserId = "minus",

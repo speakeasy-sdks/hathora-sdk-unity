@@ -6,26 +6,28 @@ Operations that allow you configure and manage an application's [build](https://
 
 ### Available Operations
 
-* [CreateDeployment](#createdeployment) - Create a new [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) and [build](https://hathora.dev/docs/concepts/hathora-entities#build).
-* [GetDeploymentInfo](#getdeploymentinfo) - Get details for an existing [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) using `appId`.
-* [GetDeployments](#getdeployments) - Returns an array of [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) objects for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
+* [CreateDeployment](#createdeployment) - Create a new [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment). Creating a new deployment means all new rooms created will use the latest deployment configuration, but existing games in progress will not be affected.
+* [GetDeploymentInfo](#getdeploymentinfo) - Get details for a [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment).
+* [GetDeployments](#getdeployments) - Returns an array of [deployments](https://hathora.dev/docs/concepts/hathora-entities#deployment) for an [application](https://hathora.dev/docs/concepts/hathora-entities#application).
 
 ## CreateDeployment
 
-Create a new [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) and [build](https://hathora.dev/docs/concepts/hathora-entities#build).
+Create a new [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment). Creating a new deployment means all new rooms created will use the latest deployment configuration, but existing games in progress will not be affected.
 
 ### Example Usage
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.DeploymentV1.CreateDeploymentAsync(new CreateDeploymentSecurity() {
-        Auth0 = "",
-    }, new CreateDeploymentRequest() {
+using(var res = await sdk.DeploymentV1.CreateDeploymentAsync(new CreateDeploymentRequest() {
         DeploymentConfig = new DeploymentConfig() {
             AdditionalContainerPorts = new List<ContainerPort>() {
                 new ContainerPort() {
@@ -55,10 +57,9 @@ using(var res = await sdk.DeploymentV1.CreateDeploymentAsync(new CreateDeploymen
 
 ### Parameters
 
-| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
-| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `request`                                                                       | [CreateDeploymentRequest](../../models/operations/CreateDeploymentRequest.md)   | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
-| `security`                                                                      | [CreateDeploymentSecurity](../../models/operations/CreateDeploymentSecurity.md) | :heavy_check_mark:                                                              | The security requirements to use for the request.                               |
+| Parameter                                                                     | Type                                                                          | Required                                                                      | Description                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
+| `request`                                                                     | [CreateDeploymentRequest](../../models/operations/CreateDeploymentRequest.md) | :heavy_check_mark:                                                            | The request object to use for the request.                                    |
 
 
 ### Response
@@ -68,19 +69,22 @@ using(var res = await sdk.DeploymentV1.CreateDeploymentAsync(new CreateDeploymen
 
 ## GetDeploymentInfo
 
-Get details for an existing [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) using `appId`.
+Get details for a [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment).
 
 ### Example Usage
 
 ```csharp
 using Hathora;
+using Hathora.Models.Shared;
 using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.DeploymentV1.GetDeploymentInfoAsync(new GetDeploymentInfoSecurity() {
-        Auth0 = "",
-    }, new GetDeploymentInfoRequest() {
+using(var res = await sdk.DeploymentV1.GetDeploymentInfoAsync(new GetDeploymentInfoRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         DeploymentId = 1,
     }))
@@ -91,10 +95,9 @@ using(var res = await sdk.DeploymentV1.GetDeploymentInfoAsync(new GetDeploymentI
 
 ### Parameters
 
-| Parameter                                                                         | Type                                                                              | Required                                                                          | Description                                                                       |
-| --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
-| `request`                                                                         | [GetDeploymentInfoRequest](../../models/operations/GetDeploymentInfoRequest.md)   | :heavy_check_mark:                                                                | The request object to use for the request.                                        |
-| `security`                                                                        | [GetDeploymentInfoSecurity](../../models/operations/GetDeploymentInfoSecurity.md) | :heavy_check_mark:                                                                | The security requirements to use for the request.                                 |
+| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
+| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
+| `request`                                                                       | [GetDeploymentInfoRequest](../../models/operations/GetDeploymentInfoRequest.md) | :heavy_check_mark:                                                              | The request object to use for the request.                                      |
 
 
 ### Response
@@ -104,19 +107,22 @@ using(var res = await sdk.DeploymentV1.GetDeploymentInfoAsync(new GetDeploymentI
 
 ## GetDeployments
 
-Returns an array of [deployment](https://hathora.dev/docs/concepts/hathora-entities#deployment) objects for an existing [application](https://hathora.dev/docs/concepts/hathora-entities#application) using `appId`.
+Returns an array of [deployments](https://hathora.dev/docs/concepts/hathora-entities#deployment) for an [application](https://hathora.dev/docs/concepts/hathora-entities#application).
 
 ### Example Usage
 
 ```csharp
 using Hathora;
+using Hathora.Models.Shared;
 using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.DeploymentV1.GetDeploymentsAsync(new GetDeploymentsSecurity() {
-        Auth0 = "",
-    }, new GetDeploymentsRequest() {
+using(var res = await sdk.DeploymentV1.GetDeploymentsAsync(new GetDeploymentsRequest() {
         AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
     }))
 {
@@ -126,10 +132,9 @@ using(var res = await sdk.DeploymentV1.GetDeploymentsAsync(new GetDeploymentsSec
 
 ### Parameters
 
-| Parameter                                                                   | Type                                                                        | Required                                                                    | Description                                                                 |
-| --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| `request`                                                                   | [GetDeploymentsRequest](../../models/operations/GetDeploymentsRequest.md)   | :heavy_check_mark:                                                          | The request object to use for the request.                                  |
-| `security`                                                                  | [GetDeploymentsSecurity](../../models/operations/GetDeploymentsSecurity.md) | :heavy_check_mark:                                                          | The security requirements to use for the request.                           |
+| Parameter                                                                 | Type                                                                      | Required                                                                  | Description                                                               |
+| ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------- |
+| `request`                                                                 | [GetDeploymentsRequest](../../models/operations/GetDeploymentsRequest.md) | :heavy_check_mark:                                                        | The request object to use for the request.                                |
 
 
 ### Response

@@ -15,9 +15,6 @@ namespace Hathora.Models.Shared
     using UnityEngine;
     
     
-    /// <summary>
-    /// Region to filter by. If omitted, active public lobbies in all regions will be returned.
-    /// </summary>
     public enum Region
     {
     	[JsonProperty("Seattle")]

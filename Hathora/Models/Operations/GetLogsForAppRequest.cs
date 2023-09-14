@@ -27,9 +27,6 @@ namespace Hathora.Models.Operations
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=follow")]
         public bool? Follow { get; set; }
         
-        /// <summary>
-        /// Region to filter by. If omitted, active public lobbies in all regions will be returned.
-        /// </summary>
         [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=region")]
         public Region? Region { get; set; }

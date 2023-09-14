@@ -4,13 +4,14 @@
 ```csharp
 using Hathora;
 using Hathora.Models.Shared;
-using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.AppV1.CreateAppAsync(new CreateAppSecurity() {
-        Auth0 = "",
-    }, new AppConfig() {
+using(var res = await sdk.AppV1.CreateAppAsync(new AppConfig() {
         AppName = "minecraft",
         AuthConfiguration = new AuthConfiguration() {
             Anonymous = new RecordStringNever() {},

@@ -13,23 +13,19 @@
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.BillingV1.GetBalanceAsync(new GetBalanceSecurity() {
-        Auth0 = "",
-    }))
+using(var res = await sdk.BillingV1.GetBalanceAsync())
 {
     // handle response
 }
 ```
-
-### Parameters
-
-| Parameter                                                           | Type                                                                | Required                                                            | Description                                                         |
-| ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| `security`                                                          | [GetBalanceSecurity](../../models/operations/GetBalanceSecurity.md) | :heavy_check_mark:                                                  | The security requirements to use for the request.                   |
 
 
 ### Response
@@ -43,23 +39,19 @@ using(var res = await sdk.BillingV1.GetBalanceAsync(new GetBalanceSecurity() {
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.BillingV1.GetInvoicesAsync(new GetInvoicesSecurity() {
-        Auth0 = "",
-    }))
+using(var res = await sdk.BillingV1.GetInvoicesAsync())
 {
     // handle response
 }
 ```
-
-### Parameters
-
-| Parameter                                                             | Type                                                                  | Required                                                              | Description                                                           |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| `security`                                                            | [GetInvoicesSecurity](../../models/operations/GetInvoicesSecurity.md) | :heavy_check_mark:                                                    | The security requirements to use for the request.                     |
 
 
 ### Response
@@ -73,23 +65,19 @@ using(var res = await sdk.BillingV1.GetInvoicesAsync(new GetInvoicesSecurity() {
 
 ```csharp
 using Hathora;
-using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.BillingV1.GetPaymentMethodAsync(new GetPaymentMethodSecurity() {
-        Auth0 = "",
-    }))
+using(var res = await sdk.BillingV1.GetPaymentMethodAsync())
 {
     // handle response
 }
 ```
-
-### Parameters
-
-| Parameter                                                                       | Type                                                                            | Required                                                                        | Description                                                                     |
-| ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| `security`                                                                      | [GetPaymentMethodSecurity](../../models/operations/GetPaymentMethodSecurity.md) | :heavy_check_mark:                                                              | The security requirements to use for the request.                               |
 
 
 ### Response
@@ -104,13 +92,14 @@ using(var res = await sdk.BillingV1.GetPaymentMethodAsync(new GetPaymentMethodSe
 ```csharp
 using Hathora;
 using Hathora.Models.Shared;
-using Hathora.Models.Operations;
 
-var sdk = new HathoraSDK();
+var sdk = new HathoraSDK(
+    security: new Security() {
+        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
+    }
+);
 
-using(var res = await sdk.BillingV1.InitStripeCustomerPortalUrlAsync(new InitStripeCustomerPortalUrlSecurity() {
-        Auth0 = "",
-    }, new CustomerPortalUrl() {
+using(var res = await sdk.BillingV1.InitStripeCustomerPortalUrlAsync(new CustomerPortalUrl() {
         ReturnUrl = "quibusdam",
     }))
 {
@@ -120,10 +109,9 @@ using(var res = await sdk.BillingV1.InitStripeCustomerPortalUrlAsync(new InitStr
 
 ### Parameters
 
-| Parameter                                                                                             | Type                                                                                                  | Required                                                                                              | Description                                                                                           |
-| ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| `request`                                                                                             | [CustomerPortalUrl](../../models/shared/CustomerPortalUrl.md)                                         | :heavy_check_mark:                                                                                    | The request object to use for the request.                                                            |
-| `security`                                                                                            | [InitStripeCustomerPortalUrlSecurity](../../models/operations/InitStripeCustomerPortalUrlSecurity.md) | :heavy_check_mark:                                                                                    | The security requirements to use for the request.                                                     |
+| Parameter                                                     | Type                                                          | Required                                                      | Description                                                   |
+| ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- | ------------------------------------------------------------- |
+| `request`                                                     | [CustomerPortalUrl](../../models/shared/CustomerPortalUrl.md) | :heavy_check_mark:                                            | The request object to use for the request.                    |
 
 
 ### Response

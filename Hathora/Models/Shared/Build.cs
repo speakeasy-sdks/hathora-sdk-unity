@@ -17,7 +17,7 @@ namespace Hathora.Models.Shared
     
     
     /// <summary>
-    /// Build is a versioned artifact for a game server's container image and its data.
+    /// A build represents a game server artifact and its associated metadata.
     /// </summary>
     [Serializable]
     public class Build
@@ -41,7 +41,7 @@ namespace Hathora.Models.Shared
         public string BuildTag { get; set; } = default!;
         
         /// <summary>
-        /// When a new `buildId` is generated.
+        /// When [`CreateBuild()`](https://hathora.dev/api#tag/BuildV1/operation/CreateBuild) is called.
         /// </summary>
         [SerializeField]
         [JsonProperty("createdAt")]
@@ -55,52 +55,52 @@ namespace Hathora.Models.Shared
         public string CreatedBy { get; set; } = default!;
         
         /// <summary>
-        /// When the container image was deleted.
+        /// When the build was deleted.
         /// </summary>
         [SerializeField]
         [JsonProperty("deletedAt")]
         public DateTime DeletedAt { get; set; } = default!;
         
         /// <summary>
-        /// When the container image finished being built.
+        /// When [`RunBuild()`](https://hathora.dev/api#tag/BuildV1/operation/RunBuild) finished executing.
         /// </summary>
         [SerializeField]
         [JsonProperty("finishedAt")]
         public DateTime FinishedAt { get; set; } = default!;
         
         /// <summary>
-        /// Image size in MB.
+        /// The size (in bytes) of the Docker image built by Hathora.
         /// </summary>
         [SerializeField]
         [JsonProperty("imageSize")]
         public double ImageSize { get; set; } = default!;
         
         /// <summary>
-        /// An alias for the container image in our regional registries.
+        /// Identifiers for the containers stored in Hathora's registries.
         /// </summary>
         [SerializeField]
         [JsonProperty("regionalContainerTags")]
         public List<BuildRegionalContainerTags> RegionalContainerTags { get; set; } = default!;
         
         /// <summary>
-        /// When the container image starts getting built.
+        /// When [`RunBuild()`](https://hathora.dev/api#tag/BuildV1/operation/RunBuild) is called.
         /// </summary>
         [SerializeField]
         [JsonProperty("startedAt")]
         public DateTime StartedAt { get; set; } = default!;
         
         /// <summary>
-        /// Status of creating a build.
+        /// Current status of your build.
         /// 
         /// <remarks>
         /// 
-        /// `created`: a new `buildId` was generated
+        /// `created`: a build was created but not yet run
         /// 
-        /// `running`: the container image is being built
+        /// `running`: the build process is actively executing
         /// 
-        /// `succeeded`: the container image was successfully built and stored in our registry
+        /// `succeeded`: the game server artifact was successfully built and stored in the Hathora registries
         /// 
-        /// `failed`: there was an issue creating and storing the container image in our container registry
+        /// `failed`: the build process was unsuccessful, most likely due to an error with the `Dockerfile`
         /// </remarks>
         /// </summary>
         [SerializeField]

@@ -7,9 +7,9 @@ features:
     core: 0.1.0
     deprecations: 0.0.1
     downloadStreams: 0.0.1
+    examples: 0.0.2
     globalSecurity: 0.0.1
     globalServerURLs: 0.0.1
-    methodSecurity: 0.0.1
 unity:
   version: 0.0.1
   author: Speakeasy

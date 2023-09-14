@@ -10,7 +10,6 @@
 #nullable enable
 namespace Hathora.Models.Operations
 {
-    using Hathora.Utils;
     using System;
     using UnityEngine.Networking;
     using UnityEngine;
@@ -26,7 +25,7 @@ namespace Hathora.Models.Operations
         /// Ok
         /// </summary>
         [SerializeField]
-        public MemoryQueueBufferStream? RunBuild200TextPlainBinaryString { get; set; }
+        public string? RunBuild200TextPlainByteString { get; set; }
         
         [SerializeField]
         public string? RunBuild404ApplicationJSONString { get; set; }

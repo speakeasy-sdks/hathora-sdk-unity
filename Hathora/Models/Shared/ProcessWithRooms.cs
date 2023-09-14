@@ -98,13 +98,12 @@ namespace Hathora.Models.Shared
         [JsonProperty("region")]
         public Region Region { get; set; } = default!;
         
-        /// <summary>
-        /// Tracks the number of room slots available on the process.
-        /// </summary>
+        [Obsolete("This field will be removed in a future release, please migrate away from it as soon as possible")]
         [SerializeField]
         [JsonProperty("roomSlotsAvailable")]
         public double RoomSlotsAvailable { get; set; } = default!;
         
+        [Obsolete("This field will be removed in a future release, please migrate away from it as soon as possible")]
         [SerializeField]
         [JsonProperty("roomSlotsAvailableUpdatedAt")]
         public DateTime RoomSlotsAvailableUpdatedAt { get; set; } = default!;
@@ -112,6 +111,17 @@ namespace Hathora.Models.Shared
         [SerializeField]
         [JsonProperty("rooms")]
         public List<RoomWithoutAllocations> Rooms { get; set; } = default!;
+        
+        /// <summary>
+        /// Tracks the number of rooms that have been allocated to the process.
+        /// </summary>
+        [SerializeField]
+        [JsonProperty("roomsAllocated")]
+        public double RoomsAllocated { get; set; } = default!;
+        
+        [SerializeField]
+        [JsonProperty("roomsAllocatedUpdatedAt")]
+        public DateTime RoomsAllocatedUpdatedAt { get; set; } = default!;
         
         /// <summary>
         /// Governs how many [rooms](https://hathora.dev/docs/concepts/hathora-entities#room) can be scheduled in a process.

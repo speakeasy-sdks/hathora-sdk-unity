@@ -15,9 +15,6 @@ namespace Hathora.Models.Shared
     using UnityEngine;
     
     
-    /// <summary>
-    /// Ok
-    /// </summary>
     [Serializable]
     public class LoginResponse
     {
