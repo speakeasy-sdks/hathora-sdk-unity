@@ -21,7 +21,7 @@ namespace Hathora.Models.Operations
     {
         [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; } = default!;
+        public string? AppId { get; set; }
         
         /// <summary>
         /// Region to filter by. If omitted, active public lobbies in all regions will be returned.

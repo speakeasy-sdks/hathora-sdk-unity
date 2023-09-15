@@ -10,7 +10,6 @@
 #nullable enable
 namespace Hathora
 {
-    using Hathora.Models.Shared;
     using Hathora.Utils;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -36,6 +35,7 @@ namespace Hathora
     
     public class SDKConfig
     {
+        public string? AppId;
     }
 
     public class HathoraSDK: IHathoraSDK
@@ -69,20 +69,16 @@ namespace Hathora
         public IRoomV1SDK RoomV1 { get; private set; }
         public IRoomV2SDK RoomV2 { get; private set; }
 
-        public HathoraSDK(Security? security = null, string? serverUrl = null, ISpeakeasyHttpClient? client = null)
+        public HathoraSDK(string? appId = null, string? serverUrl = null, ISpeakeasyHttpClient? client = null)
         {
             _serverUrl = serverUrl ?? HathoraSDK.ServerList[0];
 
             _defaultClient = new SpeakeasyHttpClient(client);
             _securityClient = _defaultClient;
             
-            if(security != null)
-            {
-                _securityClient = SecuritySerializer.Apply(_defaultClient, security);
-            }
-            
             Config = new SDKConfig()
             {
+                AppId = appId,
             };
 
             AppV1 = new AppV1SDK(_defaultClient, _securityClient, _serverUrl, Config);

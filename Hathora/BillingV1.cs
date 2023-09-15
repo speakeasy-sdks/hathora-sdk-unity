@@ -21,10 +21,10 @@ namespace Hathora
 
     public interface IBillingV1SDK
     {
-        Task<GetBalanceResponse> GetBalanceAsync();
-        Task<GetInvoicesResponse> GetInvoicesAsync();
-        Task<GetPaymentMethodResponse> GetPaymentMethodAsync();
-        Task<InitStripeCustomerPortalUrlResponse> InitStripeCustomerPortalUrlAsync(CustomerPortalUrl request);
+        Task<GetBalanceResponse> GetBalanceAsync(GetBalanceSecurity security);
+        Task<GetInvoicesResponse> GetInvoicesAsync(GetInvoicesSecurity security);
+        Task<GetPaymentMethodResponse> GetPaymentMethodAsync(GetPaymentMethodSecurity security);
+        Task<InitStripeCustomerPortalUrlResponse> InitStripeCustomerPortalUrlAsync(InitStripeCustomerPortalUrlSecurity security, CustomerPortalUrl request);
     }
 
     public class BillingV1SDK: IBillingV1SDK
@@ -47,7 +47,7 @@ namespace Hathora
         }
         
 
-        public async Task<GetBalanceResponse> GetBalanceAsync()
+        public async Task<GetBalanceResponse> GetBalanceAsync(GetBalanceSecurity security)
         {
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
@@ -63,7 +63,7 @@ namespace Hathora
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
-            var client = _securityClient;
+            var client = SecuritySerializer.Apply(_defaultClient, security);
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)
@@ -105,7 +105,7 @@ namespace Hathora
         }
         
 
-        public async Task<GetInvoicesResponse> GetInvoicesAsync()
+        public async Task<GetInvoicesResponse> GetInvoicesAsync(GetInvoicesSecurity security)
         {
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
@@ -121,7 +121,7 @@ namespace Hathora
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
-            var client = _securityClient;
+            var client = SecuritySerializer.Apply(_defaultClient, security);
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)
@@ -163,7 +163,7 @@ namespace Hathora
         }
         
 
-        public async Task<GetPaymentMethodResponse> GetPaymentMethodAsync()
+        public async Task<GetPaymentMethodResponse> GetPaymentMethodAsync(GetPaymentMethodSecurity security)
         {
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
@@ -179,7 +179,7 @@ namespace Hathora
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
-            var client = _securityClient;
+            var client = SecuritySerializer.Apply(_defaultClient, security);
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)
@@ -230,7 +230,7 @@ namespace Hathora
         }
         
 
-        public async Task<InitStripeCustomerPortalUrlResponse> InitStripeCustomerPortalUrlAsync(CustomerPortalUrl request)
+        public async Task<InitStripeCustomerPortalUrlResponse> InitStripeCustomerPortalUrlAsync(InitStripeCustomerPortalUrlSecurity security, CustomerPortalUrl request)
         {
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
@@ -256,7 +256,7 @@ namespace Hathora
                 httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
             }
             
-            var client = _securityClient;
+            var client = SecuritySerializer.Apply(_defaultClient, security);
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)

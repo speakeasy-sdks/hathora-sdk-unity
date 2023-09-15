@@ -22,13 +22,11 @@ Create a new lobby for an existing [application](https://hathora.dev/docs/concep
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.LobbyV2.CreateLobbyAsync(new Models.Operations.CreateLobbyRequest() {
@@ -37,7 +35,6 @@ using(var res = await sdk.LobbyV2.CreateLobbyAsync(new Models.Operations.CreateL
             Region = Hathora.Models.Shared.Region.London,
             Visibility = Hathora.Models.Shared.LobbyVisibility.Private,
         },
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         RoomId = "2swovpy1fnunu",
     }))
 {
@@ -65,13 +62,11 @@ using(var res = await sdk.LobbyV2.CreateLobbyAsync(new Models.Operations.CreateL
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.LobbyV2.CreateLocalLobbyAsync(new CreateLocalLobbyRequest() {
@@ -79,7 +74,6 @@ using(var res = await sdk.LobbyV2.CreateLocalLobbyAsync(new CreateLocalLobbyRequ
             InitialConfig = new LobbyInitialConfig() {},
             Region = Hathora.Models.Shared.Region.Frankfurt,
         },
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         RoomId = "2swovpy1fnunu",
     }))
 {
@@ -107,13 +101,11 @@ using(var res = await sdk.LobbyV2.CreateLocalLobbyAsync(new CreateLocalLobbyRequ
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.LobbyV2.CreatePrivateLobbyAsync(new CreatePrivateLobbyRequest() {
@@ -121,7 +113,6 @@ using(var res = await sdk.LobbyV2.CreatePrivateLobbyAsync(new CreatePrivateLobby
             InitialConfig = new LobbyInitialConfig() {},
             Region = Hathora.Models.Shared.Region.Chicago,
         },
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         RoomId = "2swovpy1fnunu",
     }))
 {
@@ -149,13 +140,11 @@ using(var res = await sdk.LobbyV2.CreatePrivateLobbyAsync(new CreatePrivateLobby
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.LobbyV2.CreatePublicLobbyAsync(new CreatePublicLobbyRequest() {
@@ -163,7 +152,6 @@ using(var res = await sdk.LobbyV2.CreatePublicLobbyAsync(new CreatePublicLobbyRe
             InitialConfig = new LobbyInitialConfig() {},
             Region = Hathora.Models.Shared.Region.Sydney,
         },
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         RoomId = "2swovpy1fnunu",
     }))
 {
@@ -191,17 +179,13 @@ Get details for an existing lobby using `appId` and `roomId`.
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.LobbyV2.GetLobbyInfoAsync(new GetLobbyInfoRequest() {
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         RoomId = "2swovpy1fnunu",
     }))
 {
@@ -229,17 +213,14 @@ Get all active lobbies for a given [application](https://hathora.dev/docs/concep
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.LobbyV2.ListActivePublicLobbiesAsync(new ListActivePublicLobbiesRequest() {
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         Region = Hathora.Models.Shared.Region.Seattle,
     }))
 {
@@ -267,20 +248,19 @@ Set the state of a lobby using `appId` and `roomId`. State is intended to be set
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
-using(var res = await sdk.LobbyV2.SetLobbyStateAsync(new Models.Operations.SetLobbyStateRequest() {
+using(var res = await sdk.LobbyV2.SetLobbyStateAsync(new SetLobbyStateSecurity() {
+        HathoraDevToken = "",
+    }, new Models.Operations.SetLobbyStateRequest() {
         SetLobbyStateRequest = new Models.Shared.SetLobbyStateRequest() {
             State = new SetLobbyStateRequestState() {},
         },
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         RoomId = "2swovpy1fnunu",
     }))
 {
@@ -293,6 +273,7 @@ using(var res = await sdk.LobbyV2.SetLobbyStateAsync(new Models.Operations.SetLo
 | Parameter                                                                                 | Type                                                                                      | Required                                                                                  | Description                                                                               |
 | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------- |
 | `request`                                                                                 | [Models.Operations.SetLobbyStateRequest](../../models/operations/SetLobbyStateRequest.md) | :heavy_check_mark:                                                                        | The request object to use for the request.                                                |
+| `security`                                                                                | [SetLobbyStateSecurity](../../models/operations/SetLobbyStateSecurity.md)                 | :heavy_check_mark:                                                                        | The security requirements to use for the request.                                         |
 
 
 ### Response

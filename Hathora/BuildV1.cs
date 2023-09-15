@@ -21,11 +21,11 @@ namespace Hathora
 
     public interface IBuildV1SDK
     {
-        Task<CreateBuildResponse> CreateBuildAsync(Models.Operations.CreateBuildRequest request);
-        Task<DeleteBuildResponse> DeleteBuildAsync(DeleteBuildRequest? request = null);
-        Task<GetBuildInfoResponse> GetBuildInfoAsync(GetBuildInfoRequest? request = null);
-        Task<GetBuildsResponse> GetBuildsAsync(GetBuildsRequest? request = null);
-        Task<RunBuildResponse> RunBuildAsync(RunBuildRequest request);
+        Task<CreateBuildResponse> CreateBuildAsync(CreateBuildSecurity security, Models.Operations.CreateBuildRequest request);
+        Task<DeleteBuildResponse> DeleteBuildAsync(DeleteBuildSecurity security, DeleteBuildRequest? request = null);
+        Task<GetBuildInfoResponse> GetBuildInfoAsync(GetBuildInfoSecurity security, GetBuildInfoRequest? request = null);
+        Task<GetBuildsResponse> GetBuildsAsync(GetBuildsSecurity security, GetBuildsRequest? request = null);
+        Task<RunBuildResponse> RunBuildAsync(RunBuildSecurity security, RunBuildRequest request);
     }
 
     public class BuildV1SDK: IBuildV1SDK
@@ -51,8 +51,9 @@ namespace Hathora
         /// <summary>
         /// Creates a new [build](https://hathora.dev/docs/concepts/hathora-entities#build). Responds with a `buildId` that you must pass to [`RunBuild()`](https://hathora.dev/api#tag/BuildV1/operation/RunBuild) to build the game server artifact. You can optionally pass in a `buildTag` to associate an external version with a build.
         /// </summary>
-        public async Task<CreateBuildResponse> CreateBuildAsync(Models.Operations.CreateBuildRequest request)
+        public async Task<CreateBuildResponse> CreateBuildAsync(CreateBuildSecurity security, Models.Operations.CreateBuildRequest request)
         {
+            request.AppId ??= Config.AppId;
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
             {
@@ -77,7 +78,7 @@ namespace Hathora
                 httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
             }
             
-            var client = _securityClient;
+            var client = SecuritySerializer.Apply(_defaultClient, security);
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)
@@ -131,8 +132,9 @@ namespace Hathora
         /// <summary>
         /// Delete a [build](https://hathora.dev/docs/concepts/hathora-entities#build). All associated metadata is deleted.
         /// </summary>
-        public async Task<DeleteBuildResponse> DeleteBuildAsync(DeleteBuildRequest? request = null)
+        public async Task<DeleteBuildResponse> DeleteBuildAsync(DeleteBuildSecurity security, DeleteBuildRequest? request = null)
         {
+            request.AppId ??= Config.AppId;
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
             {
@@ -147,7 +149,7 @@ namespace Hathora
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
-            var client = _securityClient;
+            var client = SecuritySerializer.Apply(_defaultClient, security);
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)
@@ -206,8 +208,9 @@ namespace Hathora
         /// <summary>
         /// Get details for a [build](https://hathora.dev/docs/concepts/hathora-entities#build).
         /// </summary>
-        public async Task<GetBuildInfoResponse> GetBuildInfoAsync(GetBuildInfoRequest? request = null)
+        public async Task<GetBuildInfoResponse> GetBuildInfoAsync(GetBuildInfoSecurity security, GetBuildInfoRequest? request = null)
         {
+            request.AppId ??= Config.AppId;
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
             {
@@ -222,7 +225,7 @@ namespace Hathora
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
-            var client = _securityClient;
+            var client = SecuritySerializer.Apply(_defaultClient, security);
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)
@@ -267,8 +270,9 @@ namespace Hathora
         /// <summary>
         /// Returns an array of [builds](https://hathora.dev/docs/concepts/hathora-entities#build) for an [application](https://hathora.dev/docs/concepts/hathora-entities#application).
         /// </summary>
-        public async Task<GetBuildsResponse> GetBuildsAsync(GetBuildsRequest? request = null)
+        public async Task<GetBuildsResponse> GetBuildsAsync(GetBuildsSecurity security, GetBuildsRequest? request = null)
         {
+            request.AppId ??= Config.AppId;
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
             {
@@ -283,7 +287,7 @@ namespace Hathora
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
-            var client = _securityClient;
+            var client = SecuritySerializer.Apply(_defaultClient, security);
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)
@@ -328,8 +332,9 @@ namespace Hathora
         /// <summary>
         /// Builds a game server artifact from a tarball you provide. Pass in the `buildId` generated from [`CreateBuild()`](https://hathora.dev/api#tag/BuildV1/operation/CreateBuild).
         /// </summary>
-        public async Task<RunBuildResponse> RunBuildAsync(RunBuildRequest request)
+        public async Task<RunBuildResponse> RunBuildAsync(RunBuildSecurity security, RunBuildRequest request)
         {
+            request.AppId ??= Config.AppId;
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
             {
@@ -354,7 +359,7 @@ namespace Hathora
                 httpRequest.SetRequestHeader("Content-Type", serializedBody.ContentType);
             }
             
-            var client = _securityClient;
+            var client = SecuritySerializer.Apply(_defaultClient, security);
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)

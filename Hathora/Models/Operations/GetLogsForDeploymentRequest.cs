@@ -19,12 +19,12 @@ namespace Hathora.Models.Operations
     public class GetLogsForDeploymentRequest
     {
         [SerializeField]
-        [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; } = default!;
-        
-        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=deploymentId")]
         public int DeploymentId { get; set; } = default!;
+        
+        [SerializeField]
+        [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
+        public string? AppId { get; set; }
         
         [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=follow")]

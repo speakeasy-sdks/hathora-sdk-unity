@@ -14,17 +14,14 @@
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.LobbyV1.CreatePrivateLobbyDeprecatedAsync(new CreatePrivateLobbyDeprecatedRequest() {
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         Local = false,
         Region = Hathora.Models.Shared.Region.Frankfurt,
     }))
@@ -53,17 +50,14 @@ using(var res = await sdk.LobbyV1.CreatePrivateLobbyDeprecatedAsync(new CreatePr
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.LobbyV1.CreatePublicLobbyDeprecatedAsync(new CreatePublicLobbyDeprecatedRequest() {
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         Local = false,
         Region = Hathora.Models.Shared.Region.Singapore,
     }))
@@ -92,17 +86,14 @@ using(var res = await sdk.LobbyV1.CreatePublicLobbyDeprecatedAsync(new CreatePub
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.LobbyV1.ListActivePublicLobbiesDeprecatedAsync(new ListActivePublicLobbiesDeprecatedRequest() {
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
         Local = false,
         Region = Hathora.Models.Shared.Region.Singapore,
     }))

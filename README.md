@@ -24,14 +24,15 @@ To do so open the Package Manager via `Window > Package Manager` and click the `
 ```csharp
 using Hathora;
 using Hathora.Models.Shared;
+using Hathora.Models.Operations;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
-using(var res = await sdk.AppV1.CreateAppAsync(new AppConfig() {
+using(var res = await sdk.AppV1.CreateAppAsync(new CreateAppSecurity() {
+        HathoraDevToken = "",
+    }, new AppConfig() {
         AppName = "minecraft",
         AuthConfiguration = new AuthConfiguration() {
             Anonymous = new RecordStringNever() {},

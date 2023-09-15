@@ -20,7 +20,7 @@ namespace Hathora
 
     public interface IMetricsV1SDK
     {
-        Task<GetMetricsResponse> GetMetricsAsync(GetMetricsRequest? request = null);
+        Task<GetMetricsResponse> GetMetricsAsync(GetMetricsSecurity security, GetMetricsRequest? request = null);
     }
 
     public class MetricsV1SDK: IMetricsV1SDK
@@ -46,8 +46,9 @@ namespace Hathora
         /// <summary>
         /// Get metrics for a [process](https://hathora.dev/docs/concepts/hathora-entities#process) using `appId` and `processId`.
         /// </summary>
-        public async Task<GetMetricsResponse> GetMetricsAsync(GetMetricsRequest? request = null)
+        public async Task<GetMetricsResponse> GetMetricsAsync(GetMetricsSecurity security, GetMetricsRequest? request = null)
         {
+            request.AppId ??= Config.AppId;
             string baseUrl = _serverUrl;
             if (baseUrl.EndsWith("/"))
             {
@@ -62,7 +63,7 @@ namespace Hathora
             httpRequest.SetRequestHeader("user-agent", $"speakeasy-sdk/{_target} {_sdkVersion} {_sdkGenVersion} {_openapiDocVersion}");
             
             
-            var client = _securityClient;
+            var client = SecuritySerializer.Apply(_defaultClient, security);
             
             var httpResponse = await client.SendAsync(httpRequest);
             switch (httpResponse.result)

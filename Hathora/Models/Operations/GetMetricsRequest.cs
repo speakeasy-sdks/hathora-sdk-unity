@@ -21,8 +21,12 @@ namespace Hathora.Models.Operations
     public class GetMetricsRequest
     {
         [SerializeField]
+        [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=processId")]
+        public string ProcessId { get; set; } = default!;
+        
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; } = default!;
+        public string? AppId { get; set; }
         
         /// <summary>
         /// Unix timestamp. Default is current time.
@@ -37,10 +41,6 @@ namespace Hathora.Models.Operations
         [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=metrics")]
         public List<MetricName>? Metrics { get; set; }
-        
-        [SerializeField]
-        [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=processId")]
-        public string ProcessId { get; set; } = default!;
         
         /// <summary>
         /// Unix timestamp. Default is -1 hour from `end`.

@@ -19,16 +19,16 @@ namespace Hathora.Models.Operations
     public class GetLogsForProcessRequest
     {
         [SerializeField]
+        [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=processId")]
+        public string ProcessId { get; set; } = default!;
+        
+        [SerializeField]
         [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=appId")]
-        public string AppId { get; set; } = default!;
+        public string? AppId { get; set; }
         
         [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=follow")]
         public bool? Follow { get; set; }
-        
-        [SerializeField]
-        [SpeakeasyMetadata("pathParam:style=simple,explode=false,name=processId")]
-        public string ProcessId { get; set; } = default!;
         
         [SerializeField]
         [SpeakeasyMetadata("queryParam:style=form,explode=true,name=tailLines")]

@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 #nullable enable
-namespace Hathora.Models.Shared
+namespace Hathora.Models.Operations
 {
     using Hathora.Utils;
     using System;
@@ -16,7 +16,7 @@ namespace Hathora.Models.Shared
     
     
     [Serializable]
-    public class Security
+    public class DestroyRoomSecurity
     {
         [SerializeField]
         [SpeakeasyMetadata("security:scheme=true,type=http,subType=bearer,name=Authorization")]

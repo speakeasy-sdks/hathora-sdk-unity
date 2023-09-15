@@ -18,18 +18,13 @@ Returns a unique player token for an anonymous user.
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
-using(var res = await sdk.AuthV1.LoginAnonymousAsync(new LoginAnonymousRequest() {
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
-    }))
+using(var res = await sdk.AuthV1.LoginAnonymousAsync(new LoginAnonymousRequest() {}))
 {
     // handle response
 }
@@ -55,20 +50,17 @@ Returns a unique player token using a Google-signed OIDC `idToken`.
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.AuthV1.LoginGoogleAsync(new Models.Operations.LoginGoogleRequest() {
         LoginGoogleRequest = new Models.Shared.LoginGoogleRequest() {
             IdToken = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImZkNDhhNzUxMzhkOWQ0OGYwYWE2MzVlZjU2OWM0ZTE5NmY3YWU4ZDYiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJhY2NvdW50cy5nb29nbGUuY29tIiwiYXpwIjoiODQ4NDEyODI2Nzg4LW00bXNyYjZxNDRkbTJ1ZTNrZ3Z1aTBmcTdrZGE1NWxzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwiYXVkIjoiODQ4NDEyODI2Nzg4LW00bXNyYjZxNDRkbTJ1ZTNrZ3Z1aTBmcTdrZGE1NWxzLmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE0NTQyMzMwNzI3MTU2MTMzNzc2IiwiZW1haWwiOiJocGFdkeivmeuzQGdtYWlsLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdF9oYXNoIjoidno1NGhhdTNxbnVR",
         },
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
     }))
 {
     // handle response
@@ -95,20 +87,17 @@ Returns a unique player token with a specified nickname for a user.
 
 ```csharp
 using Hathora;
-using Hathora.Models.Shared;
 using Hathora.Models.Operations;
+using Hathora.Models.Shared;
 
 var sdk = new HathoraSDK(
-    security: new Security() {
-        HathoraDevToken = "<YOUR_DEV_TOKEN_HERE>",
-    }
+    appId: "app-af469a92-5b45-4565-b3c4-b79878de67d2"
 );
 
 using(var res = await sdk.AuthV1.LoginNicknameAsync(new Models.Operations.LoginNicknameRequest() {
         LoginNicknameRequest = new Models.Shared.LoginNicknameRequest() {
             Nickname = "squiddytwoshoes",
         },
-        AppId = "app-af469a92-5b45-4565-b3c4-b79878de67d2",
     }))
 {
     // handle response
